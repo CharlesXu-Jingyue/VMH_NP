@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VMH boundary editor</title>
+<style>
+  :root { --line:#d0d4da; --ink:#1b1f24; --muted:#5b6470; --bg:#f6f7f9; --panel:#ffffff; --accent:#1f5fbf; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { font: 13px/1.4 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg);
+         display: grid; grid-template-rows: auto 1fr; }
+  header { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 8px 12px; background: var(--panel);
+           border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 14px; margin: 0 6px 0 0; }
+  label { color: var(--muted); }
+  select, button, input[type=text] { font: inherit; padding: 3px 7px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.on { background: #fff3c4; border-color: #c9a200; }
+  main { display: grid; grid-template-columns: 1fr 330px; min-height: 0; }
+  #stage { position: relative; min-width: 0; min-height: 0; background: #fff; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+  #hint { position: absolute; left: 10px; bottom: 8px; color: var(--muted); background: rgba(255,255,255,.85); padding: 2px 6px; border-radius: 4px; pointer-events: none; }
+  #orient { position: absolute; right: 10px; top: 8px; color: var(--muted); background: rgba(255,255,255,.85); padding: 2px 6px; border-radius: 4px; pointer-events: none; }
+  aside { overflow: auto; background: var(--panel); border-left: 1px solid var(--line); padding: 10px 12px; }
+  aside h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 14px 0 6px; }
+  aside h2:first-child { margin-top: 0; }
+  .row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 4px 0; }
+  .poly { display: grid; grid-template-columns: 14px 1fr auto; gap: 6px; align-items: center; padding: 4px 6px; border: 1px solid var(--line);
+          border-radius: 5px; margin: 4px 0; cursor: pointer; }
+  .poly.sel { border-color: var(--accent); background: #eef4ff; }
+  .poly small { color: var(--muted); grid-column: 2 / 4; }
+  .sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+  .legend div { display: flex; gap: 6px; align-items: center; margin: 1px 0; }
+  .bar { height: 12px; border-radius: 3px; background: linear-gradient(90deg, #cdcdcd, #fdbb63, #d7301f, #5a0010); }
+  textarea { width: 100%; height: 90px; font: 11px/1.3 ui-monospace, Menlo, monospace; }
+  ul { margin: 4px 0; padding-left: 18px; color: var(--muted); }
+  .note { color: var(--muted); }
+  kbd { font: 11px ui-monospace, Menlo, monospace; border: 1px solid var(--line); border-radius: 3px; padding: 0 3px; background: #fafafa; }
+</style>
+</head>
+<body>
+<header>
+  <h1>VMH boundary editor</h1>
+  <span><label>Dataset</label> <select id="ds"></select></span>
+  <span><button id="prev" title="Previous section ([)">&#9664;</button>
+        <select id="sec"></select>
+        <button id="next" title="Next section (])">&#9654;</button></span>
+  <span><label>Colour by</label> <select id="mode"></select></span>
+  <span><label><input type="checkbox" id="showNN"> non-neuronal</label></span>
+  <span><label><input type="checkbox" id="showCCF" checked> atlas VMH label</label></span>
+  <span><label>Point size</label> <input type="range" id="psize" min="1" max="6" step="0.5" value="2.5" style="width:80px"></span>
+  <span style="margin-left:auto"><button id="export" class="primary">Export JSON</button></span>
+</header>
+<main>
+  <div id="stage"><canvas id="cv"></canvas><div id="orient">dorsal up, ventral down</div><div id="hint"></div></div>
+  <aside>
+    <h2>Regions on this section</h2>
+    <div id="polys"></div>
+    <div class="row">
+      <select id="newLabel"><option>VMHdm</option><option>VMHc</option><option>VMHvl</option><option>VMHa</option><option>VMH</option></select>
+      <button id="draw">Draw new region</button>
+    </div>
+    <div class="row">
+      <button id="copyPrev">Copy from previous section</button>
+      <button id="resetSec">Reset to seed</button>
+      <button id="clearSec">Clear</button>
+      <button id="undo">Undo</button>
+    </div>
+    <div id="summary" class="note"></div>
+
+    <h2>Legend</h2>
+    <div id="legend" class="legend"></div>
+
+    <h2>How to edit</h2>
+    <ul>
+      <li>Click a region to select it. Drag a filled handle to move a vertex.</li>
+      <li>Drag a hollow handle (edge midpoint) to add a vertex. Double-click a vertex to remove it.</li>
+      <li>Hold <kbd>Shift</kbd> and drag inside a selected region to move it whole.</li>
+      <li><b>Draw new region</b>: click to place vertices, double-click or <kbd>Enter</kbd> to close, <kbd>Esc</kbd> to cancel.</li>
+      <li>Scroll to zoom, drag the background to pan. <kbd>[</kbd> <kbd>]</kbd> change section, <kbd>Delete</kbd> removes the selected region, <kbd>Ctrl/Cmd+Z</kbd> undoes.</li>
+      <li>Draw each hemisphere as its own region. Overlaps are resolved in favour of the smaller region.</li>
+    </ul>
+
+    <h2>Export and import</h2>
+    <div class="note">Export saves <code>vmh_boundaries.json</code>. Put it in the repository at <code>config/vmh_boundaries.json</code>. Edits are also kept in this browser between visits.</div>
+    <div class="row"><input type="file" id="importFile" accept=".json"> <button id="discard">Discard edits, reload seeds</button></div>
+    <textarea id="out" readonly placeholder="Exported JSON also appears here, in case the download is blocked."></textarea>
+  </aside>
+</main>
+<script>
+const DATA = /*__DATA__*/null;
+const LABEL_COLORS = { VMHdm: '#1f6fd6', VMHc: '#178a4a', VMHvl: '#d73027', VMHa: '#8e44ad', VMH: '#111111' };
+const STORE_KEY = 'vmh_np_boundaries_v1';
+const $ = id => document.getElementById(id);
+const cv = $('cv'), ctx = cv.getContext('2d');
+
+function b64(str, Type) {
+  const bin = atob(str), u8 = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  return Type === Uint8Array ? u8 : new Type(u8.buffer);
+}
+// decode every section once
+for (const ds of Object.values(DATA.datasets)) for (const s of ds.sections) {
+  s.X = b64(s.x, Int16Array); s.Y = b64(s.y, Int16Array); s.T = b64(s.t, Uint8Array); s.F = b64(s.f, Uint8Array);
+  s.G = {}; for (const g in s.g) s.G[g] = b64(s.g[g], Uint8Array);
+}
+const clone = o => JSON.parse(JSON.stringify(o));
+function seedState() {
+  const st = {};
+  for (const [id, ds] of Object.entries(DATA.datasets)) { st[id] = {}; for (const s of ds.sections) st[id][s.id] = clone(s.seeds); }
+  return st;
+}
+let polys = seedState(), restored = false;
+try { const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+      if (saved) { for (const d in polys) for (const s in polys[d]) if (saved[d] && saved[d][s]) polys[d][s] = saved[d][s]; restored = true; } } catch (e) {}
+function persist() { try { localStorage.setItem(STORE_KEY, JSON.stringify(polys)); } catch (e) {} }
+
+let dsId = Object.keys(DATA.datasets)[0], si = 0, mode = 'type', sel = -1, drawing = null, undoStack = [];
+const views = {};
+const D = () => DATA.datasets[dsId], S = () => D().sections[si], P = () => polys[dsId][S().id];
+
+// ---- geometry
+function inPoly(pts, x, y) {
+  let c = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const [xi, yi] = pts[i], [xj, yj] = pts[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+function area(pts) { let a = 0; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) a += pts[j][0] * pts[i][1] - pts[i][0] * pts[j][1]; return Math.abs(a) / 2; }
+const view = () => views[dsId] || (views[dsId] = fitView());
+function fitView() {
+  const s = S(), w = cv.clientWidth, h = cv.clientHeight;
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < s.n; i++) { const x = s.X[i] / 1000, y = s.Y[i] / 1000; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  const k = Math.min(w / (x1 - x0), h / (y1 - y0)) * 0.96;
+  return { k, ox: (x0 + x1) / 2 - w / 2 / k, oy: (y0 + y1) / 2 - h / 2 / k };
+}
+const toS = (x, y) => { const v = view(); return [(x - v.ox) * v.k, (y - v.oy) * v.k]; };
+const toW = (sx, sy) => { const v = view(); return [sx / v.k + v.ox, sy / v.k + v.oy]; };
+
+// ---- colour
+const RAMP = [[205, 205, 205], [253, 187, 99], [215, 48, 31], [90, 0, 16]];
+function ramp(t) {
+  const x = Math.max(0, Math.min(1, t)) * (RAMP.length - 1), i = Math.min(RAMP.length - 2, Math.floor(x)), f = x - i;
+  const c = RAMP[i].map((a, k) => Math.round(a + (RAMP[i + 1][k] - a) * f));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+const RAMP_LUT = Array.from({ length: 256 }, (_, i) => ramp(i / 255));
+
+// ---- drawing
+function resize() {
+  const r = window.devicePixelRatio || 1;
+  cv.width = Math.round(cv.clientWidth * r); cv.height = Math.round(cv.clientHeight * r);
+  ctx.setTransform(r, 0, 0, r, 0, 0);
+}
+function render() {
+  const s = S(), v = view(), w = cv.clientWidth, h = cv.clientHeight, ps = +$('psize').value;
+  ctx.clearRect(0, 0, w, h);
+  const types = DATA.types, showNN = $('showNN').checked;
+  const put = (i, col, size) => { const sx = (s.X[i] / 1000 - v.ox) * v.k, sy = (s.Y[i] / 1000 - v.oy) * v.k;
+    if (sx < -5 || sy < -5 || sx > w + 5 || sy > h + 5) return; ctx.fillStyle = col; ctx.fillRect(sx - size / 2, sy - size / 2, size, size); };
+  if (mode === 'type') {
+    for (const layer of [0, 1, 2, 3]) for (let i = 0; i < s.n; i++) {
+      const t = types[s.T[i]];
+      if (t.layer !== layer || (layer === 0 && !showNN)) continue;
+      put(i, t.color, layer === 3 ? ps * 1.5 : layer === 2 ? ps * 1.15 : ps * 0.8);
+    }
+  } else {
+    const g = s.G[mode];
+    const idx = []; for (let i = 0; i < s.n; i++) if (showNN || types[s.T[i]].layer > 0) idx.push(i);
+    idx.sort((a, b) => g[a] - g[b]);
+    for (const i of idx) put(i, RAMP_LUT[g[i]], g[i] ? ps * 1.4 : ps);
+  }
+  if ($('showCCF').checked) {
+    ctx.strokeStyle = '#555'; ctx.lineWidth = 1.2; ctx.setLineDash([5, 4]);
+    for (const line of (s.ccf || [])) { ctx.beginPath(); line.forEach(([x, y], i) => { const [a, b] = toS(x, y); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }); ctx.stroke(); }
+    ctx.setLineDash([]);
+    if (!(s.ccf || []).length) { ctx.strokeStyle = 'rgba(60,60,60,.3)'; ctx.lineWidth = 0.6;
+      for (let i = 0; i < s.n; i++) if (s.F[i] & 1) { const [a, b] = toS(s.X[i] / 1000, s.Y[i] / 1000); ctx.beginPath(); ctx.arc(a, b, ps * 1.6, 0, 6.2832); ctx.stroke(); } }
+  }
+  P().forEach((p, i) => {
+    const col = LABEL_COLORS[p.label] || '#ff8c00';
+    ctx.beginPath(); p.points.forEach(([x, y], k) => { const [a, b] = toS(x, y); k ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }); ctx.closePath();
+    if (i === sel) { ctx.fillStyle = col + '22'; ctx.fill(); }
+    ctx.strokeStyle = col; ctx.lineWidth = i === sel ? 2.6 : 1.8; ctx.stroke();
+    const c = p.points.reduce((a, q) => [a[0] + q[0], a[1] + q[1]], [0, 0]).map(z => z / p.points.length), [lx, ly] = toS(c[0], c[1]);
+    ctx.font = '600 12px sans-serif'; ctx.fillStyle = '#fff'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.strokeText(p.label, lx - 14, ly); ctx.fillStyle = col; ctx.fillText(p.label, lx - 14, ly);
+    if (i === sel) {
+      p.points.forEach(([x, y], k) => { const [a, b] = toS(x, y), q = p.points[(k + 1) % p.points.length], [c2, d2] = toS((x + q[0]) / 2, (y + q[1]) / 2);
+        ctx.beginPath(); ctx.arc(c2, d2, 3.5, 0, 6.2832); ctx.fillStyle = '#fff'; ctx.fill(); ctx.strokeStyle = col; ctx.lineWidth = 1.2; ctx.stroke();
+        ctx.beginPath(); ctx.arc(a, b, 5, 0, 6.2832); ctx.fillStyle = col; ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke(); });
+    }
+  });
+  if (drawing) {
+    const col = LABEL_COLORS[drawing.label] || '#ff8c00';
+    ctx.beginPath(); drawing.points.forEach(([x, y], k) => { const [a, b] = toS(x, y); k ? ctx.lineTo(a, b) : ctx.moveTo(a, b); });
+    if (drawing.cursor) { const [a, b] = toS(...drawing.cursor); ctx.lineTo(a, b); }
+    ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash([4, 3]); ctx.stroke(); ctx.setLineDash([]);
+    drawing.points.forEach(([x, y]) => { const [a, b] = toS(x, y); ctx.beginPath(); ctx.arc(a, b, 4, 0, 6.2832); ctx.fillStyle = col; ctx.fill(); });
+  }
+  // scale bar
+  const bar = 0.2 * v.k; ctx.fillStyle = '#222'; ctx.fillRect(14, 14, bar, 3); ctx.font = '11px sans-serif'; ctx.fillText('200 µm', 14, 30);
+}
+
+// ---- side panel
+function counts(p) {
+  const s = S(), types = DATA.types; let n = 0, v = 0;
+  for (let i = 0; i < s.n; i++) { const t = types[s.T[i]]; if (t.layer === 0) continue; if (inPoly(p.points, s.X[i] / 1000, s.Y[i] / 1000)) { n++; if (t.layer === 3) v++; } }
+  return [n, v];
+}
+function panel() {
+  const box = $('polys'); box.innerHTML = '';
+  P().forEach((p, i) => {
+    const [n, v] = counts(p), el = document.createElement('div');
+    el.className = 'poly' + (i === sel ? ' sel' : '');
+    const sw = document.createElement('span'); sw.className = 'sw'; sw.style.background = LABEL_COLORS[p.label] || '#ff8c00';
+    const lab = document.createElement('select');
+    for (const o of ['VMHdm', 'VMHc', 'VMHvl', 'VMHa', 'VMH']) { const op = document.createElement('option'); op.textContent = o; if (o === p.label) op.selected = true; lab.appendChild(op); }
+    lab.onchange = () => { snapshot(); p.label = lab.value; changed(); };
+    lab.onclick = e => e.stopPropagation();
+    const del = document.createElement('button'); del.textContent = 'Delete'; del.onclick = e => { e.stopPropagation(); snapshot(); P().splice(i, 1); sel = -1; changed(); };
+    const info = document.createElement('small'); info.textContent = `${n} neurons, ${v} of VMH types, ${area(p.points).toFixed(3)} mm²`;
+    el.append(sw, lab, del, info); el.onclick = () => { sel = i; panel(); render(); };
+    box.appendChild(el);
+  });
+  if (!P().length) box.innerHTML = '<div class="note">No regions on this section.</div>';
+  const s = S(), types = DATA.types; let tot = 0, ins = 0;
+  for (let i = 0; i < s.n; i++) if (types[s.T[i]].layer === 3) { tot++; if (P().some(p => inPoly(p.points, s.X[i] / 1000, s.Y[i] / 1000))) ins++; }
+  $('summary').textContent = `${tot} neurons of VMH types on this section; ${ins} (${tot ? Math.round(100 * ins / tot) : 0}%) inside a region.` + (restored ? ' Earlier edits were restored from this browser.' : '');
+}
+function legend() {
+  const el = $('legend'); el.innerHTML = '';
+  if (mode === 'type') {
+    DATA.types.forEach(t => { if (t.layer === 0 && !$('showNN').checked) return; const d = document.createElement('div'); const sw = document.createElement('span'); sw.className = 'sw'; sw.style.background = t.color; d.append(sw, document.createTextNode(t.name)); el.appendChild(d); });
+  } else {
+    const g = D().genes.find(x => x.name === mode);
+    el.innerHTML = `<div class="bar" style="width:100%"></div>`;
+    const d = document.createElement('div'); d.style.justifyContent = 'space-between'; d.innerHTML = `<span>0</span><span>${g.max.toFixed(1)} ${g.unit}</span>`; el.appendChild(d);
+    const n = document.createElement('div'); n.className = 'note'; n.textContent = g.kind === 'measured' ? `${g.name}: measured in situ in this dataset.` : `${g.name}: not on this panel. Each cell shows the 10x mean of its assigned cluster.`; el.appendChild(n);
+  }
+}
+function fillControls() {
+  $('ds').innerHTML = ''; for (const [id, d] of Object.entries(DATA.datasets)) { const o = document.createElement('option'); o.value = id; o.textContent = d.label; $('ds').appendChild(o); } $('ds').value = dsId;
+  $('sec').innerHTML = ''; D().sections.forEach((s, i) => { const o = document.createElement('option'); o.value = i; o.textContent = `${s.id.split('.').pop()} (${s.pos}) · ${s.nv} VMH-type`; $('sec').appendChild(o); }); $('sec').value = si;
+  const keep = mode; $('mode').innerHTML = '<option value="type">Cell type</option>';
+  for (const g of D().genes) { const o = document.createElement('option'); o.value = g.name; o.textContent = g.name + (g.kind === 'measured' ? '' : ' (projected)'); $('mode').appendChild(o); }
+  mode = [...$('mode').options].some(o => o.value === keep) ? keep : 'type'; $('mode').value = mode;
+}
+function refresh() { panel(); legend(); render(); hint(); }
+function changed() { persist(); refresh(); }
+function snapshot() { undoStack.push({ dsId, sec: S().id, polys: clone(P()) }); if (undoStack.length > 100) undoStack.shift(); }
+function hint() { $('hint').textContent = drawing ? `Drawing ${drawing.label}: click to add vertices, double-click or Enter to close, Esc to cancel.` : ''; $('draw').classList.toggle('on', !!drawing); }
+function setSection(i) { si = Math.max(0, Math.min(D().sections.length - 1, i)); sel = -1; drawing = null; $('sec').value = si; refresh(); }
+
+// ---- interaction
+let drag = null;
+const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+function hitHandle(sx, sy) {
+  if (sel < 0 || !P()[sel]) return null;
+  const pts = P()[sel].points;
+  for (let k = 0; k < pts.length; k++) { const [a, b] = toS(...pts[k]); if (Math.hypot(a - sx, b - sy) < 8) return { kind: 'v', k }; }
+  for (let k = 0; k < pts.length; k++) { const q = pts[(k + 1) % pts.length], [a, b] = toS((pts[k][0] + q[0]) / 2, (pts[k][1] + q[1]) / 2); if (Math.hypot(a - sx, b - sy) < 7) return { kind: 'm', k }; }
+  return null;
+}
+function finishDrawing() { if (drawing && drawing.points.length >= 3) { snapshot(); P().push({ label: drawing.label, points: drawing.points.map(p => p.map(z => +z.toFixed(4))) }); sel = P().length - 1; } drawing = null; changed(); }
+cv.addEventListener('mousedown', e => {
+  const [sx, sy] = pos(e), [wx, wy] = toW(sx, sy);
+  if (drawing) { drawing.points.push([wx, wy]); render(); return; }
+  const h = hitHandle(sx, sy);
+  if (h) { snapshot(); if (h.kind === 'm') { P()[sel].points.splice(h.k + 1, 0, [wx, wy]); h.k += 1; } drag = { kind: 'vertex', k: h.k }; return; }
+  if (e.shiftKey && sel >= 0 && inPoly(P()[sel].points, wx, wy)) { snapshot(); drag = { kind: 'move', last: [wx, wy] }; return; }
+  // select the smallest region under the cursor, else pan
+  let best = -1; P().forEach((p, i) => { if (inPoly(p.points, wx, wy) && (best < 0 || area(p.points) < area(P()[best].points))) best = i; });
+  if (best >= 0 && best !== sel) { sel = best; refresh(); return; }
+  drag = { kind: 'pan', sx, sy, ox: view().ox, oy: view().oy, moved: false, hadSel: best };
+});
+window.addEventListener('mousemove', e => {
+  const [sx, sy] = pos(e), [wx, wy] = toW(sx, sy);
+  if (drawing) { drawing.cursor = [wx, wy]; render(); return; }
+  if (!drag) return;
+  if (drag.kind === 'vertex') { P()[sel].points[drag.k] = [+wx.toFixed(4), +wy.toFixed(4)]; render(); }
+  else if (drag.kind === 'move') { const dx = wx - drag.last[0], dy = wy - drag.last[1]; P()[sel].points = P()[sel].points.map(([x, y]) => [+(x + dx).toFixed(4), +(y + dy).toFixed(4)]); drag.last = [wx, wy]; render(); }
+  else if (drag.kind === 'pan') { const v = view(); if (Math.hypot(sx - drag.sx, sy - drag.sy) > 3) drag.moved = true; v.ox = drag.ox - (sx - drag.sx) / v.k; v.oy = drag.oy - (sy - drag.sy) / v.k; render(); }
+});
+window.addEventListener('mouseup', () => {
+  if (!drag) return;
+  if (drag.kind === 'pan') { if (!drag.moved && drag.hadSel < 0 && sel >= 0) { sel = -1; refresh(); } }
+  else changed();
+  drag = null;
+});
+cv.addEventListener('dblclick', e => {
+  const [sx, sy] = pos(e);
+  if (drawing) { drawing.points.pop(); finishDrawing(); return; }       // the second click of the double-click added a duplicate
+  const h = hitHandle(sx, sy);
+  if (h && h.kind === 'v' && P()[sel].points.length > 3) { snapshot(); P()[sel].points.splice(h.k, 1); changed(); }
+});
+cv.addEventListener('wheel', e => {
+  e.preventDefault(); const [sx, sy] = pos(e), [wx, wy] = toW(sx, sy), v = view();
+  v.k *= Math.exp(-e.deltaY * 0.0015); v.k = Math.max(40, Math.min(6000, v.k)); v.ox = wx - sx / v.k; v.oy = wy - sy / v.k; render();
+}, { passive: false });
+window.addEventListener('keydown', e => {
+  if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName) && e.key !== 'Escape') return;
+  if (e.key === 'Escape') { drawing = null; refresh(); }
+  else if (e.key === 'Enter' && drawing) finishDrawing();
+  else if (e.key === '[') setSection(si - 1);
+  else if (e.key === ']') setSection(si + 1);
+  else if ((e.key === 'Delete' || e.key === 'Backspace') && sel >= 0 && !drawing) { snapshot(); P().splice(sel, 1); sel = -1; changed(); }
+  else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
+});
+function undo() {
+  const u = undoStack.pop(); if (!u) return;
+  polys[u.dsId][u.sec] = u.polys;
+  if (u.dsId !== dsId) { dsId = u.dsId; fillControls(); }
+  const i = D().sections.findIndex(s => s.id === u.sec); si = i < 0 ? 0 : i; $('sec').value = si; sel = -1; changed();
+}
+
+// ---- controls
+$('ds').onchange = () => { dsId = $('ds').value; si = Math.floor(D().sections.length / 2); sel = -1; drawing = null; fillControls(); refresh(); };
+$('sec').onchange = () => setSection(+$('sec').value);
+$('prev').onclick = () => setSection(si - 1);
+$('next').onclick = () => setSection(si + 1);
+$('mode').onchange = () => { mode = $('mode').value; legend(); render(); };
+$('showNN').onchange = () => { legend(); render(); };
+$('showCCF').onchange = render; $('psize').oninput = render;
+$('draw').onclick = () => { drawing = drawing ? null : { label: $('newLabel').value, points: [], cursor: null }; sel = -1; refresh(); };
+$('undo').onclick = undo;
+$('copyPrev').onclick = () => { if (si === 0) return; snapshot(); polys[dsId][S().id] = clone(polys[dsId][D().sections[si - 1].id]); sel = -1; changed(); };
+$('resetSec').onclick = () => { snapshot(); polys[dsId][S().id] = clone(S().seeds); sel = -1; changed(); };
+$('clearSec').onclick = () => { snapshot(); polys[dsId][S().id] = []; sel = -1; changed(); };
+$('discard').onclick = () => { if (!confirmReset()) return; polys = seedState(); restored = false; undoStack = []; sel = -1; try { localStorage.removeItem(STORE_KEY); } catch (e) {} refresh(); };
+let armed = 0;
+function confirmReset() { const now = Date.now(); if (now - armed < 4000) { armed = 0; $('discard').textContent = 'Discard edits, reload seeds'; return true; } armed = now; $('discard').textContent = 'Click again to confirm'; return false; }
+function exportJSON() {
+  const out = { version: 1, exported: new Date().toISOString(), units: 'mm, section coordinates of each dataset', source: DATA.source, datasets: {} };
+  for (const [id, ds] of Object.entries(DATA.datasets)) { out.datasets[id] = { label: ds.label, sections: {} }; for (const s of ds.sections) out.datasets[id].sections[s.id] = polys[id][s.id]; }
+  const text = JSON.stringify(out, null, 1); $('out').value = text;
+  try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = 'vmh_boundaries.json'; document.body.appendChild(a); a.click(); a.remove(); } catch (e) {}
+}
+$('export').onclick = exportJSON;
+$('importFile').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t => { const j = JSON.parse(t); for (const d in polys) for (const s in polys[d]) { const src = j.datasets && j.datasets[d] && j.datasets[d].sections && j.datasets[d].sections[s]; if (src) polys[d][s] = src; } undoStack = []; sel = -1; changed(); })
+    .catch(() => { $('out').value = 'Could not read that file as boundary JSON.'; });
+};
+window.addEventListener('resize', () => { resize(); render(); });
+
+si = Math.floor(D().sections.length / 2);
+fillControls(); resize(); refresh();
+</script>
+</body>
+</html>

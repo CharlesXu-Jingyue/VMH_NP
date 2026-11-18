@@ -1,0 +1,90 @@
+gene,family,source_class,peptides,note
+Penk,Opioid,neuronal,enkephalins,
+Pdyn,Opioid,neuronal,dynorphins,
+Pomc,Melanocortin/opioid,neuronal,alpha-MSH; beta-endorphin; ACTH; alpha-MSH (peripheral targets),Arcuate and NTS neurons; also pituitary
+Pnoc,Opioid,neuronal,nociceptin/orphanin FQ,
+Agrp,Melanocortin/opioid,neuronal,AgRP (inverse agonist),
+Tac1,Tachykinin,neuronal,substance P; neurokinin A,
+Tac2,Tachykinin,neuronal,neurokinin B,
+Tac4,Tachykinin,neuronal,hemokinin-1,Mostly peripheral
+Cck,CCK/gastrin,neuronal,CCK-8,
+Gast,CCK/gastrin,endocrine,gastrin,
+Sst,Somatostatin,neuronal,somatostatin,
+Cort,Somatostatin,neuronal,cortistatin,
+Npy,NPY,neuronal,NPY,
+Pyy,NPY,endocrine,PYY,Gut; small brainstem population
+Ppy,NPY,endocrine,pancreatic polypeptide,
+Vip,VIP/PACAP/glucagon,neuronal,VIP,
+Adcyap1,VIP/PACAP/glucagon,neuronal,PACAP,
+Ghrh,VIP/PACAP/glucagon,neuronal,GHRH,
+Gcg,VIP/PACAP/glucagon,neuronal,GLP-1; GLP-2; glucagon,Central source is the NTS; also gut and pancreas
+Sct,VIP/PACAP/glucagon,endocrine,secretin,
+Gip,VIP/PACAP/glucagon,endocrine,GIP,
+Crh,CRH,neuronal,CRH,CRH has much lower affinity at Crhr2
+Ucn,CRH,neuronal,urocortin 1,
+Ucn2,CRH,neuronal,urocortin 2,
+Ucn3,CRH,neuronal,urocortin 3,
+Avp,Vasopressin/oxytocin,neuronal,vasopressin,
+Oxt,Vasopressin/oxytocin,neuronal,oxytocin,
+Trh,Releasing hormone,neuronal,TRH,
+Gnrh1,Releasing hormone,neuronal,GnRH,
+Kiss1,RFamide,neuronal,kisspeptin,
+Npff,RFamide,neuronal,NPFF,
+Npvf,RFamide,neuronal,RFRP-1/3,
+Qrfp,RFamide,neuronal,QRFP,
+Prlh,RFamide,neuronal,prolactin-releasing peptide,
+Gal,Galanin,neuronal,galanin,
+Galp,Galanin,neuronal,galanin-like peptide,
+Spx,Galanin,neuronal,spexin,
+Nts,Neurotensin,neuronal,neurotensin / neuromedin N,
+Nmu,Neuromedin,neuronal,neuromedin U,
+Nms,Neuromedin,neuronal,neuromedin S,
+Nmb,Bombesin-like,neuronal,neuromedin B,
+Grp,Bombesin-like,neuronal,gastrin-releasing peptide,
+Hcrt,Orexin,neuronal,orexin A/B,
+Pmch,MCH,neuronal,MCH,
+Cartpt,CART,neuronal,CART,Receptor unresolved; Gpr160 is a proposed candidate
+Calca,Calcitonin/CGRP,neuronal,CGRP-alpha; calcitonin,
+Calcb,Calcitonin/CGRP,neuronal,CGRP-beta,
+Iapp,Calcitonin/CGRP,endocrine,amylin,Pancreas; some central expression reported
+Adm,Calcitonin/CGRP,neuronal,adrenomedullin,
+Adm2,Calcitonin/CGRP,neuronal,adrenomedullin 2,
+Nppa,Natriuretic,endocrine,ANP,
+Nppb,Natriuretic,endocrine,BNP,
+Nppc,Natriuretic,neuronal,CNP,
+Edn1,Endothelin,neuronal,endothelin-1,
+Edn3,Endothelin,neuronal,endothelin-3,
+Agt,Angiotensin,neuronal,angiotensin II; angiotensin 1-7,Astrocytes are the main central source
+Kng1,Kinin,endocrine,bradykinin,
+Kng2,Kinin,endocrine,bradykinin,
+Rln1,Relaxin/insulin-like,endocrine,relaxin,
+Rln3,Relaxin/insulin-like,neuronal,relaxin-3,Nucleus incertus
+Insl3,Relaxin/insulin-like,endocrine,INSL3,
+Insl5,Relaxin/insulin-like,endocrine,INSL5,Colon
+Ins1,Relaxin/insulin-like,endocrine,insulin,
+Ins2,Relaxin/insulin-like,endocrine,insulin,
+Igf1,Relaxin/insulin-like,growth,IGF-1,
+Igf2,Relaxin/insulin-like,growth,IGF-2,
+Lep,Adipokine/cytokine-type hormone,endocrine,leptin,Adipose
+Ghrl,Ghrelin,endocrine,ghrelin,Stomach
+Prl,Adipokine/cytokine-type hormone,endocrine,prolactin,Pituitary
+Gh,Adipokine/cytokine-type hormone,endocrine,growth hormone,Pituitary
+Nps,Neuropeptide S,neuronal,neuropeptide S,
+Npb,Neuropeptide B/W,neuronal,neuropeptide B,
+Npw,Neuropeptide B/W,neuronal,neuropeptide W,
+Pth,Parathyroid,endocrine,PTH,
+Pthlh,Parathyroid,neuronal,PTHrP,
+Pth2,Parathyroid,neuronal,TIP39,
+Apln,Apelin,neuronal,apelin,
+Apela,Apelin,neuronal,ELABELA,
+Uts2,Urotensin,neuronal,urotensin II,
+Uts2b,Urotensin,neuronal,urotensin II-related peptide,
+Prok1,Prokineticin,neuronal,prokineticin 1,
+Prok2,Prokineticin,neuronal,prokineticin 2,
+Pcsk1n,Granin-like,granin,BigLEN; PEN,proSAAS; broadly neuronal
+Vgf,Granin-like,granin,TLQP-21,Other VGF peptides have no assigned receptor
+Chga,Granin-like,granin,,Chromogranin A; no assigned neuronal receptor
+Chgb,Granin-like,granin,,Chromogranin B
+Scg2,Granin-like,granin,,Secretogranin II (secretoneurin)
+Scg3,Granin-like,granin,,Secretogranin III
+Nucb2,Granin-like,granin,,Nesfatin-1; receptor unknown

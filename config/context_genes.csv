@@ -1,0 +1,23 @@
+gene,role
+Pcsk1,prohormone convertase 1/3
+Pcsk2,prohormone convertase 2
+Cpe,carboxypeptidase E
+Pam,amidating enzyme
+Scg5,"7B2, PC2 chaperone"
+Crhbp,CRH binding protein
+Nr5a1,VMH marker (SF-1)
+Fezf1,VMH marker
+Esr1,VMHvl marker
+Pgr,VMHvl marker
+Slc17a6,glutamatergic (Vglut2)
+Slc32a1,GABAergic (Vgat)
+Gad1,GABAergic
+Gad2,GABAergic
+Snap25,pan-neuronal
+Ar,androgen receptor
+Cyp19a1,aromatase
+Dlk1,VMH-adjacent marker
+Satb2,VMH subpopulation marker
+Foxp2,VMH subpopulation marker
+Nkx2-1,ventral hypothalamic lineage
+Sox14,VMH lineage marker

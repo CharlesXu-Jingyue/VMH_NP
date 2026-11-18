@@ -1,0 +1,10 @@
+dataset,vmh_definition,n_vmh_type_neurons,f1_released,share_vmh_type_released,recall_released,shift_ap_mm,shift_dv_mm,shift_ml_mm,n_inside_shifted,f1_shifted,share_vmh_type_shifted,recall_shifted
+allen_m,Allen CCF VMH,5409,0.6812,0.7557,0.6201,0.15,0.04,0.08,4075,0.7933,0.9232,0.6955
+allen_m,unified core,5409,0.496,0.5456,0.4546,0.3,0.04,0.1,3958,0.723,0.8555,0.626
+allen_m,unified core + shell,5409,0.5917,0.532,0.6665,0.3,0.06,0.1,5478,0.7569,0.7521,0.7617
+zhuang1_f,Allen CCF VMH,3132,0.6221,0.7026,0.5581,0.25,-0.02,0.04,2797,0.8069,0.8552,0.7637
+zhuang1_f,unified core,3132,0.5116,0.6742,0.4122,0.4,0,0.02,2576,0.7351,0.8144,0.6699
+zhuang1_f,unified core + shell,3132,0.6568,0.6668,0.6472,0.4,-0.02,0.02,3580,0.7676,0.7196,0.8225
+zhuang2_m,Allen CCF VMH,977,0.7015,0.8369,0.6039,0.05,0.02,-0.02,702,0.7195,0.8604,0.6182
+zhuang2_m,unified core,977,0.5599,0.7692,0.4401,-0.05,0,-0.02,661,0.6154,0.7625,0.5159
+zhuang2_m,unified core + shell,977,0.6742,0.7101,0.6418,0.1,-0.02,0.02,930,0.7069,0.7247,0.6899

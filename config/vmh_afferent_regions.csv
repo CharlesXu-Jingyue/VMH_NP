@@ -1,0 +1,26 @@
+acronym,name,evidence
+BST,Bed nuclei of the stria terminalis,"Reported input to VMHvl Esr1 neurons (Lo et al. 2019); urocortin 3 fibres (Li et al. 2002)"
+MEA,Medial amygdalar nucleus,"Reported input to VMHvl Esr1 neurons (Lo et al. 2019); urocortin 3 neurons (Li et al. 2002)"
+PA,Posterior amygdalar nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+COAp,"Cortical amygdalar area, posterior part",Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+BMA,Basomedial amygdalar nucleus,Classical tracing literature for dorsomedial and central VMH
+LSv,"Lateral septal nucleus, ventral part",Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+LSr,"Lateral septal nucleus, rostral part",Classical tracing literature
+SUB,Subiculum,Reported input to VMHvl Esr1 neurons (ventral subiculum; Lo et al. 2019)
+MPN,Medial preoptic nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+MPO,Medial preoptic area,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+AVPV,Anteroventral periventricular nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+MEPO,Median preoptic nucleus,Urocortin 3 neurons with fibres in VMH (Li et al. 2002)
+AHN,Anterior hypothalamic nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+PVH,Paraventricular hypothalamic nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+PeF,Perifornical nucleus,Urocortin 3 neurons with fibres in VMH (Li et al. 2002)
+ARH,Arcuate hypothalamic nucleus,Classical tracing literature; reported input (Lo et al. 2019)
+DMH,Dorsomedial nucleus of the hypothalamus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+TU,Tuberal nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+LHA,Lateral hypothalamic area,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+PMv,Ventral premammillary nucleus,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+PMd,Dorsal premammillary nucleus,Classical tracing literature
+PVT,Paraventricular nucleus of the thalamus,Classical tracing literature
+PAG,Periaqueductal gray,Reported input to VMHvl Esr1 neurons (Lo et al. 2019)
+PB,Parabrachial nucleus,Cholecystokinin neurons of the lateral part target SF1 neurons of VMH (Garfield et al. 2014)
+NTS,Nucleus of the solitary tract,Classical tracing literature
