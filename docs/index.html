@@ -9,7 +9,7 @@
 /* layout idea: a fixed three-column workbench (gene list, view, gene card); every view answers "where is this gene" */
 :root {
   --bg: #f1f3ef; --surface: #fcfcfb; --ink: #14181a; --muted: #586063; --line: #dadfd9;
-  --accent: #1c5cab; --accent-soft: #e2ecf9; --zero: #d6d9d4;
+  --accent: #1c5cab; --accent-soft: #e2ecf9; --zero: #d6d9d4; --mark: #a86a00;
   --display: "Newsreader", Georgia, serif;
   --body: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -17,10 +17,10 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) { --bg: #141716; --surface: #1c201e; --ink: #eceeea; --muted: #a2aaa5; --line: #303633;
-    --accent: #7db2f0; --accent-soft: #1d2d42; --zero: #3b413e; color-scheme: dark; }
+    --accent: #7db2f0; --accent-soft: #1d2d42; --zero: #3b413e; --mark: #e6ad3c; color-scheme: dark; }
 }
 :root[data-theme="dark"] { --bg: #141716; --surface: #1c201e; --ink: #eceeea; --muted: #a2aaa5; --line: #303633;
-  --accent: #7db2f0; --accent-soft: #1d2d42; --zero: #3b413e; color-scheme: dark; }
+  --accent: #7db2f0; --accent-soft: #1d2d42; --zero: #3b413e; --mark: #e6ad3c; color-scheme: dark; }
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
 body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); display: flex; flex-direction: column; }
@@ -98,11 +98,34 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #tip b { font-weight: 600; }
 #tip .dim { opacity: .72; }
 #ring { position: absolute; pointer-events: none; border-radius: 50%; border: 1.5px solid var(--ink); box-shadow: 0 0 0 1.5px var(--surface); display: none; z-index: 1; }
-#legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 8px 14px 4px; font-size: 12.5px; color: var(--muted); }
-#legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
-#legend .ln { display: inline-block; width: 16px; height: 0; border-top: 2px solid; margin-right: 5px; vertical-align: 3px; }
-#legend .ramp { display: inline-block; width: 120px; height: 9px; border-radius: 4px; vertical-align: -1px; margin: 0 6px; }
-#caption { padding: 2px 14px 12px; font-size: 12.5px; color: var(--muted); max-width: 78ch; }
+/* every legend and caption variant sits in one grid cell, so the footer (and with it the map) keeps its size when the view is switched */
+#mapfoot { display: grid; }
+#mapfoot > div { grid-area: 1 / 1; min-width: 0; }
+#mapfoot > div[aria-hidden="true"] { visibility: hidden; }
+.hid { visibility: hidden; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 8px 14px 4px; font-size: 12.5px; color: var(--muted); }
+.legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.legend .ln { display: inline-block; width: 16px; height: 0; border-top: 2px solid; margin-right: 5px; vertical-align: 3px; }
+.legend .ramp { display: inline-block; width: 120px; height: 9px; border-radius: 4px; vertical-align: -1px; margin: 0 6px; }
+.caption { padding: 2px 14px 10px; font-size: 12.5px; color: var(--muted); }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 3px 10px; cursor: pointer; font-size: 12.5px; }
+.btn:hover { border-color: var(--accent); }
+/* the download buttons float in the map's corner, so they take no height from the map */
+.dl { position: absolute; top: 8px; right: 10px; z-index: 1; display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); }
+.dl .btn { padding: 2px 7px; font-size: 11.5px; }
+#status { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); max-width: min(92vw, 640px); background: var(--ink); color: var(--surface); padding: 7px 13px; border-radius: 6px; font-size: 13px; z-index: 5; }
+#status:empty { display: none; }
+/* marks and notes */
+.star { background: none; border: 0; cursor: pointer; font-size: 19px; line-height: 1; padding: 0 2px; color: var(--muted); }
+.star[aria-pressed="true"], .mk { color: var(--mark); }
+.star:hover { color: var(--mark); }
+.mk { font-style: normal; margin-right: 4px; }
+.chk { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12.5px; cursor: pointer; }
+textarea { width: 100%; min-height: 58px; resize: vertical; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font: inherit; font-size: 13px; color: inherit; }
+.cardhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+#notes-tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+#notes td textarea { min-width: 220px; min-height: 46px; }
+.tab .count { font-family: var(--mono); font-size: 11.5px; margin-left: 5px; color: var(--muted); }
 /* tables */
 table { border-collapse: separate; border-spacing: 0; font-size: 12.5px; }
 th { position: sticky; top: 0; background: var(--surface); font-weight: 500; color: var(--muted); padding: 6px 4px; text-align: center; border-bottom: 1px solid var(--line); z-index: 1; white-space: nowrap; }
@@ -159,6 +182,7 @@ button.chip:hover { border-color: var(--accent); }
     <button class="tab" data-view="map">Map</button>
     <button class="tab" data-view="matrix">All genes</button>
     <button class="tab" data-view="sources">Ligand sources</button>
+    <button class="tab" data-view="notes">Notes<span class="count" id="ncount"></span></button>
     <button class="tab doc" data-view="documentation">Documentation</button>
   </nav>
 </header>
@@ -170,6 +194,7 @@ button.chip:hover { border-color: var(--accent); }
         <button data-kind="ligand">Peptides</button><button data-kind="receptor">Receptors</button><button data-kind="context">Markers</button>
       </div>
       <input id="q" type="search" placeholder="Find a gene" aria-label="Find a gene">
+      <label class="chk"><input type="checkbox" id="onlymarked"> Marked or annotated only</label>
       <div id="gl-key"><span class="dot"></span>measured in situ in the selected brain</div>
     </div>
     <div class="scroll" id="genelist"></div>
@@ -180,6 +205,7 @@ button.chip:hover { border-color: var(--accent); }
     <div class="scroll"><div id="card"></div></div>
   </section>
 </main>
+<div id="status" role="status"></div>
 <script src="data.js"></script>
 <script src="doc.js"></script>
 <script>
@@ -194,13 +220,13 @@ const COMP_KEYS = ['outside', 'VMHDM', 'VMHC', 'VMHVL', 'VMH', 'VMHSh', 'no_ccf'
 const COMP_LABEL = { outside: 'outside VMH', VMHDM: 'dorsomedial', VMHC: 'central', VMHVL: 'ventrolateral', VMH: 'undivided ends', VMHSh: 'shell', no_ccf: 'unregistered' };
 const COLS = ['DM', 'C', 'VL', 'ends', 'shell'];
 const BRAIN_NAMES = { allen_m: 'Allen M', zhuang1_f: 'Zhuang 1 F', zhuang2_m: 'Zhuang 2 M' };
-let DATA, S = { view: 'map', gene: 'Oxtr', kind: 'receptor', ds: 'allen_m', sec: 0, color: 'gene', est: 'measured', matrixBrain: 'mix', q: '' };
+let DATA, S = { view: 'map', gene: 'Oxtr', kind: 'receptor', ds: 'allen_m', sec: 0, color: 'gene', est: 'measured', matrixBrain: 'mix', q: '', marked: false };
 
 const theme = () => { const t = document.documentElement.getAttribute('data-theme'); return t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; };
 const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function hex(h) { return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); }
-function ramp(t) {
-  const r = RAMP[theme()], x = Math.max(0, Math.min(1, t)) * (r.length - 1), i = Math.min(r.length - 2, Math.floor(x)), f = x - i, a = hex(r[i]), b = hex(r[i + 1]);
+function ramp(t, th) {
+  const r = RAMP[th || theme()], x = Math.max(0, Math.min(1, t)) * (r.length - 1), i = Math.min(r.length - 2, Math.floor(x)), f = x - i, a = hex(r[i]), b = hex(r[i + 1]);
   return `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * f)).join(',')})`;
 }
 function inkOn(t) { return (theme() === 'light') === (t >= 0.5) ? '#ffffff' : (theme() === 'light' ? '#14181a' : '#0d1114'); }
@@ -219,14 +245,15 @@ function select(gene, keepKind) {
 function renderGenes() {
   document.querySelectorAll('#kind button').forEach(b => b.setAttribute('aria-pressed', b.dataset.kind === S.kind));
   const q = S.q.toLowerCase();
-  const rows = DATA.order.filter(g => DATA.genes[g].kind === S.kind && (!q || g.toLowerCase().includes(q) || (DATA.genes[g].what || '').toLowerCase().includes(q)))
+  const rows = DATA.order.filter(g => DATA.genes[g].kind === S.kind && (!S.marked || N.genes[g]) && (!q || g.toLowerCase().includes(q) || (DATA.genes[g].what || '').toLowerCase().includes(q)))
     .map(g => [g, DATA.genes[g].proj.allen_m[DATA.comps.indexOf('core')] || 0]).sort((a, b) => b[1] - a[1]);
-  const box = $('#genelist'); box.textContent = '';
-  if (!rows.length) box.append(el('p', { class: 'muted', style: 'padding:6px 12px', text: 'No gene matches.' }));
+  const box = $('#genelist'), top = box.scrollTop; box.textContent = '';
+  if (!rows.length) box.append(el('p', { class: 'muted', style: 'padding:6px 12px', text: S.marked ? 'No marked or annotated gene in this class.' : 'No gene matches.' }));
   for (const [g, v] of rows) {
     box.append(el('button', { class: 'gene', 'aria-pressed': g === S.gene, title: `${g}: ${fmt(v)}% of core neurons (projected, male brain)`, onclick: () => select(g, true) },
-      el('span', {}, el('i', { text: g }), B().measured[g] ? el('span', { class: 'dot', title: 'Measured in situ in the selected brain' }) : ''), el('span', { class: 'bar' }, el('b', { style: `width:${Math.min(100, v)}%` })), el('span', { class: 'num', text: fmt(v) })));
+      el('span', {}, markOf(g), el('i', { text: g }), B().measured[g] ? el('span', { class: 'dot', title: 'Measured in situ in the selected brain' }) : ''), el('span', { class: 'bar' }, el('b', { style: `width:${Math.min(100, v)}%` })), el('span', { class: 'num', text: fmt(v) })));
   }
+  box.scrollTop = top;
 }
 
 // ---------------------------------------------------------------- gene card
@@ -238,11 +265,12 @@ function heatCell(v, cls = 'c') {
 function renderCard() {
   const g = G(), c = $('#card'); c.textContent = '';
   const kindName = { ligand: 'peptide precursor', receptor: 'receptor', context: 'marker' }[g.kind];
-  c.append(el('h3', { text: S.gene }));
+  c.append(el('div', { class: 'cardhead' }, el('h3', { text: S.gene }), starButton(S.gene)));
   c.append(el('p', {}, el('span', { class: 'chip', text: kindName }), g.family && g.kind !== 'context' ? el('span', { class: 'chip', text: g.family }) : '', g.tag && g.tag !== 'neuronal' ? el('span', { class: 'chip', text: g.tag }) : ''));
   if (g.what) c.append(el('p', {}, el('span', { class: 'muted', text: g.kind === 'ligand' ? 'Peptides: ' : g.kind === 'receptor' ? 'Principal coupling: ' : '' }), g.what));
   if (g.note) c.append(el('p', { class: 'muted', text: g.note }));
   if (g.pairNotes) c.append(el('p', { class: 'muted', text: g.pairNotes }));
+  c.append(el('h4', { text: 'Your note' }), noteArea(S.gene));
   if (g.partners.length) {
     c.append(el('h4', { text: g.kind === 'ligand' ? 'Listed receptor genes and components' : 'Listed ligand genes' }));
     const p = el('p'); for (const x of g.partners) p.append(el('button', { class: 'chip', title: 'Show ' + x, text: x, onclick: () => select(x) })); c.append(p);
@@ -312,17 +340,25 @@ function renderMap() {
     el('span', {}, el('label', { for: 'sec', text: 'Section' }), el('button', { class: 'step', 'aria-label': 'More anterior', text: '←', onclick: () => { S.sec = Math.max(0, S.sec - 1); renderMap(); } }), ' ', secSel, ' ',
       el('button', { class: 'step', 'aria-label': 'More posterior', text: '→', onclick: () => { S.sec = Math.min(b.sections.length - 1, S.sec + 1); renderMap(); } })),
     el('span', {}, el('label', { text: 'Colour' }), seg('colour', [['gene', S.gene], ['comp', 'Compartment'], ['type', 'Supertype']], S.color, k => { S.color = k; save(); renderMap(); })));
-  if (S.color === 'gene') {
-    tb.append(el('span', {}, el('label', { text: 'Estimate' }), seg('est', [['measured', 'Measured in situ', m ? '' : `${S.gene} is not on this brain's panel`], ['projected', 'Projected']], est, k => { S.est = k; renderMap(); })));
+  {                              // always laid out, hidden unless colouring by gene, so the toolbar keeps its height
+    const off = S.color === 'gene' ? '' : 'hid';
+    tb.append(el('span', { class: off }, el('label', { text: 'Estimate' }), seg('est', [['measured', 'Measured in situ', m ? '' : `${S.gene} is not on this brain's panel`], ['projected', 'Projected']], est, k => { S.est = k; renderMap(); })));
     if (!m) {
       const others = Object.keys(DATA.brains).filter(k => DATA.brains[k].measured[S.gene]);
-      const note = el('span', { class: 'note', id: 'est-note', text: others.length ? `${S.gene} is not on this brain's panel. Measured in:` : `${S.gene} is on no brain's panel, so only the projection exists.` });
+      const note = el('span', { class: 'note ' + off, id: 'est-note', text: others.length ? `${S.gene} is not on this brain's panel. Measured in:` : `${S.gene} is on no brain's panel, so only the projection exists.` });
       for (const k of others) note.append(el('button', { class: 'jump', text: DATA.brains[k].label, onclick: () => setBrain(k, 'measured') }));
       tb.append(note);
     }
   }
-  const stage = el('div', { id: 'stage' }, el('canvas', { id: 'cv', role: 'img', 'aria-label': `Neurons around the VMH in section ${S.sec + 1}, coloured by ${S.color === 'gene' ? S.gene : S.color}` }), el('div', { id: 'ring' }), el('div', { id: 'tip' }));
-  v.append(tb, stage, el('div', { id: 'legend' }), el('div', { id: 'caption' }));
+  const dl = el('span', { class: 'dl', role: 'group', 'aria-label': 'Download the map in view' }, 'Download', ...['png', 'svg', 'pdf'].map(k => el('button', { class: 'btn', 'data-dl': k, text: k.toUpperCase(), title: `Save the map in view as ${k.toUpperCase()}${k === 'png' ? '' : ' (vector)'}`, onclick: () => downloadMap(k) })));
+  const variants = [['gene', 'projected'], ['comp', est], ['type', est]]; if (m) variants.unshift(['gene', 'measured']);
+  const foot = el('div', { id: 'mapfoot' });
+  for (const [c, e] of variants) {
+    const on = c === S.color && (c !== 'gene' || e === est);
+    foot.append(el('div', { 'aria-hidden': on ? 'false' : 'true' }, legendNode(c, e), el('div', { class: 'caption', text: captionText(c, e) })));
+  }
+  const stage = el('div', { id: 'stage' }, el('canvas', { id: 'cv', role: 'img', 'aria-label': `Neurons around the VMH in section ${S.sec + 1}, coloured by ${S.color === 'gene' ? S.gene : S.color}` }), el('div', { id: 'ring' }), el('div', { id: 'tip' }), dl);
+  v.append(tb, stage, foot);       // the footer is in place before the map is measured
   draw(est);
   const cv = $('#cv');
   cv.addEventListener('pointermove', hover); cv.addEventListener('pointerdown', hover);
@@ -330,9 +366,9 @@ function renderMap() {
   if (stageWatch) stageWatch.disconnect();
   if (window.ResizeObserver) { stageWatch = new ResizeObserver(() => { const c = $('#cv'); if (c && (c.clientWidth !== frame.w || c.clientHeight !== frame.h)) draw(frame.est); }); stageWatch.observe(stage); }
 }
-function fit(cv) {
+function fit(w, h) {
   const b = B(); if (!b.box) { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (let i = 0; i < b.n; i++) { const x = b.X[i], y = b.Y[i]; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } b.box = [x0, x1, y0, y1]; }
-  const [x0, x1, y0, y1] = b.box, w = cv.clientWidth, h = cv.clientHeight, k = Math.min(w / (x1 - x0), h / (y1 - y0)) * 0.94;
+  const [x0, x1, y0, y1] = b.box, k = Math.min(w / (x1 - x0), h / (y1 - y0)) * 0.94;
   return { k, ox: (x0 + x1) / 2 - w / 2 / k, oy: (y0 + y1) / 2 - h / 2 / k };
 }
 function cellValue(i, est) {       // returns [t in 0..1 or -1 for "none", text]
@@ -349,53 +385,72 @@ function cellValue(i, est) {       // returns [t in 0..1 or -1 for "none", text]
   const p = DATA.P[S.gene][c];
   return p >= 5 ? [p / 100, `${p}% estimated above-background detection of ${S.gene} in ${of}`] : [-1, `${of} has no above-background call for ${S.gene}`];
 }
-function draw(est) {
-  const cv = $('#cv'); if (!cv) return;
-  legend(est);                     // before measuring: the legend and caption take their height from the map
-  hideTip();
-  const r = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; cv.width = Math.round(w * r); cv.height = Math.round(h * r);
-  const ctx = cv.getContext('2d'); ctx.setTransform(r, 0, 0, r, 0, 0); ctx.clearRect(0, 0, w, h);
-  const b = B(), sec = b.sections[S.sec], f = fit(cv), th = theme(), zero = cssv('--zero'), surf = cssv('--surface'), ink = cssv('--ink');
-  const pts = [];
+// The map as a list of plain shapes, so the screen, the PNG, the SVG and the PDF all draw the same thing.
+// P: colours of the surface it is drawn on. Shapes: c circle, l polyline, r rectangle, t text.
+function screenPal() { return { th: theme(), zero: cssv('--zero'), surf: cssv('--surface'), ink: cssv('--ink'), muted: cssv('--muted') }; }
+function mapScene(color, est, P, w, h) {
+  const b = B(), sec = b.sections[S.sec], f = fit(w, h), th = P.th, pts = [], prims = [];
   for (let i = sec.off; i < sec.off + sec.n; i++) {
     let col, big = false, z = 0;
-    if (S.color === 'gene') { const [t] = cellValue(i, est); if (t < 0) col = zero; else { col = ramp(0.25 + 0.75 * t); big = true; z = 1 + t; } }
-    else if (S.color === 'comp') { col = COMP_COL[th][b.CP[i]]; big = b.CP[i] > 0; z = big ? 1 : 0; }
+    if (color === 'gene') { const [t] = cellValue(i, est); if (t < 0) col = P.zero; else { col = ramp(0.25 + 0.75 * t, th); big = true; z = 1 + t; } }
+    else if (color === 'comp') { col = COMP_COL[th][b.CP[i]]; big = b.CP[i] > 0; z = big ? 1 : 0; }
     else { col = ST_COL[th][b.ST[i]]; big = b.ST[i] > 0; z = big ? 1 : 0; }
     pts.push([(b.X[i] - f.ox) * f.k, (b.Y[i] - f.oy) * f.k, col, big, z, i]);
   }
-  pts.sort((a, c) => a[4] - c[4]);
-  frame = { f, sec, est, w, h, pts };      // pts in drawing order: the last one is on top
-  for (const [x, y, col, big] of pts) { ctx.beginPath(); ctx.arc(x, y, big ? 3.1 : 2, 0, 6.2832); ctx.fillStyle = col; ctx.fill(); if (big) { ctx.lineWidth = 0.8; ctx.strokeStyle = surf; ctx.stroke(); } }
-  // compartment outlines
-  ctx.lineJoin = 'round';
+  pts.sort((a, c) => a[4] - c[4]);       // drawing order: the last one is on top
+  for (const [x, y, col, big] of pts) prims.push({ t: 'c', g: 'cells', x, y, r: big ? 3.1 : 2, fill: col, stroke: big ? P.surf : null, sw: 0.8 });
   for (const [name, lines] of Object.entries(sec.outlines)) {
-    const col = S.color === 'comp' ? ink : COMP_COL[th][COMP_KEYS.indexOf(name)];
-    for (const line of lines) {
-      ctx.beginPath(); line.forEach(([x, y], k) => { const a = (x * 1000 - f.ox) * f.k, c = (y * 1000 - f.oy) * f.k; k ? ctx.lineTo(a, c) : ctx.moveTo(a, c); });
-      ctx.lineWidth = name === 'VMHSh' ? 1.2 : 2; ctx.setLineDash(name === 'VMHSh' ? [4, 3] : []); ctx.strokeStyle = col; ctx.stroke();
-    }
+    const col = color === 'comp' ? P.ink : COMP_COL[th][COMP_KEYS.indexOf(name)];
+    for (const line of lines) prims.push({ t: 'l', g: 'outlines', pts: line.map(([x, y]) => [(x * 1000 - f.ox) * f.k, (y * 1000 - f.oy) * f.k]), stroke: col, sw: name === 'VMHSh' ? 1.2 : 2, dash: name === 'VMHSh' ? [4, 3] : null });
   }
-  ctx.setLineDash([]);
-  // scale bar
-  ctx.fillStyle = ink; ctx.fillRect(14, h - 20, 0.2 * 1000 * f.k, 2); ctx.font = `11px ${cssv('--body')}`; ctx.fillText('200 µm', 14, h - 26);
-  ctx.fillStyle = cssv('--muted'); ctx.textAlign = 'right'; ctx.fillText('dorsal up', w - 12, h - 12); ctx.textAlign = 'left';
+  prims.push({ t: 'r', g: 'annotations', x: 14, y: h - 20, w: 0.2 * 1000 * f.k, h: 2, fill: P.ink },
+    { t: 't', g: 'annotations', x: 14, y: h - 26, s: P.paper ? '0.2 mm' : '200 µm', size: 11, fill: P.ink },
+    { t: 't', g: 'annotations', x: w - 12, y: h - 12, s: 'dorsal up', size: 11, fill: P.muted, anchor: 'end' });
+  return { prims, pts, f, sec };
 }
-function legend(est) {
-  const L = $('#legend'), th = theme(); L.textContent = '';
-  const sw = (c, t, line) => el('span', {}, el('span', { class: line ? 'ln' : 'sw', style: line ? `border-color:${c}` : `background:${c}` }), t);
-  if (S.color === 'gene') {
+function paint(ctx, prims, font) {
+  ctx.lineJoin = 'round';
+  for (const p of prims) {
+    if (p.t === 'c') { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fillStyle = p.fill; ctx.fill(); if (p.stroke) { ctx.lineWidth = p.sw; ctx.strokeStyle = p.stroke; ctx.stroke(); } }
+    else if (p.t === 'l') { ctx.beginPath(); p.pts.forEach(([x, y], k) => k ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.lineWidth = p.sw; ctx.setLineDash(p.dash || []); ctx.strokeStyle = p.stroke; ctx.stroke(); ctx.setLineDash([]); }
+    else if (p.t === 'r') { ctx.fillStyle = p.fill; ctx.fillRect(p.x, p.y, p.w, p.h); }
+    else { ctx.font = `${p.bold ? '600 ' : ''}${p.size}px ${font}`; ctx.fillStyle = p.fill; ctx.textAlign = p.anchor === 'end' ? 'right' : 'left'; ctx.fillText(p.s, p.x, p.y); ctx.textAlign = 'left'; }
+  }
+}
+function draw(est) {
+  const cv = $('#cv'); if (!cv) return;
+  hideTip();
+  const r = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; cv.width = Math.round(w * r); cv.height = Math.round(h * r);
+  const ctx = cv.getContext('2d'); ctx.setTransform(r, 0, 0, r, 0, 0); ctx.clearRect(0, 0, w, h);
+  const sc = mapScene(S.color, est, screenPal(), w, h);
+  frame = { f: sc.f, sec: sc.sec, est, w, h, pts: sc.pts };
+  paint(ctx, sc.prims, cssv('--body'));
+}
+function legendItems(color, est, th, zero) {
+  const items = [], sec = B().sections[S.sec];
+  if (color === 'gene') {
     const m = measuredHere();
-    L.append(el('span', {}, sw(cssv('--zero'), est === 'measured' ? 'at background' : 'below call or unavailable')),
-      el('span', {}, est === 'measured' ? 'just above' : '5%', el('span', { class: 'ramp', style: `background:linear-gradient(90deg,${[0, .25, .5, .75, 1].map(t => ramp(0.25 + 0.75 * t)).join(',')})` }), est === 'measured' ? `log2 signal ${m.max.toFixed(2)}` : '100% of the cluster'));
-    ['VMHDM', 'VMHC', 'VMHVL', 'VMH', 'VMHSh'].forEach(k => { if (B().sections[S.sec].outlines[k]) L.append(sw(COMP_COL[th][COMP_KEYS.indexOf(k)], COMP_LABEL[k], true)); });
-  } else if (S.color === 'comp') COMP_KEYS.slice(1).concat('outside').forEach(k => L.append(sw(COMP_COL[th][COMP_KEYS.indexOf(k)], COMP_LABEL[k])));
-  else { DATA.supertypes.forEach((n, i) => L.append(sw(ST_COL[th][i + 1], n))); L.append(sw(ST_COL[th][0], 'other neurons')); }
-  const b = B(), s = b.sections[S.sec], g = G();
+    items.push({ k: 'dot', col: zero, label: est === 'measured' ? 'at background' : 'below call or unavailable' },
+      { k: 'ramp', left: est === 'measured' ? 'just above' : '5%', right: est === 'measured' ? `log2 signal ${m.max.toFixed(2)}` : '100% of the cluster' });
+    for (const k of ['VMHDM', 'VMHC', 'VMHVL', 'VMH', 'VMHSh']) if (sec.outlines[k]) items.push({ k: 'line', col: COMP_COL[th][COMP_KEYS.indexOf(k)], label: COMP_LABEL[k], dash: k === 'VMHSh' });
+  } else if (color === 'comp') COMP_KEYS.slice(1).concat('outside').forEach(k => items.push({ k: 'dot', col: COMP_COL[th][COMP_KEYS.indexOf(k)], label: COMP_LABEL[k] }));
+  else { DATA.supertypes.forEach((n, i) => items.push({ k: 'dot', col: ST_COL[th][i + 1], label: n })); items.push({ k: 'dot', col: ST_COL[th][0], label: 'other neurons' }); }
+  return items;
+}
+function legendNode(color, est) {
+  const L = el('div', { class: 'legend' }), th = theme();
+  for (const it of legendItems(color, est, th, cssv('--zero'))) {
+    if (it.k === 'ramp') L.append(el('span', {}, it.left, el('span', { class: 'ramp', style: `background:linear-gradient(90deg,${[0, .25, .5, .75, 1].map(t => ramp(0.25 + 0.75 * t)).join(',')})` }), it.right));
+    else L.append(el('span', {}, el('span', { class: it.k === 'line' ? 'ln' : 'sw', style: it.k === 'line' ? `border-color:${it.col}${it.dash ? ';border-top-style:dashed' : ''}` : `background:${it.col}` }), it.label));
+  }
+  return L;
+}
+function captionText(color, est) {
+  const b = B(), s = b.sections[S.sec];
   let txt = `${s.n.toLocaleString()} neurons, ${s.nv.toLocaleString()} of VMH supertypes. Outlines are the unified atlas compartments, interpolated between plates, after this brain's alignment (shift ${b.shift[0].toFixed(2)} mm anterior-posterior). `;
-  if (S.color === 'gene') txt += est === 'measured' ? `${S.gene} is on this brain's panel: each neuron shows its own in situ signal, grey when at or below the 95th percentile of non-neuronal cells.`
+  if (color === 'gene') txt += est === 'measured' ? `${S.gene} is on this brain's panel: each neuron shows its own in situ signal, grey when at or below the 95th percentile of non-neuronal cells.`
     : `${measuredHere() ? '' : S.gene + ' is not on this brain’s panel. '}Projected: color shows the ambient-adjusted 10x detection fraction for this cell’s cluster or its fallback type.`;
-  $('#caption').textContent = txt;
+  return txt;
 }
 function hideTip() { for (const id of ['#tip', '#ring']) { const n = $(id); if (n) n.style.display = 'none'; } }
 function hover(e) {
@@ -425,6 +480,246 @@ function hover(e) {
   if (x + tw > rc.width - 4) x = cx - 12 - tw;
   if (y + th > rc.height - 4) y = cy - 12 - th;
   tip.style.left = Math.max(4, x) + 'px'; tip.style.top = Math.max(4, y) + 'px';
+}
+
+// ---------------------------------------------------------------- map download (PNG, SVG, PDF)
+let _mc;
+function textW(str, size, bold) { _mc = _mc || document.createElement('canvas').getContext('2d'); _mc.font = `${bold ? 'bold ' : ''}${size}px Helvetica, Arial, sans-serif`; return _mc.measureText(str).width; }
+function wrapText(str, size, maxW) { const out = []; let line = ''; for (const w of str.split(/\s+/)) { const t = line ? line + ' ' + w : w; if (line && textW(t, size) > maxW) { out.push(line); line = w; } else line = t; } if (line) out.push(line); return out; }
+function rgbOf(c) { return c[0] === '#' ? hex(c) : c.match(/\d+/g).slice(0, 3).map(Number); }
+const hexOf = c => '#' + rgbOf(c).map(v => v.toString(16).padStart(2, '0')).join('');
+// The figure that is saved: the map in view on a white page, with a title, its legend and its caption. Sizes are in points.
+function exportFigure() {
+  const m = measuredHere(), est = m && S.est === 'measured' ? 'measured' : 'projected';
+  const P = { th: 'light', paper: true, zero: '#d6d9d4', surf: '#ffffff', ink: '#14181a', muted: '#586063' };
+  const b = B(), s = b.sections[S.sec], W = 720, pad = 20, mw = W - 2 * pad, fs = 10.5;
+  fit(1, 1);                               // makes sure the bounding box of this brain's cells is known
+  const [x0, x1, y0, y1] = b.box, mh = Math.round(mw * (y1 - y0) / (x1 - x0));
+  const prims = [], T = (str, x, y, size, o) => prims.push(Object.assign({ t: 't', g: 'text', s: str, x, y, size, fill: P.ink }, o));
+  const what = S.color === 'gene' ? `${S.gene}, ${est === 'measured' ? 'measured in situ' : 'projected from single-cell sequencing'}` : S.color === 'comp' ? 'Atlas compartments' : 'VMH supertypes';
+  const where = `${b.label} · section ${S.sec + 1} of ${b.sections.length} · AP ${s.ap.toFixed(2)} mm`;
+  let y = pad + 12;
+  T(what, pad, y, 14, { bold: true }); y += 15;
+  T(where, pad, y, fs, { fill: P.muted }); y += 8;
+  for (const p of mapScene(S.color, est, P, mw, mh).prims) prims.push(p.pts ? Object.assign({}, p, { pts: p.pts.map(([a, c]) => [a + pad, c + y]) }) : Object.assign({}, p, { x: p.x + pad, y: p.y + y }));
+  y += mh + 18;
+  let x = pad;
+  for (const it of legendItems(S.color, est, 'light', P.zero)) {
+    const wl = it.k === 'ramp' ? textW(it.left, fs) + 132 + textW(it.right, fs) : (it.k === 'line' ? 21 : 14) + textW(it.label, fs);
+    if (x > pad && x + wl > pad + mw) { x = pad; y += 16; }
+    if (it.k === 'dot') { prims.push({ t: 'c', g: 'legend', x: x + 5, y: y - 3.6, r: 4.5, fill: it.col, stroke: null }); T(it.label, x + 14, y, fs, { g: 'legend', fill: P.muted }); }
+    else if (it.k === 'line') { prims.push({ t: 'l', g: 'legend', pts: [[x, y - 3.6], [x + 16, y - 3.6]], stroke: it.col, sw: it.dash ? 1.2 : 2, dash: it.dash ? [4, 3] : null }); T(it.label, x + 21, y, fs, { g: 'legend', fill: P.muted }); }
+    else {
+      T(it.left, x, y, fs, { g: 'legend', fill: P.muted }); const rx = x + textW(it.left, fs) + 6;
+      for (let k = 0; k < 30; k++) prims.push({ t: 'r', g: 'legend', x: rx + k * 4, y: y - 8, w: k < 29 ? 4.25 : 4, h: 8, fill: ramp(0.25 + 0.75 * (k + 0.5) / 30, 'light') });
+      T(it.right, rx + 126, y, fs, { g: 'legend', fill: P.muted });
+    }
+    x += wl + 16;
+  }
+  y += 20;
+  for (const line of wrapText(captionText(S.color, est), 9.5, mw)) { T(line, pad, y, 9.5, { g: 'caption', fill: P.muted }); y += 12.5; }
+  y += 5; T('VMH neuropeptide atlas. Data: Allen Brain Cell Atlas. Compartments: unified mouse brain atlas (Chon et al. 2019).', pad, y, 8.5, { g: 'caption', fill: P.muted });
+  const name = `vmh_${S.color === 'gene' ? S.gene + '_' + est : S.color === 'comp' ? 'compartments' : 'supertypes'}_${S.ds}_section${String(S.sec + 1).padStart(2, '0')}`;
+  return { W, H: Math.ceil(y + pad), prims, title: `${what}. ${where}`, name };
+}
+function toSVG(fig) {
+  const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'), n = v => +v.toFixed(2);
+  const out = [`<?xml version="1.0" encoding="UTF-8"?>`, `<svg xmlns="http://www.w3.org/2000/svg" width="${fig.W}pt" height="${fig.H}pt" viewBox="0 0 ${fig.W} ${fig.H}" font-family="Helvetica, Arial, sans-serif">`, `<title>${esc(fig.title)}</title>`, `<rect id="background" width="${fig.W}" height="${fig.H}" fill="#ffffff"/>`];
+  let grp = null;
+  for (const p of fig.prims) {
+    if (p.g !== grp) { if (grp) out.push('</g>'); out.push(`<g id="${p.g}">`); grp = p.g; }
+    if (p.t === 'c') out.push(`<circle cx="${n(p.x)}" cy="${n(p.y)}" r="${p.r}" fill="${hexOf(p.fill)}"${p.stroke ? ` stroke="${hexOf(p.stroke)}" stroke-width="${p.sw}"` : ''}/>`);
+    else if (p.t === 'l') out.push(`<polyline points="${p.pts.map(([a, c]) => n(a) + ',' + n(c)).join(' ')}" fill="none" stroke="${hexOf(p.stroke)}" stroke-width="${p.sw}" stroke-linejoin="round"${p.dash ? ` stroke-dasharray="${p.dash.join(' ')}"` : ''}/>`);
+    else if (p.t === 'r') out.push(`<rect x="${n(p.x)}" y="${n(p.y)}" width="${n(p.w)}" height="${n(p.h)}" fill="${hexOf(p.fill)}"/>`);
+    else out.push(`<text x="${n(p.x)}" y="${n(p.y)}" font-size="${p.size}" fill="${hexOf(p.fill)}"${p.bold ? ' font-weight="bold"' : ''}${p.anchor === 'end' ? ' text-anchor="end"' : ''}>${esc(p.s)}</text>`);
+  }
+  if (grp) out.push('</g>');
+  out.push('</svg>');
+  return out.join('\n');
+}
+// A one-page vector PDF written by hand: shapes as paths, text in the standard Helvetica faces (not embedded, so it stays editable).
+const PDF_CHARS = { '’': 0x92, '‘': 0x91, '“': 0x93, '”': 0x94, '–': 0x96, '—': 0x97, '·': 0xB7, 'µ': 0xB5, 'μ': 0xB5, '−': 0x2D, '≈': 0x7E };
+function pdfText(str) {
+  let o = '';
+  for (const ch of str) {
+    let c = ch.codePointAt(0); if (PDF_CHARS[ch]) c = PDF_CHARS[ch]; else if (c > 255 || (c > 126 && c < 160)) c = 63;
+    o += c === 40 || c === 41 || c === 92 ? '\\' + String.fromCharCode(c) : c < 32 || c > 126 ? '\\' + c.toString(8).padStart(3, '0') : String.fromCharCode(c);
+  }
+  return o;
+}
+async function toPDF(fig) {
+  const n = v => String(+v.toFixed(2)), col = c => rgbOf(c).map(v => +(v / 255).toFixed(3)).join(' ');
+  const ops = [`1 0 0 -1 0 ${fig.H} cm`, '1 j'];
+  let fill = '', stroke = '', lw = '', dash = '';
+  const set = (f, st, w, d) => {
+    if (f != null && f !== fill) { ops.push(col(f) + ' rg'); fill = f; }
+    if (st != null && st !== stroke) { ops.push(col(st) + ' RG'); stroke = st; }
+    if (w != null && w !== lw) { ops.push(w + ' w'); lw = w; }
+    if (d != null && d !== dash) { ops.push(d + ' d'); dash = d; }
+  };
+  for (const p of fig.prims) {
+    if (p.t === 'c') {
+      const { x, y, r } = p, k = 0.5523 * r; set(p.fill, p.stroke, p.stroke ? p.sw : null, p.stroke ? '[] 0' : null);
+      ops.push(`${n(x + r)} ${n(y)} m ${n(x + r)} ${n(y + k)} ${n(x + k)} ${n(y + r)} ${n(x)} ${n(y + r)} c ${n(x - k)} ${n(y + r)} ${n(x - r)} ${n(y + k)} ${n(x - r)} ${n(y)} c ${n(x - r)} ${n(y - k)} ${n(x - k)} ${n(y - r)} ${n(x)} ${n(y - r)} c ${n(x + k)} ${n(y - r)} ${n(x + r)} ${n(y - k)} ${n(x + r)} ${n(y)} c ${p.stroke ? 'b' : 'f'}`);
+    } else if (p.t === 'l') {
+      set(null, p.stroke, p.sw, p.dash ? `[${p.dash.join(' ')}] 0` : '[] 0');
+      ops.push(p.pts.map(([a, c], i) => `${n(a)} ${n(c)} ${i ? 'l' : 'm'}`).join(' ') + ' S');
+    } else if (p.t === 'r') { set(p.fill); ops.push(`${n(p.x)} ${n(p.y)} ${n(p.w)} ${n(p.h)} re f`); }
+    else { set(p.fill); const x = p.anchor === 'end' ? p.x - textW(p.s, p.size, p.bold) : p.x; ops.push(`BT /F${p.bold ? 2 : 1} ${p.size} Tf 1 0 0 -1 ${n(x)} ${n(p.y)} Tm (${pdfText(p.s)}) Tj ET`); }
+  }
+  const bytes = str => { const u = new Uint8Array(str.length); for (let i = 0; i < str.length; i++) u[i] = str.charCodeAt(i) & 255; return u; };
+  let stream = bytes(ops.join('\n')), filter = '';
+  if (window.CompressionStream) {
+    try { const z = new Uint8Array(await new Response(new Blob([stream]).stream().pipeThrough(new CompressionStream('deflate'))).arrayBuffer()); if (z.length) { stream = z; filter = ' /Filter /FlateDecode'; } } catch (e) {}
+  }
+  const font = name => `<< /Type /Font /Subtype /Type1 /BaseFont /${name} /Encoding /WinAnsiEncoding >>`;
+  const objs = ['<< /Type /Catalog /Pages 2 0 R >>', '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${fig.W} ${fig.H}] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>`,
+    null, font('Helvetica'), font('Helvetica-Bold'), `<< /Title (${pdfText(fig.title)}) /Creator (VMH neuropeptide atlas explorer) >>`];
+  const parts = [], offs = []; let at = 0;
+  const put = u => { parts.push(u); at += u.length; };
+  put(bytes('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n'));
+  objs.forEach((o, i) => {
+    offs.push(at);
+    if (o === null) { put(bytes(`${i + 1} 0 obj\n<< /Length ${stream.length}${filter} >>\nstream\n`)); put(stream); put(bytes('\nendstream\nendobj\n')); }
+    else put(bytes(`${i + 1} 0 obj\n${o}\nendobj\n`));
+  });
+  const xref = at;
+  put(bytes(`xref\n0 ${objs.length + 1}\n0000000000 65535 f \n${offs.map(o => String(o).padStart(10, '0') + ' 00000 n \n').join('')}trailer\n<< /Size ${objs.length + 1} /Root 1 0 R /Info 7 0 R >>\nstartxref\n${xref}\n%%EOF\n`));
+  return new Blob(parts, { type: 'application/pdf' });
+}
+function toPNG(fig, scale) {
+  const cv = document.createElement('canvas'); cv.width = Math.round(fig.W * scale); cv.height = Math.round(fig.H * scale);
+  const ctx = cv.getContext('2d'); ctx.scale(scale, scale); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, fig.W, fig.H);
+  paint(ctx, fig.prims, 'Helvetica, Arial, sans-serif');
+  return new Promise((ok, no) => cv.toBlob(b => b ? ok(b) : no(new Error('the image could not be encoded')), 'image/png'));
+}
+let sayTimer;
+function say(msg) { const n = $('#status'); n.textContent = msg; clearTimeout(sayTimer); if (msg && !/…$/.test(msg)) sayTimer = setTimeout(() => { n.textContent = ''; }, 7000); }
+// Saving a file. A plain page (GitHub Pages, or the file opened from the folder) starts an ordinary download.
+// Inside the Claude viewer a page may not do that; there the viewer's own save prompt is used when it is offered.
+let saver;
+async function saveFile(filename, data, mime) {
+  const blob = data instanceof Blob ? data : new Blob([data], { type: mime });
+  if (window.claude && typeof window.claude.use === 'function') {
+    if (saver === undefined) saver = window.claude.use('downloads').catch(() => null);
+    const d = await saver;
+    if (!d) return 'Saving files is not available in this viewer. Use the GitHub Pages site or open docs/index.html from the folder.';
+    try { await d.save({ filename, data: blob }); return `Saved ${filename}`; }
+    catch (e) { return e && e.code === 'declined' ? 'Not saved.' : `Could not save ${filename} here${e && e.code ? ' (' + e.code + ')' : ''}.`; }
+  }
+  const a = el('a', { href: URL.createObjectURL(blob), download: filename }); document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  return `Saved ${filename}`;
+}
+async function downloadMap(kind) {
+  say('Preparing the file…');
+  try {
+    const fig = exportFigure();
+    const data = kind === 'svg' ? toSVG(fig) : kind === 'pdf' ? await toPDF(fig) : await toPNG(fig, 3);
+    say(await saveFile(`${fig.name}.${kind}`, data, { svg: 'image/svg+xml', pdf: 'application/pdf', png: 'image/png' }[kind]));
+  } catch (e) { say('The export failed: ' + (e && e.message || e)); }
+}
+
+// ---------------------------------------------------------------- marks and notes (kept in this browser, exported on request)
+let N = { v: 1, genes: {}, remarks: '' }, notesKept = true;
+const NOTES_KEY = 'vmh_np_notes';
+function loadNotes() { try { const d = JSON.parse(localStorage.getItem(NOTES_KEY) || 'null'); if (d && d.genes) N = { v: 1, genes: d.genes, remarks: d.remarks || '' }; } catch (e) { notesKept = false; } }
+function saveNotes() { N.updated = new Date().toISOString(); try { localStorage.setItem(NOTES_KEY, JSON.stringify(N)); notesKept = true; } catch (e) { notesKept = false; } countNotes(); }
+const noteOf = g => N.genes[g] || { star: false, note: '' };
+const annotated = () => Object.keys(N.genes).filter(g => DATA.genes[g]).sort((a, b) => (noteOf(b).star - noteOf(a).star) || a.localeCompare(b));
+function setNote(g, patch) {
+  const cur = Object.assign({ star: false, note: '' }, N.genes[g], patch);
+  if (!cur.star && !cur.note.trim()) delete N.genes[g]; else { cur.t = new Date().toISOString(); N.genes[g] = cur; }
+  saveNotes();
+}
+function countNotes() { const n = annotated().length, c = $('#ncount'); if (c) c.textContent = n ? String(n) : ''; }
+function markOf(g) { const x = N.genes[g]; return x ? el('span', { class: 'mk', title: x.star ? 'Marked as important' : 'Has a note', text: x.star ? '★' : '✎' }) : ''; }
+function starButton(g) {
+  const on = noteOf(g).star;
+  return el('button', { class: 'star', 'aria-pressed': on, 'aria-label': on ? `Remove the mark from ${g}` : `Mark ${g} as important`, title: on ? 'Marked as important. Click to remove the mark.' : 'Mark as important', text: on ? '★' : '☆',
+    onclick: () => { setNote(g, { star: !on }); renderGenes(); renderCard(); if (S.view === 'notes') renderNotes(); } });
+}
+function noteArea(g) {
+  const ta = el('textarea', { 'data-note': g, 'aria-label': `Note on ${g}`, placeholder: 'Why this gene matters, what to check, a reference…' });
+  ta.value = noteOf(g).note;
+  ta.addEventListener('input', () => {
+    const had = !!N.genes[g]; setNote(g, { note: ta.value });
+    document.querySelectorAll('textarea[data-note]').forEach(o => { if (o !== ta && o.dataset.note === g) o.value = ta.value; });
+    if (had !== !!N.genes[g]) renderGenes();
+  });
+  ta.addEventListener('change', () => { if (S.view === 'notes' && !ta.closest('#notes')) renderNotes(); });
+  return ta;
+}
+const KIND_NAME = { ligand: 'peptide precursor', receptor: 'receptor', context: 'marker' };
+const evidenceOf = d => d.src && d.src.brain ? peakEvidence(d.src) : '';
+function notesMarkdown() {
+  const L = ['# VMH neuropeptide atlas: notes', '', `Exported ${new Date().toISOString().slice(0, 10)} from the VMH neuropeptide atlas explorer.`, ''];
+  if (N.remarks.trim()) L.push('## General remarks', '', N.remarks.trim(), '');
+  const names = annotated();
+  L.push(`## Genes (${names.length})`, '');
+  for (const g of names) {
+    const d = DATA.genes[g], x = noteOf(g);
+    L.push(`### ${g}${x.star ? ' ★' : ''}`, '', `- Class: ${KIND_NAME[d.kind]}${d.family && d.kind !== 'context' ? ', ' + d.family : ''}`);
+    if (d.what) L.push(`- ${d.kind === 'ligand' ? 'Peptides' : d.kind === 'receptor' ? 'Principal coupling' : 'About'}: ${d.what}`);
+    if (evidenceOf(d)) L.push(`- VMH transcript screen (10%): ${evidenceOf(d)}`);
+    L.push(`- Marked as important: ${x.star ? 'yes' : 'no'}`, '');
+    if (x.note.trim()) L.push(x.note.trim(), '');
+  }
+  return L.join('\n');
+}
+function notesCSV() {
+  const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const rows = [['gene', 'class', 'family', 'marked', 'note', 'vmh_evidence', 'peak_brain', 'peak_compartment', 'peak_method', 'peak_percent', 'updated']];
+  for (const g of annotated()) { const d = DATA.genes[g], x = noteOf(g), r = d.src && d.src.brain ? d.src : {};
+    rows.push([g, KIND_NAME[d.kind], d.family || '', x.star ? 'yes' : 'no', x.note, r.evidence || '', r.brain ? BRAIN_NAMES[r.brain] : '', r.compartment ? COMP_LABEL[r.compartment] : '', r.method || '', r.peak == null ? '' : r.peak, x.t || '']); }
+  return rows.map(r => r.map(q).join(',')).join('\r\n') + '\r\n';
+}
+function importNotes(text) {
+  const d = JSON.parse(text); if (!d || typeof d.genes !== 'object') throw new Error('not a notes file from this explorer');
+  let n = 0;
+  for (const [g, x] of Object.entries(d.genes)) {
+    if (!DATA.genes[g] || !x) continue;
+    const cur = noteOf(g), add = String(x.note || '').trim(), old = cur.note.trim();
+    N.genes[g] = { star: !!(cur.star || x.star), note: !old ? add : !add || add === old ? cur.note : old + '\n\n' + add, t: new Date().toISOString() }; n++;
+  }
+  const r = String(d.remarks || '').trim(), mine = N.remarks.trim();
+  if (r && r !== mine) N.remarks = mine ? mine + '\n\n' + r : r;
+  saveNotes(); return n;
+}
+function renderNotes() {
+  const v = $('#view'); v.textContent = '';
+  const names = annotated(), stamp = new Date().toISOString().slice(0, 10);
+  const nStar = names.filter(g => N.genes[g].star).length, nNote = names.filter(g => N.genes[g].note.trim()).length;
+  const btn = (text, title, fn) => el('button', { class: 'btn', title, text, onclick: fn });
+  const file = el('input', { type: 'file', accept: '.json,application/json', hidden: '' });
+  file.addEventListener('change', async () => { const f = file.files[0]; if (!f) return; try { const n = importNotes(await f.text()); renderGenes(); renderCard(); renderNotes(); say(`Merged ${n} gene${n === 1 ? '' : 's'} from ${f.name}.`); } catch (e) { say('That file could not be read: ' + e.message); } });
+  const clear = btn('Clear all', 'Remove every mark, note and remark', () => {
+    if (clear.dataset.armed) { N = { v: 1, genes: {}, remarks: '' }; saveNotes(); renderGenes(); renderCard(); renderNotes(); say('All marks and notes removed.'); }
+    else { clear.dataset.armed = '1'; clear.textContent = 'Click again to clear everything'; setTimeout(() => { delete clear.dataset.armed; clear.textContent = 'Clear all'; }, 4000); }
+  });
+  const tools = el('div', { id: 'notes-tools' }, el('span', { class: 'muted', text: 'Export' }),
+    btn('Markdown', 'Marks, notes and remarks as a readable text file', async () => say(await saveFile(`vmh_np_notes_${stamp}.md`, notesMarkdown(), 'text/markdown'))),
+    btn('CSV', 'One row per marked or annotated gene, for a spreadsheet', async () => say(await saveFile(`vmh_np_notes_${stamp}.csv`, '﻿' + notesCSV(), 'text/csv'))),
+    btn('JSON', 'Everything, in the form Import reads back', async () => say(await saveFile(`vmh_np_notes_${stamp}.json`, JSON.stringify(Object.assign({ app: 'vmh_np_explorer', exported: new Date().toISOString() }, N), null, 2), 'application/json'))),
+    btn('Copy as Markdown', 'Copy the Markdown export to the clipboard', () => { if (!navigator.clipboard) { say('Copying is not available here. Use an export instead.'); return; } navigator.clipboard.writeText(notesMarkdown()).then(() => say('Copied to the clipboard.'), () => say('Copying is blocked here. Use an export instead.')); }),
+    btn('Import JSON', 'Merge a JSON export from another browser or computer', () => file.click()), file, clear);
+  const pad = el('div', { class: 'pad', id: 'notes' });
+  pad.append(el('p', { text: `Marks and notes are kept in this browser only${notesKept ? '' : ', and this browser is not keeping them between visits'}. Export them to keep a copy, share them, or move them to another computer.` }));
+  const remarks = el('textarea', { id: 'remarks', 'aria-label': 'General remarks', placeholder: 'Remarks that are not about one gene', style: 'min-height:84px;max-width:78ch' });
+  remarks.value = N.remarks; remarks.addEventListener('input', () => { N.remarks = remarks.value; saveNotes(); });
+  pad.append(el('h3', { text: 'General remarks' }), remarks, el('h3', { text: 'Marked and annotated genes' }));
+  if (!names.length) pad.append(el('p', { text: 'Nothing yet. Select a gene in the list, then press the star beside its name in the card on the right, or write in its note box.' }));
+  else {
+    const t = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['', 'Gene', 'Class', 'VMH evidence', 'Note', ''].map(x => el('th', { text: x })))));
+    const tb = el('tbody');
+    for (const g of names) { const d = DATA.genes[g];
+      tb.append(el('tr', {}, el('td', {}, starButton(g)), el('td', { class: 'g', style: 'position:static' }, el('button', { text: g, title: `Select ${g}`, onclick: () => select(g) })),
+        el('td', { text: KIND_NAME[d.kind] + (d.family && d.kind !== 'context' ? ', ' + d.family : '') }), el('td', { text: evidenceOf(d) }), el('td', {}, noteArea(g)),
+        el('td', {}, btn('Map', `Show ${g} on the map`, () => { S.view = 'map'; location.hash = 'map'; select(g); })))); }
+    t.append(tb); pad.append(t);
+  }
+  v.append(el('div', { id: 'toolbar' }, el('span', { class: 'muted', text: `${nStar} marked · ${nNote} with a note` }), tools), el('div', { class: 'scroll' }, pad));
 }
 
 // ---------------------------------------------------------------- all genes
@@ -492,9 +787,9 @@ function renderAll() {
   document.querySelectorAll('.tab[data-view]').forEach(b => b.setAttribute('aria-current', b.dataset.view === S.view ? 'page' : 'false'));
   renderGenes(); renderCard();
   $('main').classList.toggle('docmode', S.view === 'documentation');
-  ({ map: renderMap, matrix: renderMatrix, sources: renderSources, documentation: renderDoc })[S.view]();
+  ({ map: renderMap, matrix: renderMatrix, sources: renderSources, notes: renderNotes, documentation: renderDoc })[S.view]();
 }
-function route() { const h = location.hash.replace('#', ''); S.view = ['map', 'matrix', 'sources', 'documentation'].includes(h) ? h : 'map'; renderAll(); }
+function route() { const h = location.hash.replace('#', ''); S.view = ['map', 'matrix', 'sources', 'notes', 'documentation'].includes(h) ? h : 'map'; renderAll(); }
 
 // ---------------------------------------------------------------- documentation (docs/doc.js, built by step 11)
 function renderDoc() {
@@ -516,10 +811,12 @@ async function boot() {
   DATA.P = {}; for (const g in DATA.projected) DATA.P[g] = b64(DATA.projected[g], Uint8Array);
   DATA.PS = b64(DATA.projSrc, Uint8Array);
   try { const s = JSON.parse(localStorage.getItem('vmh_np_explorer') || 'null'); if (s && DATA.genes[s.gene] && DATA.brains[s.ds]) { S.gene = s.gene; S.ds = s.ds; S.color = s.color || 'gene'; S.kind = DATA.genes[s.gene].kind; } } catch (e) {}
+  loadNotes(); countNotes();
   S.sec = Math.floor(B().sections.length / 2);
   document.querySelectorAll('.tab[data-view]').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; if (S.view !== b.dataset.view) { S.view = b.dataset.view; renderAll(); } }));
   document.querySelectorAll('#kind button').forEach(b => b.addEventListener('click', () => { S.kind = b.dataset.kind; renderGenes(); if (S.view === 'matrix') renderMatrix(); }));
   $('#q').addEventListener('input', e => { S.q = e.target.value; renderGenes(); });
+  $('#onlymarked').addEventListener('change', e => { S.marked = e.target.checked; renderGenes(); });
   addEventListener('hashchange', route);
   addEventListener('resize', () => { if (S.view === 'map') draw(frame.est); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);

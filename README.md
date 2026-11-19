@@ -168,7 +168,7 @@ figures. It needs no server-side code and nothing is built on the host:
 
 | File | Contents |
 |---|---|
-| `docs/index.html` | The explorer. Four tabs: a map of neurons in each brain coloured by one gene (measured in situ or projected) with the compartment outlines, a table of all genes by compartment or supertype, the ligand sources of Part 3, and the documentation |
+| `docs/index.html` | The explorer. Five tabs: a map of neurons in each brain coloured by one gene (measured in situ or projected) with the compartment outlines, which can be saved as PNG, SVG or PDF; a table of all genes by compartment or supertype; the ligand sources of Part 3; notes, where a reader marks genes, writes remarks and exports them (they stay in the reader's browser); and the documentation |
 | `docs/data.js` | Its data (about 4 MB), loaded as a script so the page also works when opened straight from the folder |
 | `docs/doc.js`, `docs/figures/` | The Documentation tab: method, data, how to read the explorer, main results and limits. Every number is filled in from `results/tables` by step 11 |
 
