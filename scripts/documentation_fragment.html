@@ -98,13 +98,16 @@
 <ul>
   <li><b>Projected.</b> The compartment's mix of cell types, from the spatial data, times each type's ambient-adjusted detection fraction from the sequencing data. Types below the call threshold contribute zero. Droplet dropout can hide genuinely expressing cells. Available for all genes.</li>
   <li><b>Measured.</b> For genes on a spatial panel, the fraction of the compartment's neurons whose signal exceeds the 95th percentile of non-neuronal cells in the same brain.</li>
+  <li><b>What a measured value is worth.</b> The Allen panel carries {{n_blank}} blank probes that target no transcript. Put through the same rule, a blank probe passes in a median of {{blank_median}} of a compartment's neurons, and the 95th percentile across blank probes is {{blank_floor}}, depending on the compartment; {{blank_reaching}} of them reach 10%. A measured fraction of 10% is therefore inside what arises with nothing to detect. A measured value counts on its own only when it exceeds that 95th percentile for its compartment. The Zhuang matrices carry no blank probes, so a measured value from those brains cannot be tested and never brings a gene into the lists by itself; it is still shown, and it still confirms a projection of at least 10%.</li>
 </ul>
 <p>Pooling genes and compartments gives Spearman correlations of {{spearman_sentence}}. Ranking the five compartments within each gene gives median correlations of {{within_gene}}. Genes with a constant estimate have no defined rank correlation. Measured levels are platform-specific, so a difference between the Allen brain and the Zhuang brains is not a sex difference.</p>
 <figure><img src="figures/projected_vs_measured.png" alt="Projected against measured fraction of neurons expressing, one panel per brain">
 <figcaption>Projected against measured, one point per gene and compartment.</figcaption></figure>
 
 <h2 id="doc-results">Main results</h2>
-<p>{{n_lig_hit}} of {{n_lig}} precursor genes and {{n_rec_hit}} of {{n_rec}} receptor genes reach 10% by either method in at least one of the five compartments across three brains. The evidence column summarizes the full screen. Numeric columns show the Allen male projection. Gene cards identify each brain and compartment where the methods fall on opposite sides of 10%.</p>
+<p>{{n_lig_hit}} of {{n_lig}} precursor genes and {{n_rec_hit}} of {{n_rec}} receptor genes pass the screen: at least 10% of the neurons of a dorsomedial, central, ventrolateral or shell compartment, in at least one of the three brains, by the projection or by a measured value that clears the blank-probe control (see Measured and projected). The evidence column summarizes the screen. Numeric columns show the Allen male projection. Gene cards identify each brain and compartment where the methods fall on opposite sides of 10%, and say whether a measured value counted.</p>
+<p>The undivided anterior and posterior ends are shown in every table but do not decide whether a gene is listed. After alignment, {{ends_share}} of the neurons inside them are VMH cell types, against {{three_share}} in the dorsomedial, central and ventrolateral compartments, so in two brains a value from the ends mostly describes neighbouring nuclei.</p>
+<p>Left out by these two rules: {{weak_genes}} reach 10% only by a measured value that the controls do not support, and {{ends_genes}} reach 10% only in the undivided ends. Their cards show the numbers.</p>
 <h3>Peptide precursors</h3>
 <div class="tscroll"><table>
 <thead><tr><th>Precursor</th><th>Peptide</th><th>VMH evidence</th><th class="n">Dorsomedial</th><th class="n">Central</th><th class="n">Ventrolateral</th><th class="n">Undivided ends</th><th class="n">Shell</th></tr></thead>
@@ -125,7 +128,7 @@
 <p>No sex difference in expression survives correction for multiple testing ({{sex_sentence}}). The exact permutation test compares donors. Libraries contributing at least 15 cells of a supertype are pooled within each mouse. The small donor counts limit power.</p>
 
 <h2 id="doc-sources">Where ligands come from</h2>
-<p>Local evidence requires a measured or projected fraction of at least 10% in any brain and compartment. Ambiguous non-neuronal background alone gives an unresolved call. Afferent candidates require ligand-producing clusters in a region with a mouse tracing citation ({{n_tracing}} of {{n_regions}} curated regions). The final cluster classifier achieves {{calibration}} on the data used to choose its threshold. Five-fold validation holding out entire hypothalamic clusters gives F1 {{held_out_f1}}. Transfer accuracy in other regions is unknown.</p>
+<p>Local evidence is the screen of Main results. Ambiguous non-neuronal background alone gives an unresolved call. Afferent candidates require ligand-producing clusters in a region with a mouse tracing citation ({{n_tracing}} of {{n_regions}} curated regions). The final cluster classifier achieves {{calibration}} on the data used to choose its threshold. Five-fold validation holding out entire hypothalamic clusters gives F1 {{held_out_f1}}. Transfer accuracy in other regions is unknown.</p>
 <p>Endocrine sources are curated by peptide product, including intestinal GLP-1 from <i>Gcg</i>. Receptor complexes require evidence for same-cell partners. Conditional and proposed partners are listed separately on receptor cards.</p>
 <div class="tscroll"><table>
 <thead><tr><th>Source of a matching peptide</th><th class="n">Receptors</th><th>Which</th></tr></thead>
@@ -137,6 +140,7 @@
 <h2 id="doc-limits">Limits</h2>
 <ul>
   <li><b>Transcript, not protein.</b> A precursor needs processing before it yields a peptide, one precursor can yield several peptides, and a receptor's protein may be trafficked to terminals outside VMH.</li>
+  <li><b>The blank-probe control is a 95th percentile.</b> One blank probe in twenty exceeds it, so among the genes on the Allen panel a few would pass by chance. {{measured_alone}}, with no projection of 10% anywhere ({{measured_alone_elsewhere}}); treat that as a lead to confirm, not as a finding. Conversely, the control cannot rescue a genuine low-abundance receptor whose measured fraction sits inside the noise band, and the Zhuang brains offer no such control at all.</li>
   <li><b>Sparse receptors are under-counted.</b> Droplet sequencing misses low-abundance transcripts, so a detection fraction can underestimate prevalence. Values below 20% are the least secure.</li>
   <li><b>Compartments stand in for molecular territories.</b> The atlas ventrolateral compartment is narrower than the territory of the <i>Esr1</i>-rich supertypes. For questions about that population, read the supertype numbers.</li>
   <li><b>Alignment is a rigid shift, and the atlas between plates is interpolated.</b> The shift corrects the offset but not local distortion. Positions between plates follow an interpolation of the published drawings, not a published label.</li>

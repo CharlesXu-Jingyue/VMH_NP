@@ -54,7 +54,7 @@ def heat(ax, M, title, annotate=True):
 def compartment_figure(gb, kind, fname):
     g = gb[gb.kind == kind]
     a = g[g.dataset == "allen_m"].pivot(index="gene", columns="compartment", values="proj_frac")
-    keep = g.loc[g.compartment.isin(COMPS) & (g.projected_hit | g.measured_hit.fillna(False)), "gene"].unique()
+    keep = g.loc[g.counts, "gene"].unique()                    # the screen of step 6: four compartments, controls applied
     order = a.loc[keep, "core"].sort_values(ascending=False).index
     panels = []
     for ds, label in (("allen_m", "Allen M"), ("zhuang1_f", "Zhuang 1 F"), ("zhuang2_m", "Zhuang 2 M")):
@@ -66,7 +66,7 @@ def compartment_figure(gb, kind, fname):
         heat(ax, M.rename(columns=SHORT), title)
     what = "Neuropeptide precursors" if kind == "ligand" else "Neuropeptide receptors"
     fig.suptitle(f"{what}: transcript detection (%) by VMH compartment", x=0.01, ha="left", fontsize=11)
-    fig.text(0.01, 0.005, "Genes reaching 10% by either method in any brain and compartment. Projected: cell-type mix of the compartment\n"
+    fig.text(0.01, 0.005, "Genes passing the screen: 10% in DM, C, VL or shell of any brain, projected, or measured above the blank-probe control. Projected: cell-type mix of the compartment\n"
              "x 10x expression of each type. Measured: neurons above the 95th percentile of non-neuronal cells; empty where the\n"
              "gene is not on that panel. Values under 10 are not printed.", fontsize=7, color=MUTED, va="bottom")
     fig.tight_layout(rect=(0, 0.05 + 0.35 / max(len(order), 6), 1, 0.97))

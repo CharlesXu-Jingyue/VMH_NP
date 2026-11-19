@@ -33,7 +33,7 @@ import scipy.sparse as sp
 from scipy.stats import rankdata
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import COMPARTMENTS, CORE, DETECTION_MIN, D, DATASETS, NON_NEURONAL, load_cells  # noqa: E402
+from common import COMPARTMENTS, CORE, DETECTION_MIN, D, DATASETS, NON_NEURONAL, SCREENED, load_cells  # noqa: E402
 from paths import CONFIG, RESULTS  # noqa: E402
 
 T = RESULTS / "tables"
@@ -125,7 +125,7 @@ def main():
     genes = list(kind)
     mats = type_matrices()
     shifts = pd.read_csv(T / "atlas_alignment.csv").set_index("dataset")
-    comp_rows, gene_rows, ap_rows, proj_types = [], [], [], {}
+    comp_rows, gene_rows, ap_rows, floor_rows, proj_types = [], [], [], [], {}
     for ds, meta in DATASETS.items():
         c = labelled_neurons(ds, shifts)
         z = np.load(D / f"{meta['tag']}_expr.npz", allow_pickle=True)
@@ -137,6 +137,21 @@ def main():
         Xn = X[c.neuron.values]
         groups = {k: (n.compartment == k).values for k in COMPARTMENTS}
         groups["core"] = n.compartment.isin(CORE).values
+        # Blank probes target no transcript. Put through the same rule as a gene (own 95th percentile of
+        # non-neuronal cells, then the fraction of a compartment's neurons above it), they show how large a
+        # measured fraction arises with nothing to detect. Only the Allen panel carries them.
+        blanks = [j for j, g in enumerate(panel) if g.lower().startswith("blank")]
+        floor = {}
+        if blanks:
+            bthr = np.percentile(X[nn][:, blanks].astype(float), 95, axis=0)
+            for comp, m in groups.items():
+                if m.any():
+                    f = (Xn[m][:, blanks].astype(float) > bthr).mean(axis=0)
+                    floor[comp] = float(np.percentile(f, 95))
+                    floor_rows.append(dict(dataset=ds, compartment=comp, n_neurons=int(m.sum()), n_blank_probes=len(blanks),
+                                           n_zero_cutoff=int((bthr == 0).sum()), blank_frac_median=float(np.median(f)),
+                                           blank_frac_p95=floor[comp], blank_frac_max=float(f.max()),
+                                           n_blanks_reaching_detection_min=int((f >= DETECTION_MIN).sum())))
         for comp, m in groups.items():
             sub = n[m]
             if not len(sub):
@@ -153,7 +168,8 @@ def main():
                            cluster_level_coverage=cover, measured=g in panel)
                 if g in panel:
                     v = Xn[m, panel.index(g)]
-                    row.update(meas_frac=float((v.astype(float) > thr[g]).mean()), meas_mean=float(v.mean()), meas_threshold=thr[g])
+                    row.update(meas_frac=float((v.astype(float) > thr[g]).mean()), meas_mean=float(v.mean()), meas_threshold=thr[g],
+                               meas_blank_floor=floor.get(comp, np.nan))
                 gene_rows.append(row)
         # anterior / middle / posterior thirds of the core, equal neuron counts
         core = n[groups["core"] & n.ap_aligned.notna().values]
@@ -180,10 +196,17 @@ def main():
     gb["projected_hit"] = gb.proj_frac >= DETECTION_MIN
     gb["measured_hit"] = (gb.meas_frac >= DETECTION_MIN).astype("boolean").where(gb.measured)
     measured_hit = gb.measured_hit.fillna(False).to_numpy(dtype=bool)
+    # A measured fraction stands on its own only where blank probes exist and it exceeds what they reach in
+    # that compartment. Without that it still counts as agreement when the projection reaches 10% as well.
+    supported = measured_hit & (gb.meas_frac > gb.meas_blank_floor).to_numpy(dtype=bool)
+    gb["measured_supported"] = pd.Series(supported, index=gb.index).astype("boolean").where(gb.measured)
     gb["evidence"] = np.select(
-        [~gb.measured, gb.projected_hit & measured_hit,
-         measured_hit, gb.projected_hit],
-        ["off panel", "both above", "measured only", "projected only"], default="both below")
+        [~gb.measured, gb.projected_hit & measured_hit, supported,
+         measured_hit & gb.meas_blank_floor.notna(), measured_hit, gb.projected_hit],
+        ["off panel", "both above", "measured only", "measured only, within blank noise",
+         "measured only, no blank control", "projected only"], default="both below")
+    gb["counts"] = gb.compartment.isin(SCREENED) & (gb.projected_hit | supported)
+    pd.DataFrame(floor_rows).to_csv(T / "blank_probe_floor.csv", index=False, float_format="%.4g")
     gb.to_csv(T / "gene_by_compartment.csv", index=False, float_format="%.4g")
     pd.DataFrame(ap_rows).to_csv(T / "gene_by_ap.csv", index=False, float_format="%.4g")
     cols = {"cluster": list(proj_types), "source": [v[2] for v in proj_types.values()]}

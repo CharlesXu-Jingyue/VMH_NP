@@ -19,7 +19,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from common import COMPARTMENTS as COMPS, DATASETS  # noqa: E402
+from common import COMPARTMENTS as COMPS, DATASETS, SCREENED, VMH_SUPERTYPES  # noqa: E402
 from paths import CONFIG, REPO, RESULTS  # noqa: E402
 
 T, OUT = RESULTS / "tables", REPO / "docs"
@@ -119,7 +119,31 @@ def main():
     evidence = pd.concat([src.spatial_evidence[src.local], conc.set_index("receptor").query("in_vmh").spatial_evidence])
     a = gb[(gb.dataset == "allen_m") & gb.compartment.isin(COMPS)].pivot(index=["gene", "kind"], columns="compartment", values="proj_frac")[COMPS]
     hit = a.reset_index().set_index("gene").loc[evidence.index].copy()
-    hit["top"] = hit[COMPS].max(axis=1)
+    hit["top"] = hit[SCREENED].max(axis=1)
+    # the screen's controls: what blank probes reach, how much of the undivided ends is VMH, and what was left out
+    fl = pd.read_csv(T / "blank_probe_floor.csv")
+    fl = fl[fl.compartment.isin(SCREENED)]
+    assert set(fl.dataset) == {"allen_m"}, "template says only the Allen panel carries blank probes"
+    fill["n_blank"] = int(fl.n_blank_probes.iloc[0])
+    fill["blank_median"] = f"{100 * fl.blank_frac_median.min():.0f} to {100 * fl.blank_frac_median.max():.0f}%"
+    fill["blank_floor"] = f"{100 * fl.blank_frac_p95.min():.0f} to {100 * fl.blank_frac_p95.max():.0f}%"
+    fill["blank_reaching"] = f"{fl.n_blanks_reaching_detection_min.min()} to {fl.n_blanks_reaching_detection_min.max()}"
+    cc = pd.read_csv(T / "compartment_composition.csv")
+    vmh_share = cc[cc.supertype.isin(VMH_SUPERTYPES)].groupby(["dataset", "compartment"]).share.sum()
+    fill["ends_share"] = ", ".join(f"{100 * vmh_share.get((ds, 'VMH'), 0):.0f}% ({short[ds]})" for ds in DATASETS)
+    three = vmh_share[vmh_share.index.get_level_values("compartment").isin(["VMHDM", "VMHC", "VMHVL"])]
+    fill["three_share"] = f"{100 * three.min():.0f} to {100 * three.max():.0f}%"
+    assert vmh_share.xs("VMH", level="compartment").min() < 0.1 < three.min(), "template contrasts the ends with the three divided compartments"
+    status = pd.concat([src.spatial_evidence, conc.set_index("receptor").spatial_evidence])
+    weak, ends_only = status[status.str.startswith("Measured signal not above controls")].index, status[status.str.startswith("Undivided ends only")].index
+    fill["weak_genes"], fill["ends_genes"] = genes(sorted(weak)), genes(sorted(ends_only))
+    alone = sorted(status[status.str.startswith("Measured only")].index)
+    fill["measured_alone"] = (f"{genes(alone)} rest{'s' if len(alone) == 1 else ''} on a measured value alone" if alone
+                              else "No listed gene rests on a measured value alone")
+    # whether the brains without blank probes see the same thing
+    other = gb[gb.gene.isin(alone) & (gb.dataset != "allen_m") & gb.measured & gb.compartment.isin(SCREENED)]
+    fill["measured_alone_elsewhere"] = "; ".join(
+        f"the Zhuang brains measure <i>{g}</i> in at most {100 * d.meas_frac.max():.0f}% of a compartment's neurons" for g, d in other.groupby("gene"))
     L, R = hit[hit.kind == "ligand"].sort_values("top", ascending=False), hit[hit.kind == "receptor"].copy()
     fill["n_lig_hit"], fill["n_rec_hit"] = len(L), len(R)
 

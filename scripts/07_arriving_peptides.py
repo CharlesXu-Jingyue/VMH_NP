@@ -37,7 +37,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import COMPARTMENTS, D, DATASETS, NON_NEURONAL  # noqa: E402
+from common import COMPARTMENTS, D, DATASETS, NON_NEURONAL, SCREENED  # noqa: E402
 from paths import CONFIG, RESULTS  # noqa: E402
 
 T = RESULTS / "tables"
@@ -100,14 +100,22 @@ def cluster_expression(lig):
 
 def spatial_evidence(d):
     """Screen each brain and compartment separately, preserving unavailable assays and paired disagreements."""
-    proj = d.projected_hit.any()
-    meas = d.measured_hit.fillna(False).any()
-    if proj and meas:
+    s = d[d.compartment.isin(SCREENED)]                 # the undivided ends are reported, not screened
+    weak = s.measured_hit.fillna(False).astype(bool)    # 10% reached, whether or not controls allow it to count
+    solid = s.measured_supported.fillna(False).astype(bool)
+    proj = s.projected_hit.any()
+    meas = solid.any()
+    ends = d[d.compartment == "VMH"]
+    if proj and (meas or (s.projected_hit & weak).any()):
         status = "Measured and projected"
     elif meas:
         status = "Measured only"
     elif proj:
         status = "Projected only"
+    elif weak.any():
+        status = "Measured signal not above controls"
+    elif (ends.projected_hit | ends.measured_hit.fillna(False).astype(bool)).any():
+        status = "Undivided ends only"
     elif (d.call == "ubiquitous").any():
         status = "Unresolved at non-neuronal levels"
     else:
@@ -115,12 +123,19 @@ def spatial_evidence(d):
     if not d.measured.any():
         status += " (off panel)"
     # Select the strongest observation for display, retaining its method and anatomical origin.
-    peaks = d.set_index(["dataset", "compartment"])[["meas_frac", "proj_frac"]].stack().dropna()
-    ds, comp, column = peaks.idxmax()
-    discordant = d[d.evidence.isin(["measured only", "projected only"])]
+    # Among the observations that count if there are any, otherwise among all screened ones.
+    counting = pd.concat([s.loc[s.projected_hit].assign(column="proj_frac", value=lambda t: t.proj_frac),
+                          s.loc[solid | (s.projected_hit & weak)].assign(column="meas_frac", value=lambda t: t.meas_frac)])
+    if len(counting):
+        top = counting.sort_values("value", ascending=False, kind="stable").iloc[0]
+        ds, comp, column, peak = top.dataset, top.compartment, top.column, top.value
+    else:
+        peaks = s.set_index(["dataset", "compartment"])[["meas_frac", "proj_frac"]].stack().dropna()
+        (ds, comp, column), peak = peaks.idxmax(), peaks.max()
+    discordant = d[d.evidence.str.startswith(("measured only", "projected only"))]
     return dict(spatial_evidence=status, spatial_hit=bool(proj or meas), peak_dataset=ds,
                 peak_compartment=comp, peak_method="measured" if column == "meas_frac" else "projected",
-                peak_fraction=peaks.max(), n_discordant=len(discordant))
+                peak_fraction=peak, n_discordant=len(discordant))
 
 
 def main():
@@ -172,8 +187,9 @@ def main():
         rows.append(dict(
             gene=g, peptides=ligands.loc[g, "peptides"], family=ligands.loc[g, "family"], source_class=ligands.loc[g, "source_class"],
             **{f"local_{c}": l[c] for c in COMPARTMENTS},
-            local_max=l.max(), local_where=l.idxmax() if gb[(gb.gene == g) & (gb.dataset == "allen_m")].projected_hit.any() else "",
-            local_max_female_brain=loc["zhuang1_f"].loc[g].reindex(COMPARTMENTS).max(),
+            local_max=l[SCREENED].max(),
+            local_where=l[SCREENED].idxmax() if gb[(gb.gene == g) & (gb.dataset == "allen_m") & gb.compartment.isin(SCREENED)].projected_hit.any() else "",
+            local_max_female_brain=loc["zhuang1_f"].loc[g].reindex(SCREENED).max(),
             afferent_regions="; ".join(f"{r} {v:.0%}" for r, v in aff.items()),
             n_afferent_regions=len(aff),
             top_regions_brainwide="; ".join(f"{r} {v:.0%}" for r, v in top.items()),
@@ -210,8 +226,8 @@ def main():
             parts = [n for n, v in (("local", local), ("afferent", aff), ("endocrine", endo)) if v]
             verdict = " + ".join(parts) if parts else "no source identified"
         out.append(dict(receptor=r, family=rec.loc[r, "family"], principal_coupling=rec.loc[r, "principal_coupling"],
-                        **{f"vmh_{c}": frac[c] for c in COMPARTMENTS}, vmh_max=frac.max(),
-                        vmh_where=frac.idxmax() if rr.projected_hit.any() else "",
+                        **{f"vmh_{c}": frac[c] for c in COMPARTMENTS}, vmh_max=frac[SCREENED].max(),
+                        vmh_where=frac[SCREENED].idxmax() if rr.projected_hit[SCREENED].any() else "",
                         **evidence[r], conditional_partners=conditional,
                         in_vmh=present, cognate_ligand_genes="; ".join(annotated.ligand_gene.unique()), local_ligands="; ".join(local),
                         afferent_ligands="; ".join(f"{g} ({S.loc[g, 'afferent_regions']})" for g in aff),

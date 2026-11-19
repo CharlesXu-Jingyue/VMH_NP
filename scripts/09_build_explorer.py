@@ -23,7 +23,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from common import (COMPARTMENTS, COMPARTMENT_COLOURS, COMPARTMENT_NAMES, D, DATASETS, NON_NEURONAL, VMH_SUPERTYPES,  # noqa: E402
+from common import (COMPARTMENTS, COMPARTMENT_COLOURS, COMPARTMENT_NAMES, D, DATASETS, NON_NEURONAL, SCREENED, VMH_SUPERTYPES,  # noqa: E402
                     load_cells)
 from paths import CONFIG, REPO, RESULTS  # noqa: E402
 
@@ -78,7 +78,7 @@ def main():
             genes[g].setdefault("proj", {})[ds] = [r1(P.loc[g, c]) for c in COMPS]
             genes[g].setdefault("meas", {})[ds] = ([r1(M.loc[g, c]) for c in COMPS] if bool(d[d.gene == g].measured.iloc[0]) else None)
             gene_rows = d[(d.gene == g) & d.compartment.isin(COMPARTMENTS)]
-            disagreements = gene_rows[gene_rows.evidence.isin(["measured only", "projected only"])]
+            disagreements = gene_rows[gene_rows.evidence.str.startswith(("measured only", "projected only"))]
             genes[g].setdefault("discordant", {})[ds] = dict(zip(disagreements.compartment, disagreements.evidence))
             if (C.loc[g, COMPARTMENTS] == "ubiquitous").any():
                 genes[g]["ubiquitous"] = True
@@ -165,7 +165,11 @@ def main():
     # subclass's (too few cells of its own), or nowhere (not in the hypothalamus sequencing data)
     proj_src = enc(P.source.str.split(":").str[0].map({"cluster": 0, "supertype": 1, "subclass": 2}).fillna(3).values.astype(np.uint8))
 
+    # what blank probes reach in each compartment (percent of neurons), for the brains whose panel has them
+    fl = pd.read_csv(T / "blank_probe_floor.csv")
+    blank_floor = {ds: {r.compartment: round(100 * r.blank_frac_p95, 1) for r in d.itertuples()} for ds, d in fl.groupby("dataset")}
     data = dict(
+        screened=SCREENED, blankFloor=blank_floor,
         built="Allen Brain Cell Atlas release 20250531; unified atlas of Chon et al. 2019",
         genes=genes, order=names, comps=COMPS, compNames=[COMPARTMENT_NAMES.get(c, "core (three compartments and ends)") for c in COMPS],
         compColours=COMPARTMENT_COLOURS, compCode=COMP_CODE,

@@ -1,0 +1,7 @@
+dataset,compartment,n_neurons,n_blank_probes,n_zero_cutoff,blank_frac_median,blank_frac_p95,blank_frac_max,n_blanks_reaching_detection_min
+allen_m,VMHDM,1168,50,42,0.06464,0.1638,0.3399,9
+allen_m,VMHC,1456,50,42,0.06971,0.1782,0.3723,12
+allen_m,VMHVL,950,50,42,0.07526,0.1978,0.3832,13
+allen_m,VMH,260,50,42,0.05192,0.1387,0.25,6
+allen_m,VMHSh,1520,50,42,0.06086,0.1554,0.2428,7
+allen_m,core,3834,50,42,0.06716,0.1725,0.3432,9

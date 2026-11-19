@@ -286,8 +286,12 @@ function renderCard() {
   for (const [name, v] of rows) { const tr = el('tr', {}, el('td', { class: 'l', text: name })); for (let i = 0; i < COLS.length; i++) tr.append(heatCell(v[i])); t.append(tr); }
   c.append(t);
   const differences = Object.entries(g.discordant).flatMap(([ds, comps]) => Object.entries(comps).map(([comp, call]) => {
-    const j = DATA.comps.indexOf(comp);
-    return `${BRAIN_NAMES[ds]}, ${COMP_LABEL[comp]}: ${call} reaches 10%. Measured ${g.meas[ds][j]}%, projected ${g.proj[ds][j]}%.`;
+    const j = DATA.comps.indexOf(comp), floor = (DATA.blankFloor[ds] || {})[comp];
+    const why = !DATA.screened.includes(comp) ? ' The undivided ends are reported but not screened.'
+      : call === 'measured only, within blank noise' ? ` Not counted: blank probes reach ${floor}% here.`
+      : call === 'measured only, no blank control' ? ' Not counted: this panel has no blank probes to test it against.'
+      : call === 'measured only' ? ` Counted: above the ${floor}% that blank probes reach here.` : '';
+    return `${BRAIN_NAMES[ds]}, ${COMP_LABEL[comp]}: ${call.split(',')[0]} reaches 10%. Measured ${g.meas[ds][j]}%, projected ${g.proj[ds][j]}%.${why}`;
   }));
   if (differences.length) {
     const details = el('details', {}, el('summary', { text: `Methods disagree at 10% (${differences.length})` }));
@@ -764,7 +768,7 @@ function renderSources() {
   const v = $('#view'); v.textContent = '';
   const pad = el('div', { class: 'pad' });
   pad.append(el('h3', { text: 'Receptors in VMH and where a cognate peptide could come from' }),
-    el('p', { text: 'Transcript-level evidence. Local evidence requires measured or projected transcript detection in at least 10% of a compartment in one brain. Afferent: neurons in a region reported to project to VMH make it, which does not show that those neurons are the ones projecting. Percentages are the share of a region’s neurons in expressing clusters.' }));
+    el('p', { text: 'Transcript-level evidence. Local evidence is the screen of the documentation: at least 10% of the neurons of a dorsomedial, central, ventrolateral or shell compartment in one brain, by the projection, or by a measurement that exceeds what blank probes reach there. Afferent: neurons in a region reported to project to VMH make it, which does not show that those neurons are the ones projecting. Percentages are the share of a region’s neurons in expressing clusters.' }));
   const t = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['Receptor', 'VMH evidence', 'Sources', 'Local precursors', 'Afferent regions', 'Endocrine'].map(x => el('th', { text: x })))));
   const tb = el('tbody');
   DATA.order.filter(g => DATA.genes[g].kind === 'receptor' && DATA.genes[g].src && DATA.genes[g].src.inVmh)
@@ -773,7 +777,7 @@ function renderSources() {
       tb.append(el('tr', {}, el('td', { class: 'g', style: 'position:static' }, el('button', { text: g, onclick: () => select(g) })),
         el('td', { text: peakEvidence(d.src) }), el('td', { text: d.src.verdict }), el('td', { text: d.src.local }), el('td', { text: d.src.afferent }), el('td', { text: d.src.endocrine }))); });
   t.append(tb); pad.append(t);
-  pad.append(el('h3', { text: 'Precursors with local transcript evidence' }), el('p', { text: 'Precursors reaching 10% of neurons in a compartment, and the receptors for their peptides.' }));
+  pad.append(el('h3', { text: 'Precursors with local transcript evidence' }), el('p', { text: 'Precursors that pass the same screen, and the receptors for their peptides.' }));
   const t2 = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['Precursor', 'Peptides', 'VMH evidence', 'Listed receptors or components'].map(x => el('th', { text: x })))));
   const tb2 = el('tbody');
   DATA.order.filter(g => DATA.genes[g].kind === 'ligand' && DATA.genes[g].src && DATA.genes[g].src.local).forEach(g => { const d = DATA.genes[g];

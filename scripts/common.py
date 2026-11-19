@@ -31,6 +31,9 @@ def load_cells(ds):
 
 COMPARTMENTS = ["VMHDM", "VMHC", "VMHVL", "VMH", "VMHSh"]
 CORE = ["VMHDM", "VMHC", "VMHVL", "VMH"]
+# Compartments that decide whether a gene counts as present in VMH. The undivided ends are reported but not
+# screened: in two of the three brains under a tenth of their neurons are VMH cell types.
+SCREENED = ["VMHDM", "VMHC", "VMHVL", "VMHSh"]
 DETECTION_MIN = 0.10
 
 

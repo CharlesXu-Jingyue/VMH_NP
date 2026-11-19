@@ -139,8 +139,15 @@ browser editor) is kept under `archive/hand_annotation/` and is no longer part o
    partners are qualified separately. Endocrine evidence follows the peptide product.
    Regional matches are candidates because ligand-producing cells may differ from the projecting cells.
 
-For local evidence, each of DM, C, VL, undivided ends and shell is screened independently
-in each brain. Either measured or projected transcript detection can reach the 10% threshold.
+For local evidence, each of DM, C, VL and shell is screened independently in each brain
+(`SCREENED` in `scripts/common.py`). A gene is listed when its projected detection reaches 10%
+of a compartment's neurons, or when its measured detection does and also exceeds the
+blank-probe control: the 95th percentile, across the 50 blank probes of the Allen panel, of
+the fraction of that compartment's neurons a blank probe passes under the same rule (16 to 20%;
+`tables/blank_probe_floor.csv`). The Zhuang matrices carry no blank probes, so a measured value
+from those brains confirms a projection but does not list a gene by itself. The undivided ends
+are reported in every table but not screened, because in two brains under a tenth of their
+neurons are VMH cell types.
 Paired comparisons identify measured-only and projected-only results for that brain and compartment.
 Off-panel measurements are missing. Non-neuronal-level detection alone remains unresolved.
 The pooled core is a descriptive aggregate. The documentation also reports within-gene spatial
@@ -155,7 +162,8 @@ rank agreement alongside the pooled correlation.
 | `tables/vmh_supertype_calls.csv`, `vmh_type_counts.csv` | Calls and cell counts for the nine VMH supertypes |
 | `tables/atlas_alignment.csv`, `atlas_supertype_by_compartment.csv` | Per-brain shift, agreement with the cell types (raw, aligned, and aligned with the nearest plate), share of neurons relabelled by interpolation, and where each supertype sits |
 | `tables/compartment_composition.csv` | Cell-type mix of each compartment in each brain |
-| `tables/gene_by_compartment.csv`, `gene_by_ap.csv` | Projected and measured expression by compartment and by anterior-posterior bin |
+| `tables/gene_by_compartment.csv`, `gene_by_ap.csv` | Projected and measured expression by compartment and by anterior-posterior bin, with the paired evidence call and whether the row counts towards the screen |
+| `tables/blank_probe_floor.csv` | What the blank probes of the Allen panel reach in each compartment under the measured rule |
 | `tables/sex_differences.csv` | Female against male donors per supertype and gene, pooling eligible libraries |
 | `tables/ligand_by_region.csv`, `ligand_sources.csv`, `receptor_ligand_concordance.csv` | Part 3 |
 | `figures/*.png` | The interpolated atlas against its plates, alignment per brain, supertype by compartment, ligands and receptors by compartment and by supertype, projected against measured |
