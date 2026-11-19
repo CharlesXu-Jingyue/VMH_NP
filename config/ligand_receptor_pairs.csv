@@ -1,160 +1,160 @@
-ligand_gene,peptide,receptor_gene,rank
-Penk,enkephalins,Oprd1,1
-Penk,enkephalins,Oprm1,2
-Pdyn,dynorphins,Oprk1,1
-Pomc,alpha-MSH,Mc3r,1
-Pomc,alpha-MSH,Mc4r,2
-Pomc,beta-endorphin,Oprm1,1
-Pomc,beta-endorphin,Oprd1,2
-Pomc,ACTH,Mc2r,1
-Pomc,alpha-MSH (peripheral targets),Mc1r,1
-Pomc,alpha-MSH (peripheral targets),Mc5r,2
-Pnoc,nociceptin/orphanin FQ,Oprl1,1
-Agrp,AgRP (inverse agonist),Mc3r,1
-Agrp,AgRP (inverse agonist),Mc4r,2
-Tac1,substance P,Tacr1,1
-Tac1,neurokinin A,Tacr2,1
-Tac1,neurokinin A,Tacr1,2
-Tac2,neurokinin B,Tacr3,1
-Tac4,hemokinin-1,Tacr1,1
-Cck,CCK-8,Cckbr,1
-Cck,CCK-8,Cckar,2
-Gast,gastrin,Cckbr,1
-Sst,somatostatin,Sstr1,1
-Sst,somatostatin,Sstr2,2
-Sst,somatostatin,Sstr3,3
-Sst,somatostatin,Sstr4,4
-Sst,somatostatin,Sstr5,5
-Cort,cortistatin,Sstr1,1
-Cort,cortistatin,Sstr2,2
-Cort,cortistatin,Sstr3,3
-Cort,cortistatin,Sstr4,4
-Cort,cortistatin,Sstr5,5
-Npy,NPY,Npy1r,1
-Npy,NPY,Npy2r,2
-Npy,NPY,Npy5r,3
-Npy,NPY,Npy6r,4
-Pyy,PYY,Npy2r,1
-Pyy,PYY,Npy1r,2
-Pyy,PYY,Npy5r,3
-Ppy,pancreatic polypeptide,Npy4r,1
-Vip,VIP,Vipr1,1
-Vip,VIP,Vipr2,2
-Adcyap1,PACAP,Adcyap1r1,1
-Adcyap1,PACAP,Vipr1,2
-Adcyap1,PACAP,Vipr2,3
-Ghrh,GHRH,Ghrhr,1
-Gcg,GLP-1,Glp1r,1
-Gcg,GLP-2,Glp2r,1
-Gcg,glucagon,Gcgr,1
-Sct,secretin,Sctr,1
-Gip,GIP,Gipr,1
-Crh,CRH,Crhr1,1
-Crh,CRH,Crhr2,2
-Ucn,urocortin 1,Crhr1,1
-Ucn,urocortin 1,Crhr2,2
-Ucn2,urocortin 2,Crhr2,1
-Ucn3,urocortin 3,Crhr2,1
-Avp,vasopressin,Avpr1a,1
-Avp,vasopressin,Avpr1b,2
-Avp,vasopressin,Avpr2,3
-Avp,vasopressin,Oxtr,4
-Oxt,oxytocin,Oxtr,1
-Oxt,oxytocin,Avpr1a,2
-Trh,TRH,Trhr,1
-Trh,TRH,Trhr2,2
-Gnrh1,GnRH,Gnrhr,1
-Kiss1,kisspeptin,Kiss1r,1
-Npff,NPFF,Npffr2,1
-Npff,NPFF,Npffr1,2
-Npvf,RFRP-1/3,Npffr1,1
-Npvf,RFRP-1/3,Npffr2,2
-Qrfp,QRFP,Qrfpr,1
-Prlh,prolactin-releasing peptide,Prlhr,1
-Gal,galanin,Galr1,1
-Gal,galanin,Galr2,2
-Gal,galanin,Galr3,3
-Galp,galanin-like peptide,Galr1,1
-Galp,galanin-like peptide,Galr2,2
-Galp,galanin-like peptide,Galr3,3
-Spx,spexin,Galr2,1
-Spx,spexin,Galr3,2
-Nts,neurotensin / neuromedin N,Ntsr1,1
-Nts,neurotensin / neuromedin N,Ntsr2,2
-Nmu,neuromedin U,Nmur2,1
-Nmu,neuromedin U,Nmur1,2
-Nms,neuromedin S,Nmur2,1
-Nms,neuromedin S,Nmur1,2
-Nmb,neuromedin B,Nmbr,1
-Grp,gastrin-releasing peptide,Grpr,1
-Hcrt,orexin A/B,Hcrtr1,1
-Hcrt,orexin A/B,Hcrtr2,2
-Pmch,MCH,Mchr1,1
-Cartpt,CART,Gpr160,1
-Calca,CGRP-alpha,Calcrl,1
-Calca,CGRP-alpha,Ramp1,2
-Calca,calcitonin,Calcr,1
-Calcb,CGRP-beta,Calcrl,1
-Calcb,CGRP-beta,Ramp1,2
-Iapp,amylin,Calcr,1
-Iapp,amylin,Ramp1,2
-Iapp,amylin,Ramp2,3
-Iapp,amylin,Ramp3,4
-Adm,adrenomedullin,Calcrl,1
-Adm,adrenomedullin,Ramp2,2
-Adm,adrenomedullin,Ramp3,3
-Adm2,adrenomedullin 2,Calcrl,1
-Adm2,adrenomedullin 2,Ramp1,2
-Adm2,adrenomedullin 2,Ramp2,3
-Adm2,adrenomedullin 2,Ramp3,4
-Nppa,ANP,Npr1,1
-Nppa,ANP,Npr3,2
-Nppb,BNP,Npr1,1
-Nppb,BNP,Npr3,2
-Nppc,CNP,Npr2,1
-Nppc,CNP,Npr3,2
-Edn1,endothelin-1,Ednra,1
-Edn1,endothelin-1,Ednrb,2
-Edn3,endothelin-3,Ednrb,1
-Agt,angiotensin II,Agtr1a,1
-Agt,angiotensin II,Agtr1b,2
-Agt,angiotensin II,Agtr2,3
-Agt,angiotensin 1-7,Mas1,1
-Kng1,bradykinin,Bdkrb2,1
-Kng1,bradykinin,Bdkrb1,2
-Kng2,bradykinin,Bdkrb2,1
-Kng2,bradykinin,Bdkrb1,2
-Rln1,relaxin,Rxfp1,1
-Rln1,relaxin,Rxfp2,2
-Rln3,relaxin-3,Rxfp3,1
-Rln3,relaxin-3,Rxfp4,2
-Rln3,relaxin-3,Rxfp1,3
-Insl3,INSL3,Rxfp2,1
-Insl5,INSL5,Rxfp4,1
-Ins1,insulin,Insr,1
-Ins2,insulin,Insr,1
-Igf1,IGF-1,Igf1r,1
-Igf1,IGF-1,Insr,2
-Igf2,IGF-2,Igf1r,1
-Igf2,IGF-2,Insr,2
-Lep,leptin,Lepr,1
-Ghrl,ghrelin,Ghsr,1
-Prl,prolactin,Prlr,1
-Gh,growth hormone,Ghr,1
-Nps,neuropeptide S,Npsr1,1
-Npb,neuropeptide B,Npbwr1,1
-Npw,neuropeptide W,Npbwr1,1
-Pth,PTH,Pth1r,1
-Pthlh,PTHrP,Pth1r,1
-Pth2,TIP39,Pth2r,1
-Apln,apelin,Aplnr,1
-Apela,ELABELA,Aplnr,1
-Uts2,urotensin II,Uts2r,1
-Uts2b,urotensin II-related peptide,Uts2r,1
-Prok1,prokineticin 1,Prokr1,1
-Prok1,prokineticin 1,Prokr2,2
-Prok2,prokineticin 2,Prokr2,1
-Prok2,prokineticin 2,Prokr1,2
-Pcsk1n,BigLEN,Gpr171,1
-Pcsk1n,PEN,Gpr83,1
-Vgf,TLQP-21,C3ar1,1
+ligand_gene,peptide,receptor_gene,rank,endocrine_source,qualification
+Penk,enkephalins,Oprd1,1,,
+Penk,enkephalins,Oprm1,2,,
+Pdyn,dynorphins,Oprk1,1,,
+Pomc,alpha-MSH,Mc3r,1,,
+Pomc,alpha-MSH,Mc4r,2,,
+Pomc,beta-endorphin,Oprm1,1,,
+Pomc,beta-endorphin,Oprd1,2,,
+Pomc,ACTH,Mc2r,1,pituitary,
+Pomc,alpha-MSH (peripheral targets),Mc1r,1,,
+Pomc,alpha-MSH (peripheral targets),Mc5r,2,,
+Pnoc,nociceptin/orphanin FQ,Oprl1,1,,
+Agrp,AgRP (inverse agonist),Mc3r,1,,
+Agrp,AgRP (inverse agonist),Mc4r,2,,
+Tac1,substance P,Tacr1,1,,
+Tac1,neurokinin A,Tacr2,1,,
+Tac1,neurokinin A,Tacr1,2,,
+Tac2,neurokinin B,Tacr3,1,,
+Tac4,hemokinin-1,Tacr1,1,,
+Cck,CCK-8,Cckbr,1,,
+Cck,CCK-8,Cckar,2,,
+Gast,gastrin,Cckbr,1,peripheral or pituitary,
+Sst,somatostatin,Sstr1,1,,
+Sst,somatostatin,Sstr2,2,,
+Sst,somatostatin,Sstr3,3,,
+Sst,somatostatin,Sstr4,4,,
+Sst,somatostatin,Sstr5,5,,
+Cort,cortistatin,Sstr1,1,,
+Cort,cortistatin,Sstr2,2,,
+Cort,cortistatin,Sstr3,3,,
+Cort,cortistatin,Sstr4,4,,
+Cort,cortistatin,Sstr5,5,,
+Npy,NPY,Npy1r,1,,
+Npy,NPY,Npy2r,2,,
+Npy,NPY,Npy5r,3,,
+Npy,NPY,Npy6r,4,,
+Pyy,PYY,Npy2r,1,peripheral or pituitary,
+Pyy,PYY,Npy1r,2,peripheral or pituitary,
+Pyy,PYY,Npy5r,3,peripheral or pituitary,
+Ppy,pancreatic polypeptide,Npy4r,1,peripheral or pituitary,
+Vip,VIP,Vipr1,1,,
+Vip,VIP,Vipr2,2,,
+Adcyap1,PACAP,Adcyap1r1,1,,
+Adcyap1,PACAP,Vipr1,2,,
+Adcyap1,PACAP,Vipr2,3,,
+Ghrh,GHRH,Ghrhr,1,,
+Gcg,GLP-1,Glp1r,1,intestine,
+Gcg,GLP-2,Glp2r,1,intestine,
+Gcg,glucagon,Gcgr,1,pancreas,
+Sct,secretin,Sctr,1,peripheral or pituitary,
+Gip,GIP,Gipr,1,peripheral or pituitary,
+Crh,CRH,Crhr1,1,,
+Crh,CRH,Crhr2,2,,
+Ucn,urocortin 1,Crhr1,1,,
+Ucn,urocortin 1,Crhr2,2,,
+Ucn2,urocortin 2,Crhr2,1,,
+Ucn3,urocortin 3,Crhr2,1,,
+Avp,vasopressin,Avpr1a,1,,
+Avp,vasopressin,Avpr1b,2,,
+Avp,vasopressin,Avpr2,3,,
+Avp,vasopressin,Oxtr,4,,
+Oxt,oxytocin,Oxtr,1,,
+Oxt,oxytocin,Avpr1a,2,,
+Trh,TRH,Trhr,1,,
+Trh,TRH,Trhr2,2,,
+Gnrh1,GnRH,Gnrhr,1,,
+Kiss1,kisspeptin,Kiss1r,1,,
+Npff,NPFF,Npffr2,1,,
+Npff,NPFF,Npffr1,2,,
+Npvf,RFRP-1/3,Npffr1,1,,
+Npvf,RFRP-1/3,Npffr2,2,,
+Qrfp,QRFP,Qrfpr,1,,
+Prlh,prolactin-releasing peptide,Prlhr,1,,
+Gal,galanin,Galr1,1,,
+Gal,galanin,Galr2,2,,
+Gal,galanin,Galr3,3,,
+Galp,galanin-like peptide,Galr1,1,,
+Galp,galanin-like peptide,Galr2,2,,
+Galp,galanin-like peptide,Galr3,3,,
+Spx,spexin,Galr2,1,,
+Spx,spexin,Galr3,2,,
+Nts,neurotensin / neuromedin N,Ntsr1,1,,
+Nts,neurotensin / neuromedin N,Ntsr2,2,,
+Nmu,neuromedin U,Nmur2,1,,
+Nmu,neuromedin U,Nmur1,2,,
+Nms,neuromedin S,Nmur2,1,,
+Nms,neuromedin S,Nmur1,2,,
+Nmb,neuromedin B,Nmbr,1,,
+Grp,gastrin-releasing peptide,Grpr,1,,
+Hcrt,orexin A/B,Hcrtr1,1,,
+Hcrt,orexin A/B,Hcrtr2,2,,
+Pmch,MCH,Mchr1,1,,
+Cartpt,CART,Gpr160,1,,proposed receptor
+Calca,CGRP-alpha,Calcrl,1,,requires same-cell Ramp1
+Calca,CGRP-alpha,Ramp1,2,,requires same-cell Calcrl
+Calca,calcitonin,Calcr,1,,requires calcitonin splice product
+Calcb,CGRP-beta,Calcrl,1,,requires same-cell Ramp1
+Calcb,CGRP-beta,Ramp1,2,,requires same-cell Calcrl
+Iapp,amylin,Calcr,1,peripheral or pituitary,requires same-cell Ramp1 or Ramp2 or Ramp3
+Iapp,amylin,Ramp1,2,peripheral or pituitary,requires same-cell Calcr
+Iapp,amylin,Ramp2,3,peripheral or pituitary,requires same-cell Calcr
+Iapp,amylin,Ramp3,4,peripheral or pituitary,requires same-cell Calcr
+Adm,adrenomedullin,Calcrl,1,,requires same-cell Ramp2 or Ramp3
+Adm,adrenomedullin,Ramp2,2,,requires same-cell Calcrl
+Adm,adrenomedullin,Ramp3,3,,requires same-cell Calcrl
+Adm2,adrenomedullin 2,Calcrl,1,,requires same-cell Ramp1 or Ramp2 or Ramp3
+Adm2,adrenomedullin 2,Ramp1,2,,requires same-cell Calcrl
+Adm2,adrenomedullin 2,Ramp2,3,,requires same-cell Calcrl
+Adm2,adrenomedullin 2,Ramp3,4,,requires same-cell Calcrl
+Nppa,ANP,Npr1,1,peripheral or pituitary,
+Nppa,ANP,Npr3,2,peripheral or pituitary,
+Nppb,BNP,Npr1,1,peripheral or pituitary,
+Nppb,BNP,Npr3,2,peripheral or pituitary,
+Nppc,CNP,Npr2,1,,
+Nppc,CNP,Npr3,2,,
+Edn1,endothelin-1,Ednra,1,,
+Edn1,endothelin-1,Ednrb,2,,
+Edn3,endothelin-3,Ednrb,1,,
+Agt,angiotensin II,Agtr1a,1,,
+Agt,angiotensin II,Agtr1b,2,,
+Agt,angiotensin II,Agtr2,3,,
+Agt,angiotensin 1-7,Mas1,1,,
+Kng1,bradykinin,Bdkrb2,1,peripheral or pituitary,
+Kng1,bradykinin,Bdkrb1,2,peripheral or pituitary,
+Kng2,bradykinin,Bdkrb2,1,peripheral or pituitary,
+Kng2,bradykinin,Bdkrb1,2,peripheral or pituitary,
+Rln1,relaxin,Rxfp1,1,peripheral or pituitary,
+Rln1,relaxin,Rxfp2,2,peripheral or pituitary,
+Rln3,relaxin-3,Rxfp3,1,,
+Rln3,relaxin-3,Rxfp4,2,,
+Rln3,relaxin-3,Rxfp1,3,,
+Insl3,INSL3,Rxfp2,1,peripheral or pituitary,
+Insl5,INSL5,Rxfp4,1,peripheral or pituitary,
+Ins1,insulin,Insr,1,peripheral or pituitary,
+Ins2,insulin,Insr,1,peripheral or pituitary,
+Igf1,IGF-1,Igf1r,1,,
+Igf1,IGF-1,Insr,2,,
+Igf2,IGF-2,Igf1r,1,,
+Igf2,IGF-2,Insr,2,,
+Lep,leptin,Lepr,1,peripheral or pituitary,
+Ghrl,ghrelin,Ghsr,1,peripheral or pituitary,
+Prl,prolactin,Prlr,1,peripheral or pituitary,
+Gh,growth hormone,Ghr,1,peripheral or pituitary,
+Nps,neuropeptide S,Npsr1,1,,
+Npb,neuropeptide B,Npbwr1,1,,
+Npw,neuropeptide W,Npbwr1,1,,
+Pth,PTH,Pth1r,1,peripheral or pituitary,
+Pthlh,PTHrP,Pth1r,1,,
+Pth2,TIP39,Pth2r,1,,
+Apln,apelin,Aplnr,1,,
+Apela,ELABELA,Aplnr,1,,
+Uts2,urotensin II,Uts2r,1,,
+Uts2b,urotensin II-related peptide,Uts2r,1,,
+Prok1,prokineticin 1,Prokr1,1,,
+Prok1,prokineticin 1,Prokr2,2,,
+Prok2,prokineticin 2,Prokr2,1,,
+Prok2,prokineticin 2,Prokr1,2,,
+Pcsk1n,BigLEN,Gpr171,1,,
+Pcsk1n,PEN,Gpr83,1,,
+Vgf,TLQP-21,C3ar1,1,,

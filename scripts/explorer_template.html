@@ -131,7 +131,9 @@ button.chip:hover { border-color: var(--accent); }
 .mini { width: 100%; }
 .mini th { position: static; font-size: 11px; padding: 2px 3px; }
 .mini td.l { padding: 2px 6px 2px 0; color: var(--muted); font-size: 12px; line-height: 1.2; }
-.mini td.c { width: 40px; min-width: 40px; }
+.mini td.c { width: 30px; min-width: 26px; }
+#card details { margin: 6px 0; font-size: 12px; }
+#card summary { cursor: pointer; color: var(--muted); }
 .mini td.na { background: none; color: var(--muted); }
 .strow { display: grid; grid-template-columns: 54px minmax(0, 1fr) 30px 70px; gap: 6px; align-items: center; font-size: 12.5px; padding: 1px 0; }
 .strow .bar { height: 8px; background: var(--zero); border-radius: 0 4px 4px 0; overflow: hidden; }
@@ -185,13 +187,14 @@ button.chip:hover { border-color: var(--accent); }
 const $ = s => document.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => { const n = document.createElement(tag); for (const k in attrs) { if (k === 'text') n.textContent = attrs[k]; else if (k === 'html') n.innerHTML = attrs[k]; else if (k.startsWith('on')) n.addEventListener(k.slice(2), attrs[k]); else n.setAttribute(k, attrs[k]); } for (const k of kids) n.append(k); return n; };
 const RAMP = { light: ['#e9eff8', '#cde2fb', '#86b6ef', '#3987e5', '#1c5cab', '#0d366b'], dark: ['#243242', '#1c4a80', '#256abf', '#3987e5', '#86b6ef', '#d8e8fc'] };
-const COMP_COL = { light: ['#b9bcb6', '#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4'], dark: ['#555b57', '#3987e5', '#d95926', '#199e70', '#c98500', '#d55181'] };
+const COMP_COL = { light: ['#b9bcb6', '#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#82778b'], dark: ['#555b57', '#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#b7a6c4'] };
 const ST_COL = { light: ['#c9ccc6', '#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#6f7370', '#e87ba4', '#008300', '#6250d6', '#e34948'],
                  dark: ['#4a504c', '#3987e5', '#d95926', '#199e70', '#c98500', '#9a9f9b', '#d55181', '#0ca30c', '#9085e9', '#e66767'] };
-const COMP_KEYS = ['outside', 'VMHDM', 'VMHC', 'VMHVL', 'VMH', 'VMHSh'];
-const COMP_LABEL = { outside: 'outside VMH', VMHDM: 'dorsomedial', VMHC: 'central', VMHVL: 'ventrolateral', VMH: 'undivided ends', VMHSh: 'shell' };
-const COLS = ['DM', 'C', 'VL', 'shell'];
-let DATA, S = { view: 'map', gene: 'Oxtr', kind: 'receptor', ds: 'allen_m', sec: 0, color: 'gene', est: 'measured', q: '' };
+const COMP_KEYS = ['outside', 'VMHDM', 'VMHC', 'VMHVL', 'VMH', 'VMHSh', 'no_ccf'];
+const COMP_LABEL = { outside: 'outside VMH', VMHDM: 'dorsomedial', VMHC: 'central', VMHVL: 'ventrolateral', VMH: 'undivided ends', VMHSh: 'shell', no_ccf: 'unregistered' };
+const COLS = ['DM', 'C', 'VL', 'ends', 'shell'];
+const BRAIN_NAMES = { allen_m: 'Allen M', zhuang1_f: 'Zhuang 1 F', zhuang2_m: 'Zhuang 2 M' };
+let DATA, S = { view: 'map', gene: 'Oxtr', kind: 'receptor', ds: 'allen_m', sec: 0, color: 'gene', est: 'measured', matrixBrain: 'mix', q: '' };
 
 const theme = () => { const t = document.documentElement.getAttribute('data-theme'); return t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; };
 const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
@@ -217,7 +220,7 @@ function renderGenes() {
   document.querySelectorAll('#kind button').forEach(b => b.setAttribute('aria-pressed', b.dataset.kind === S.kind));
   const q = S.q.toLowerCase();
   const rows = DATA.order.filter(g => DATA.genes[g].kind === S.kind && (!q || g.toLowerCase().includes(q) || (DATA.genes[g].what || '').toLowerCase().includes(q)))
-    .map(g => [g, DATA.genes[g].proj.allen_m[4] || 0]).sort((a, b) => b[1] - a[1]);
+    .map(g => [g, DATA.genes[g].proj.allen_m[DATA.comps.indexOf('core')] || 0]).sort((a, b) => b[1] - a[1]);
   const box = $('#genelist'); box.textContent = '';
   if (!rows.length) box.append(el('p', { class: 'muted', style: 'padding:6px 12px', text: 'No gene matches.' }));
   for (const [g, v] of rows) {
@@ -228,7 +231,7 @@ function renderGenes() {
 
 // ---------------------------------------------------------------- gene card
 function heatCell(v, cls = 'c') {
-  if (v == null) return el('td', { class: cls + ' na', text: '' });
+  if (v == null) return el('td', { class: cls + ' na', text: '–', title: 'Estimate unavailable' });
   const t = v / 100;
   return el('td', { class: cls, style: `background:${v < 0.5 ? cssv('--zero') : ramp(t)};color:${v < 0.5 ? cssv('--muted') : inkOn(t)}`, text: v < 0.5 ? '' : fmt(v) });
 }
@@ -239,21 +242,32 @@ function renderCard() {
   c.append(el('p', {}, el('span', { class: 'chip', text: kindName }), g.family && g.kind !== 'context' ? el('span', { class: 'chip', text: g.family }) : '', g.tag && g.tag !== 'neuronal' ? el('span', { class: 'chip', text: g.tag }) : ''));
   if (g.what) c.append(el('p', {}, el('span', { class: 'muted', text: g.kind === 'ligand' ? 'Peptides: ' : g.kind === 'receptor' ? 'Principal coupling: ' : '' }), g.what));
   if (g.note) c.append(el('p', { class: 'muted', text: g.note }));
+  if (g.pairNotes) c.append(el('p', { class: 'muted', text: g.pairNotes }));
   if (g.partners.length) {
-    c.append(el('h4', { text: g.kind === 'ligand' ? 'Receptors for its peptides' : 'Genes encoding its ligands' }));
+    c.append(el('h4', { text: g.kind === 'ligand' ? 'Listed receptor genes and components' : 'Listed ligand genes' }));
     const p = el('p'); for (const x of g.partners) p.append(el('button', { class: 'chip', title: 'Show ' + x, text: x, onclick: () => select(x) })); c.append(p);
   }
-  c.append(el('h4', { text: 'Percent of neurons, by compartment' }));
+  c.append(el('h4', { text: 'Transcript detection by compartment (%)' }));
   const t = el('table', { class: 'mini' }), head = el('tr', {}, el('th'));
-  COLS.forEach(n => head.append(el('th', { text: n }))); t.append(head);
-  const rows = [['Projected, male mix', g.proj.allen_m], ['Projected, female mix', g.proj.zhuang1_f]];
-  if (g.meas.allen_m) rows.push(['Measured, Allen male', g.meas.allen_m]);
-  if (g.meas.zhuang1_f) rows.push(['Measured, Zhuang 1 female', g.meas.zhuang1_f]);
-  if (g.meas.zhuang2_m) rows.push(['Measured, Zhuang 2 male', g.meas.zhuang2_m]);
-  for (const [name, v] of rows) { const tr = el('tr', {}, el('td', { class: 'l', text: name })); for (let i = 0; i < 4; i++) tr.append(heatCell(v[i])); t.append(tr); }
+  COLS.forEach((n, i) => head.append(el('th', { text: n, title: COMP_LABEL[DATA.comps[i]] }))); t.append(head);
+  const rows = [];
+  for (const [ds, label] of Object.entries(BRAIN_NAMES)) {
+    rows.push([`Projected, ${label}`, g.proj[ds]]);
+    if (g.meas[ds]) rows.push([`Measured, ${label}`, g.meas[ds]]);
+  }
+  for (const [name, v] of rows) { const tr = el('tr', {}, el('td', { class: 'l', text: name })); for (let i = 0; i < COLS.length; i++) tr.append(heatCell(v[i])); t.append(tr); }
   c.append(t);
-  if (g.ubiquitous) c.append(el('p', { class: 'muted', text: 'Detected in most neurons, but no higher than in non-neuronal cells, so the test cannot place it.' }));
-  if (!g.meas.allen_m && !g.meas.zhuang1_f) c.append(el('p', { class: 'muted', text: 'Not on any spatial panel: projected values only.' }));
+  const differences = Object.entries(g.discordant).flatMap(([ds, comps]) => Object.entries(comps).map(([comp, call]) => {
+    const j = DATA.comps.indexOf(comp);
+    return `${BRAIN_NAMES[ds]}, ${COMP_LABEL[comp]}: ${call} reaches 10%. Measured ${g.meas[ds][j]}%, projected ${g.proj[ds][j]}%.`;
+  }));
+  if (differences.length) {
+    const details = el('details', {}, el('summary', { text: `Methods disagree at 10% (${differences.length})` }));
+    for (const text of differences) details.append(el('p', { class: 'muted', text }));
+    c.append(details);
+  }
+  if (g.ubiquitous) c.append(el('p', { class: 'muted', text: 'In some compartments, most neurons map to types with unresolved non-neuronal background.' }));
+  if (!Object.values(g.meas).some(Boolean)) c.append(el('p', { class: 'muted', text: 'Not on any spatial panel: projected values only.' }));
   c.append(el('h4', { text: 'Percent of cells, by VMH supertype' }));
   const callName = { B: 'broad', S: 'subset', s: 'sparse', g: 'glia level', '': 'background', '?': 'few cells' };
   DATA.supertypes.forEach((name, i) => {
@@ -263,15 +277,16 @@ function renderCard() {
   });
   if (g.src) {
     c.append(el('h4', { text: g.kind === 'ligand' ? 'Where it could come from' : 'Where its ligands could come from' }));
+    c.append(el('p', { text: `VMH transcript screen (10%): ${g.src.evidence}.` }));
+    if (g.src.conditional) c.append(el('p', { class: 'muted', text: g.src.conditional }));
     if (g.kind === 'ligand') {
-      c.append(el('p', { text: g.src.local ? `Made in VMH, most in ${COMP_LABEL[g.src.where] || 'the core'}.` : 'Not made by VMH neurons at 10% in any compartment.' }));
+      if (g.src.provisional) c.append(el('p', { class: 'muted', text: 'Provisional regional links: ' + g.src.provisional }));
       if (g.src.afferent) c.append(el('p', {}, el('span', { class: 'muted', text: 'Reported afferent regions making it: ' }), g.src.afferent));
-      if (g.src.endocrine) c.append(el('p', { text: 'Tagged endocrine: made mainly outside the brain.' }));
+      if (g.src.endocrine) c.append(el('p', { text: 'A curated peptide product has an endocrine source.' }));
       if (!g.src.afferent && !g.src.local && g.src.top) c.append(el('p', {}, el('span', { class: 'muted', text: 'Made elsewhere in the brain: ' }), g.src.top));
-    } else if (!g.src.inVmh) c.append(el('p', { text: 'Receptor not detected in VMH at 10% in any compartment.' }));
-    else {
+    } else if (g.src.inVmh) {
       c.append(el('p', {}, el('span', { class: 'chip', text: g.src.verdict })));
-      if (g.src.local) c.append(el('p', {}, el('span', { class: 'muted', text: 'Made in VMH: ' }), g.src.local));
+      if (g.src.local) c.append(el('p', {}, el('span', { class: 'muted', text: 'Local transcript evidence: ' }), g.src.local));
       if (g.src.afferent) c.append(el('p', {}, el('span', { class: 'muted', text: 'Afferent regions: ' }), g.src.afferent));
       if (g.src.endocrine) c.append(el('p', {}, el('span', { class: 'muted', text: 'Endocrine: ' }), g.src.endocrine));
     }
@@ -323,14 +338,16 @@ function fit(cv) {
 function cellValue(i, est) {       // returns [t in 0..1 or -1 for "none", text]
   const b = B();
   if (est === 'measured') {
-    const m = b.measured[S.gene], v = m.V[i], sig = (v / 255 * m.max).toFixed(1), cut = (m.thr / 255 * m.max).toFixed(1);
-    return v > m.thr ? [(v - m.thr) / Math.max(1, 255 - m.thr), `its own signal ${v >= 255 ? 'at least ' : ''}${sig} (log2), above the background cut-off of ${cut}`]
-      : [-1, `its own signal ${sig} (log2), at or below the background cut-off of ${cut}`];
+    const m = b.measured[S.gene], v = m.V[i], signal = v / 255 * m.max;
+    const above = (m.aboveBits[i >> 3] >> (i & 7)) & 1;
+    const intensity = Math.max(0, (signal - m.thr) / (m.max - m.thr));
+    const text = `its signal ≈${signal.toFixed(2)} (log2${v === 255 ? ', top of scale' : ''}), ${above ? 'above' : 'at or below'} cutoff ${m.thr.toFixed(2)}`;
+    return [above ? intensity : -1, text];
   }
   const c = b.CL[i], src = DATA.PS[c], of = ['its cluster', 'its supertype (too few sequenced cells of its cluster)', 'its subclass (too few sequenced cells of its cluster)'][src];
   if (src === 3) return [-1, 'no sequencing data for its cell type'];
   const p = DATA.P[S.gene][c];
-  return p >= 5 ? [p / 100, `${p}% of sequenced cells of ${of} express ${S.gene}`] : [-1, `${of} does not express ${S.gene}`];
+  return p >= 5 ? [p / 100, `${p}% estimated above-background detection of ${S.gene} in ${of}`] : [-1, `${of} has no above-background call for ${S.gene}`];
 }
 function draw(est) {
   const cv = $('#cv'); if (!cv) return;
@@ -362,22 +379,22 @@ function draw(est) {
   ctx.setLineDash([]);
   // scale bar
   ctx.fillStyle = ink; ctx.fillRect(14, h - 20, 0.2 * 1000 * f.k, 2); ctx.font = `11px ${cssv('--body')}`; ctx.fillText('200 µm', 14, h - 26);
-  ctx.fillStyle = cssv('--muted'); ctx.textAlign = 'right'; ctx.fillText('dorsal up · midline between the two hemispheres', w - 12, h - 12); ctx.textAlign = 'left';
+  ctx.fillStyle = cssv('--muted'); ctx.textAlign = 'right'; ctx.fillText('dorsal up', w - 12, h - 12); ctx.textAlign = 'left';
 }
 function legend(est) {
   const L = $('#legend'), th = theme(); L.textContent = '';
   const sw = (c, t, line) => el('span', {}, el('span', { class: line ? 'ln' : 'sw', style: line ? `border-color:${c}` : `background:${c}` }), t);
   if (S.color === 'gene') {
     const m = measuredHere();
-    L.append(el('span', {}, sw(cssv('--zero'), est === 'measured' ? 'at background' : 'cluster not expressing')),
-      el('span', {}, est === 'measured' ? 'just above' : '5%', el('span', { class: 'ramp', style: `background:linear-gradient(90deg,${[0, .25, .5, .75, 1].map(t => ramp(0.25 + 0.75 * t)).join(',')})` }), est === 'measured' ? `log2 signal ${m.max}` : '100% of the cluster'));
+    L.append(el('span', {}, sw(cssv('--zero'), est === 'measured' ? 'at background' : 'below call or unavailable')),
+      el('span', {}, est === 'measured' ? 'just above' : '5%', el('span', { class: 'ramp', style: `background:linear-gradient(90deg,${[0, .25, .5, .75, 1].map(t => ramp(0.25 + 0.75 * t)).join(',')})` }), est === 'measured' ? `log2 signal ${m.max.toFixed(2)}` : '100% of the cluster'));
     ['VMHDM', 'VMHC', 'VMHVL', 'VMH', 'VMHSh'].forEach(k => { if (B().sections[S.sec].outlines[k]) L.append(sw(COMP_COL[th][COMP_KEYS.indexOf(k)], COMP_LABEL[k], true)); });
   } else if (S.color === 'comp') COMP_KEYS.slice(1).concat('outside').forEach(k => L.append(sw(COMP_COL[th][COMP_KEYS.indexOf(k)], COMP_LABEL[k])));
   else { DATA.supertypes.forEach((n, i) => L.append(sw(ST_COL[th][i + 1], n))); L.append(sw(ST_COL[th][0], 'other neurons')); }
   const b = B(), s = b.sections[S.sec], g = G();
   let txt = `${s.n.toLocaleString()} neurons, ${s.nv.toLocaleString()} of VMH supertypes. Outlines are the unified atlas compartments, interpolated between plates, after this brain's alignment (shift ${b.shift[0].toFixed(2)} mm anterior-posterior). `;
   if (S.color === 'gene') txt += est === 'measured' ? `${S.gene} is on this brain's panel: each neuron shows its own in situ signal, grey when at or below the 95th percentile of non-neuronal cells.`
-    : `${measuredHere() ? '' : S.gene + ' is not on this brain’s panel. '}Projected: each neuron shows the share of its 10x cluster that expresses ${S.gene}, not its own signal.`;
+    : `${measuredHere() ? '' : S.gene + ' is not on this brain’s panel. '}Projected: color shows the ambient-adjusted 10x detection fraction for this cell’s cluster or its fallback type.`;
   $('#caption').textContent = txt;
 }
 function hideTip() { for (const id of ['#tip', '#ring']) { const n = $(id); if (n) n.style.display = 'none'; } }
@@ -393,7 +410,7 @@ function hover(e) {
   const b = B(), i = hit[5], full = DATA.clusters[b.CL[i]], id = full.match(/^\d+/), tip = $('#tip'), ring = $('#ring');
   tip.textContent = '';
   tip.append(el('div', {}, el('b', { text: full.replace(/^\d+ /, '') }), id ? el('span', { class: 'dim', text: ` · cluster ${id[0]}` }) : ''),
-    el('div', { text: ({ outside: 'outside the VMH compartments', VMH: 'undivided end of the VMH', VMHSh: 'VMH shell' })[COMP_KEYS[b.CP[i]]] || `${COMP_LABEL[COMP_KEYS[b.CP[i]]]} compartment` }));
+    el('div', { text: ({ outside: 'outside the VMH compartments', VMH: 'undivided end of the VMH', VMHSh: 'VMH shell', no_ccf: 'unregistered · compartment unknown' })[COMP_KEYS[b.CP[i]]] || `${COMP_LABEL[COMP_KEYS[b.CP[i]]]} compartment` }));
   if (S.color === 'gene') {
     const m = measuredHere(), other = est === 'measured' ? 'projected' : 'measured';
     tip.append(el('div', {}, el('b', { text: est === 'measured' ? 'Measured: ' : 'Projected: ' }), cellValue(i, est)[1]));
@@ -413,47 +430,60 @@ function hover(e) {
 // ---------------------------------------------------------------- all genes
 function renderMatrix() {
   const v = $('#view'); v.textContent = '';
-  const kind = S.kind === 'context' ? 'receptor' : S.kind;
+  const kind = S.kind;
   const rows = DATA.order.filter(g => DATA.genes[g].kind === kind).map(g => [g, DATA.genes[g]])
-    .filter(([, d]) => Math.max(...d.proj.allen_m.slice(0, 4), ...d.st.map((x, i) => 'BSs'.includes(d.stc[i]) && d.stc[i] ? x || 0 : 0)) >= 10)
-    .sort((a, b) => b[1].proj.allen_m[4] - a[1].proj.allen_m[4]);
+    .filter(([, d]) => !d.src || d.src.hit || d.stc.some(call => ['B', 'S', 's'].includes(call)))
+    .sort((a, b) => b[1].proj.allen_m[DATA.comps.indexOf('core')] - a[1].proj.allen_m[DATA.comps.indexOf('core')]);
   const t = el('table'), h1 = el('tr', {}, el('th', { class: 'grp' })), h2 = el('tr', {}, el('th'));
-  const groups = [['Compartments, male mix', COLS], ['Compartments, female mix', COLS], ['VMH supertypes (10x)', DATA.supertypes]];
+  const mix = S.matrixBrain === 'mix';
+  const ds = S.matrixBrain;
+  const groups = [[mix ? 'Compartments, Allen male mix' : 'Projected, ' + BRAIN_NAMES[ds], COLS],
+    [mix ? 'Compartments, Zhuang 1 female mix' : 'Measured, ' + BRAIN_NAMES[ds], COLS],
+    ['VMH supertypes (10x)', DATA.supertypes]];
   groups.forEach(([name, cols], gi) => { if (gi) { h1.append(el('th', { class: 'grp' })); h2.append(el('th')); } h1.append(el('th', { class: 'grp', colspan: cols.length, text: name })); cols.forEach(c => h2.append(el('th', { text: c }))); });
   t.append(el('thead', {}, h1, h2));
   const tb = el('tbody');
   for (const [g, d] of rows) {
     const tr = el('tr', { class: g === S.gene ? 'sel' : '' }, el('td', { class: 'g' }, el('button', { text: g, title: `Show ${g} on the map`, onclick: () => { S.view = 'map'; location.hash = 'map'; select(g); } })));
-    d.proj.allen_m.slice(0, 4).forEach(x => tr.append(heatCell(x))); tr.append(el('td', { class: 'gap' }));
-    d.proj.zhuang1_f.slice(0, 4).forEach(x => tr.append(heatCell(x))); tr.append(el('td', { class: 'gap' }));
+    const first = mix ? d.proj.allen_m : d.proj[ds];
+    const second = mix ? d.proj.zhuang1_f : d.meas[ds];
+    first.slice(0, COLS.length).forEach(x => tr.append(heatCell(x))); tr.append(el('td', { class: 'gap' }));
+    (second || COLS.map(() => null)).slice(0, COLS.length).forEach(x => tr.append(heatCell(x))); tr.append(el('td', { class: 'gap' }));
     d.st.forEach((x, i) => tr.append(heatCell('BSs'.includes(d.stc[i]) && d.stc[i] ? x : (d.stc[i] === '?' ? null : 0))));
     tb.append(tr);
   }
   t.append(tb);
-  v.append(el('div', { id: 'toolbar' }, el('span', { class: 'muted', text: `${rows.length} ${kind === 'ligand' ? 'peptide precursors' : 'receptors'} reaching 10% in a compartment or supertype. Percent of neurons expressing; choose Peptides or Receptors in the gene list.` })),
+  const brain = el('select', { 'aria-label': 'Matrix brain', onchange: e => { S.matrixBrain = e.target.value; renderMatrix(); } });
+  brain.append(el('option', { value: 'mix', text: 'Compare brain mixes' }));
+  for (const [ds, label] of Object.entries(BRAIN_NAMES)) brain.append(el('option', { value: ds, text: label }));
+  brain.value = S.matrixBrain;
+  v.append(el('div', { id: 'toolbar' }, brain, el('span', { class: 'muted', text: `${rows.length} ${kind} genes · compartment detection (%) and 10x supertype calls. Select a gene for paired differences.` })),
     el('div', { class: 'scroll', style: 'padding:0 0 12px' }, t));
 }
 
 // ---------------------------------------------------------------- sources
+function peakEvidence(src) {
+  return `${src.evidence} · ${BRAIN_NAMES[src.brain]}, ${COMP_LABEL[src.compartment]}, ${src.method} ${src.peak}%`;
+}
 function renderSources() {
   const v = $('#view'); v.textContent = '';
   const pad = el('div', { class: 'pad' });
   pad.append(el('h3', { text: 'Receptors in VMH and where a cognate peptide could come from' }),
-    el('p', { text: 'Transcript-level evidence. Local: VMH neurons make the peptide. Afferent: neurons in a region reported to project to VMH make it, which does not show that those neurons are the ones projecting. Percentages are the share of a region’s neurons in expressing clusters.' }));
-  const t = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['Receptor', 'Most in', 'Sources', 'Made in VMH', 'Afferent regions', 'Endocrine'].map(x => el('th', { text: x })))));
+    el('p', { text: 'Transcript-level evidence. Local evidence requires measured or projected transcript detection in at least 10% of a compartment in one brain. Afferent: neurons in a region reported to project to VMH make it, which does not show that those neurons are the ones projecting. Percentages are the share of a region’s neurons in expressing clusters.' }));
+  const t = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['Receptor', 'VMH evidence', 'Sources', 'Local precursors', 'Afferent regions', 'Endocrine'].map(x => el('th', { text: x })))));
   const tb = el('tbody');
   DATA.order.filter(g => DATA.genes[g].kind === 'receptor' && DATA.genes[g].src && DATA.genes[g].src.inVmh)
-    .sort((a, b) => Math.max(...DATA.genes[b].proj.allen_m.slice(0, 4)) - Math.max(...DATA.genes[a].proj.allen_m.slice(0, 4)))
-    .forEach(g => { const d = DATA.genes[g], p = d.proj.allen_m.slice(0, 4), mx = Math.max(...p);
+    .sort((a, b) => DATA.genes[b].src.peak - DATA.genes[a].src.peak)
+    .forEach(g => { const d = DATA.genes[g];
       tb.append(el('tr', {}, el('td', { class: 'g', style: 'position:static' }, el('button', { text: g, onclick: () => select(g) })),
-        el('td', { text: d.ubiquitous && mx < 10 ? 'ubiquitous' : `${COLS[p.indexOf(mx)]} ${fmt(mx)}%` }), el('td', { text: d.src.verdict }), el('td', { text: d.src.local }), el('td', { text: d.src.afferent }), el('td', { text: d.src.endocrine }))); });
+        el('td', { text: peakEvidence(d.src) }), el('td', { text: d.src.verdict }), el('td', { text: d.src.local }), el('td', { text: d.src.afferent }), el('td', { text: d.src.endocrine }))); });
   t.append(tb); pad.append(t);
-  pad.append(el('h3', { text: 'Peptides made in VMH' }), el('p', { text: 'Precursors reaching 10% of neurons in a compartment, and the receptors for their peptides.' }));
-  const t2 = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['Precursor', 'Peptides', 'Most in', 'Receptors listed'].map(x => el('th', { text: x })))));
+  pad.append(el('h3', { text: 'Precursors with local transcript evidence' }), el('p', { text: 'Precursors reaching 10% of neurons in a compartment, and the receptors for their peptides.' }));
+  const t2 = el('table', { class: 'wide' }, el('thead', {}, el('tr', {}, ...['Precursor', 'Peptides', 'VMH evidence', 'Listed receptors or components'].map(x => el('th', { text: x })))));
   const tb2 = el('tbody');
-  DATA.order.filter(g => DATA.genes[g].kind === 'ligand' && DATA.genes[g].src && DATA.genes[g].src.local).forEach(g => { const d = DATA.genes[g], p = d.proj.allen_m.slice(0, 4), mx = Math.max(...p);
+  DATA.order.filter(g => DATA.genes[g].kind === 'ligand' && DATA.genes[g].src && DATA.genes[g].src.local).forEach(g => { const d = DATA.genes[g];
     const cell = el('td'); d.partners.forEach(x => cell.append(el('button', { class: 'chip', text: x, onclick: () => select(x) }))); if (!d.partners.length) cell.textContent = 'none assigned';
-    tb2.append(el('tr', {}, el('td', { class: 'g', style: 'position:static' }, el('button', { text: g, onclick: () => select(g) })), el('td', { text: d.what }), el('td', { text: `${COLS[p.indexOf(mx)]} ${fmt(mx)}%` }), cell)); });
+    tb2.append(el('tr', {}, el('td', { class: 'g', style: 'position:static' }, el('button', { text: g, onclick: () => select(g) })), el('td', { text: d.what }), el('td', { text: peakEvidence(d.src) }), cell)); });
   t2.append(tb2); pad.append(t2);
   v.append(el('div', { class: 'scroll' }, pad));
 }
@@ -481,7 +511,7 @@ async function boot() {
   if (!DATA) { $('#view').append(el('p', { style: 'padding:16px', text: 'The atlas data could not be loaded: data.js must sit in the same folder as this page.' })); return; }
   for (const b of Object.values(DATA.brains)) {
     b.X = b64(b.x, Int16Array); b.Y = b64(b.y, Int16Array); b.CL = b64(b.cl, Uint16Array); b.ST = b64(b.st, Uint8Array); b.CP = b64(b.cp, Uint8Array);
-    for (const m of Object.values(b.measured)) m.V = b64(m.v, Uint8Array);
+    for (const m of Object.values(b.measured)) { m.V = b64(m.v, Uint8Array); m.aboveBits = b64(m.above, Uint8Array); }
   }
   DATA.P = {}; for (const g in DATA.projected) DATA.P[g] = b64(DATA.projected[g], Uint8Array);
   DATA.PS = b64(DATA.projSrc, Uint8Array);

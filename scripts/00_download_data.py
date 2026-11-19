@@ -9,8 +9,8 @@ official abc_atlas_access cache, so that package can read them too.
 
 Usage (from the repository root):
     python3 scripts/00_download_data.py --dry-run            # list what would be fetched
-    python3 scripts/00_download_data.py                      # core tier (~24 GB)
-    python3 scripts/00_download_data.py --tiers core zhuang  # + Zhuang MERFISH (~4.6 GB)
+    python3 scripts/00_download_data.py                      # core + Zhuang (~28 GB)
+    python3 scripts/00_download_data.py --tiers core zhuang  # explicit default
     python3 scripts/00_download_data.py --tiers imputed      # imputed MERFISH (~50 GB)
 
 Interrupted downloads resume where they stopped; completed files are skipped.
@@ -46,7 +46,7 @@ def md5sum(path):
     return h.hexdigest()
 
 
-def fetch(url, dest, size, retries=8):
+def fetch(url, dest, size, expected_md5, retries=8):
     """Download url to dest, resuming from a .part file when present."""
     part = dest.with_name(dest.name + ".part")
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -91,12 +91,15 @@ def fetch(url, dest, size, retries=8):
     have = part.stat().st_size if part.exists() else 0
     if have != size:
         raise RuntimeError(f"size mismatch for {dest.name}: got {have}, expected {size}")
-    part.rename(dest)
+    if expected_md5 and md5sum(part) != expected_md5:
+        part.unlink()
+        raise ValueError("Downloaded file failed its pinned MD5")
+    part.replace(dest)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--tiers", nargs="+", default=["core"], choices=["core", "zhuang", "imputed"])
+    ap.add_argument("--tiers", nargs="+", default=["core", "zhuang"], choices=["core", "zhuang", "imputed"])
     ap.add_argument("--dest", default=str(abc_root()),
                     help="download directory (default: <data_root>/abc_atlas, see config/paths.json)")
     ap.add_argument("--manifest", default=str(MANIFEST), help="manifest CSV (default: config/data_manifest.csv)")
@@ -111,29 +114,23 @@ def main():
     print(f"{len(rows)} files, {human(total)} total, tiers: {', '.join(args.tiers)}")
     print(f"destination: {dest_root}\n")
 
-    todo, failed, warned = 0, [], []
+    todo, failed = 0, []
     for i, r in enumerate(rows, 1):
         size = int(r["size_bytes"])
         dest = dest_root / r["relative_path"]
         label = f"[{i:2d}/{len(rows)}] {r['directory']}/{r['name']} ({human(size)})"
         if dest.exists() and dest.stat().st_size == size:
-            print(f"{label}: already present")
-            continue
+            if args.dry_run or args.no_verify or md5sum(dest) == r["md5"]:
+                print(f"{label}: already present")
+                continue
+            print(f"{label}: existing MD5 mismatch, fetching pinned file")
         todo += size
         if args.dry_run:
             print(f"{label}: to download")
             continue
         print(f"{label}: downloading")
         try:
-            fetch(r["url"], dest, size)
-            if not args.no_verify:
-                got = md5sum(dest)
-                if got != r["md5"]:
-                    # Size already matched, so this usually means the file was
-                    # re-released upstream after the manifest was pinned. Keep it.
-                    print(f"    WARNING: MD5 differs from pinned manifest ({got} != {r['md5']}); file kept")
-                    warned.append(r["relative_path"])
-                    continue
+            fetch(r["url"], dest, size, None if args.no_verify else r["md5"])
             print("    ok")
         except Exception as err:  # keep going; report at the end
             print(f"    FAILED: {err}")
@@ -147,12 +144,7 @@ def main():
         for f in failed:
             print("  ", f)
         return 1
-    if warned:
-        print(f"\nAll files present; {len(warned)} had a checksum that differs from the pinned manifest:")
-        for f in warned:
-            print("  ", f)
-        return 2
-    print("\nAll files present and verified.")
+    print("\nAll files present." if args.no_verify else "\nAll files present and verified.")
     return 0
 
 

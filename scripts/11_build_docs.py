@@ -19,18 +19,14 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from common import DATASETS  # noqa: E402
+from common import COMPARTMENTS as COMPS, DATASETS  # noqa: E402
 from paths import CONFIG, REPO, RESULTS  # noqa: E402
 
 T, OUT = RESULTS / "tables", REPO / "docs"
 REPO_URL = "https://github.com/CharlesXu-Jingyue/VMH_NP"
-COMPS = ["VMHDM", "VMHC", "VMHVL", "VMHSh"]
-PANEL = {"allen_m": "550 genes", "zhuang1_f": "1,122 genes", "zhuang2_m": "1,122 genes"}
+PANEL = {"allen_m": "500 target genes and 50 blank controls", "zhuang1_f": "1,122 genes", "zhuang2_m": "1,122 genes"}
 FIGURES = ["atlas_interpolation.png", "atlas_alignment_zhuang1_f.png", "supertype_by_compartment.png",
            "projected_vs_measured.png", "compartment_ligands.png", "compartment_receptors.png"]
-SOURCE_ORDER = [("local + afferent", "Local, also afferent"), ("afferent", "Afferent only"),
-                ("afferent + endocrine", "Afferent and endocrine"), ("endocrine", "Endocrine only"),
-                ("no source identified", "No source among the listed regions")]
 
 
 def td(v, cls=""):
@@ -103,13 +99,26 @@ def main():
     assert ov.unified_core_centroid_posterior_um > 0, "template sentence says the unified core lies posterior of the Allen CCF VMH"
 
     # projected against measured (same selection as steps 6 and 8: the five atlas compartments)
-    v = gb[gb.measured & gb.compartment.isin(COMPS + ["VMH"]) & gb.kind.isin(["ligand", "receptor"])]
+    v = gb[gb.measured & gb.compartment.isin(COMPS) & gb.kind.isin(["ligand", "receptor"])]
     rho = {ds: v[v.dataset == ds][["proj_frac", "meas_frac"]].corr(method="spearman").iloc[0, 1] for ds in DATASETS}
     fill["spearman_sentence"] = ", ".join(f"{rho[ds]:.2f} ({short[ds]})" for ds in DATASETS)
 
-    # main results: male Allen projection
+    within = {}
+    for ds, group in v.groupby("dataset"):
+        correlations = [g.proj_frac.corr(g.meas_frac, method="spearman") for _, g in group.groupby("gene")
+                        if g.proj_frac.nunique() > 1 and g.meas_frac.nunique() > 1]
+        within[ds] = f"{pd.Series(correlations).median():.2f} ({len(correlations)} genes in {short[ds]})"
+    fill["within_gene"] = ", ".join(within[ds] for ds in DATASETS)
+    scores = pd.read_csv(T / "ligand_calibration.csv").set_index("evaluation")
+    calibration = scores.loc["calibration"]
+    fill["held_out_f1"] = f"{scores.loc['held-out clusters', 'f1']:.3f}"
+    fill["calibration"] = f"F1 {calibration.f1:.3f} over {int(calibration.n_pairs):,} hypothalamic cluster–gene pairs"
+    fill["n_tracing"] = int((regions.evidence_type == "mouse tracing citation").sum())
+    # Use the Allen projection as reference columns after screening all brains and both methods.
+    src = pd.read_csv(T / "ligand_sources.csv").set_index("gene")
+    evidence = pd.concat([src.spatial_evidence[src.local], conc.set_index("receptor").query("in_vmh").spatial_evidence])
     a = gb[(gb.dataset == "allen_m") & gb.compartment.isin(COMPS)].pivot(index=["gene", "kind"], columns="compartment", values="proj_frac")[COMPS]
-    hit = a[a.max(axis=1) >= 0.10].reset_index().set_index("gene")
+    hit = a.reset_index().set_index("gene").loc[evidence.index].copy()
     hit["top"] = hit[COMPS].max(axis=1)
     L, R = hit[hit.kind == "ligand"].sort_values("top", ascending=False), hit[hit.kind == "receptor"].copy()
     fill["n_lig_hit"], fill["n_rec_hit"] = len(L), len(R)
@@ -122,7 +131,7 @@ def main():
         note = lig.loc[g, "note"]
         return note.split(";")[0].strip() if isinstance(note, str) and note.strip() else str(lig.loc[g, "family"]).lower() + " precursor"
     fill["ligand_rows"] = "\n".join(
-        tr(td(f"<i>{g}</i>"), td(html.escape(peptide(g))), *[td(pct(r[c]), "n") for c in COMPS]) for g, r in L.iterrows())
+        tr(td(f"<i>{g}</i>"), td(html.escape(peptide(g))), td(evidence[g]), *[td(pct(r[c]), "n") for c in COMPS]) for g, r in L.iterrows())
 
     def lean(r):
         dm, vl = r.VMHDM, r.VMHVL
@@ -133,19 +142,19 @@ def main():
     R["order"] = R.leans.map({"": 0, "dorsomedial": 1, "ventrolateral": 2})
     R = R.sort_values(["order", "top"], ascending=[True, False])
     fill["receptor_rows"] = "\n".join(
-        tr(td(f"<i>{g}</i>"), td(html.escape(str(rec.loc[g, "family"]))), td(r.leans or "no"), *[td(pct(r[c]), "n") for c in COMPS]) for g, r in R.iterrows())
+        tr(td(f"<i>{g}</i>"), td(html.escape(str(rec.loc[g, "family"]))), td(r.leans or "no"), td(evidence[g]), *[td(pct(r[c]), "n") for c in COMPS]) for g, r in R.iterrows())
 
     # sex
     fill["sex_sentence"] = (f"{len(sex)} supertype-by-gene tests in {sex.supertype.nunique()} supertypes, "
-                            f"lowest false discovery rate {sex.q_value.min():.2f}")
+                            f"lowest adjusted p-value {sex.q_value.min():.2f}")
     assert sex.q_value.min() > 0.05, "template says no sex difference survives correction"
 
     # ligand sources
     inv = conc[conc.in_vmh]
-    assert set(inv.ligand_sources) <= {k for k, _ in SOURCE_ORDER}, "a ligand source category is missing from SOURCE_ORDER"
     fill["source_rows"] = "\n".join(
-        tr(td(label), td(str((inv.ligand_sources == key).sum()), "n"), td(genes(inv[inv.ligand_sources == key].sort_values("vmh_max", ascending=False).receptor)))
-        for key, label in SOURCE_ORDER)
+        tr(td(html.escape(verdict.capitalize())), td(str(len(group)), "n"),
+           td(genes(group.sort_values("peak_fraction", ascending=False).receptor)))
+        for verdict, group in inv.groupby("ligand_sources"))
 
     page = (HERE / "documentation_fragment.html").read_text()
     page = page[page.index("-->") + 3:].strip()                # drop the note to maintainers at the top

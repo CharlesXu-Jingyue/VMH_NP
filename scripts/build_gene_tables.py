@@ -203,11 +203,24 @@ def main():
             ligs = sorted({lg for lg, lv in L.items() for _, rs in lv["pairs"] if g in rs})
             w.writerow([g, v["family"], v["principal_coupling"], "; ".join(ligs), v["note"]])
     with open(CONFIG / "ligand_receptor_pairs.csv", "w", newline="") as fh:
-        w = csv.writer(fh); w.writerow(["ligand_gene", "peptide", "receptor_gene", "rank"])
+        w = csv.writer(fh, lineterminator="\n"); w.writerow(["ligand_gene", "peptide", "receptor_gene", "rank", "endocrine_source", "qualification"])
         for g, v in L.items():
             for pep, rs in v["pairs"]:
                 for i, r in enumerate(rs, 1):
-                    w.writerow([g, pep, r, i])
+                    endocrine = "peripheral or pituitary" if v["source_class"] == "endocrine" else ""
+                    if g == "Gcg":
+                        endocrine = "pancreas" if pep == "glucagon" else "intestine"
+                    if g == "Pomc" and pep == "ACTH":
+                        endocrine = "pituitary"
+                    qualification = ""
+                    if len(rs) > 1 and rs[0] in ("Calcrl", "Calcr"):
+                        partners = " or ".join(rs[1:]) if r == rs[0] else rs[0]
+                        qualification = f"requires same-cell {partners}"
+                    elif g == "Cartpt":
+                        qualification = "proposed receptor"
+                    elif pep == "calcitonin":
+                        qualification = "requires calcitonin splice product"
+                    w.writerow([g, pep, r, i, endocrine, qualification])
     with open(CONFIG / "context_genes.csv", "w", newline="") as fh:
         w = csv.writer(fh); w.writerow(["gene", "role"])
         w.writerows(CONTEXT.items())

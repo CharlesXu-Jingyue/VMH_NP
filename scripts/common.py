@@ -29,6 +29,11 @@ def load_cells(ds):
     return c
 
 
+COMPARTMENTS = ["VMHDM", "VMHC", "VMHVL", "VMH", "VMHSh"]
+CORE = ["VMHDM", "VMHC", "VMHVL", "VMH"]
+DETECTION_MIN = 0.10
+
+
 # display colours shared by figures and the explorer (validated categorical order)
 COMPARTMENT_COLOURS = {"VMHDM": "#2a78d6", "VMHC": "#eb6834", "VMHVL": "#1baf7a", "VMH": "#eda100", "VMHSh": "#e87ba4",
                        "outside": "#c9c8c2"}

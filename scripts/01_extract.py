@@ -6,7 +6,7 @@ outputs already exist (delete the files to recompute), and stages are small enou
 run one at a time in a memory-limited (about 3 GB) or time-limited environment.
 
 Stage groups
-  merfish_*   Allen MERFISH (male, 550-gene matrix): cells around VMH with all panel genes,
+  merfish_*   Allen MERFISH (male, 500 target genes and 50 blank controls): cells around VMH with all panel genes,
               plus whole-brain counts of cells per (cluster, CCF structure)
   zhuang*_*   Zhuang MERFISH brains 1 (female) and 2 (male), 1,122 genes: same
   tenx_*      10x v2/v3 hypothalamus matrices: curated genes for every QC-passed cell

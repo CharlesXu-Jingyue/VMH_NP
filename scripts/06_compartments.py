@@ -14,13 +14,13 @@ first four. Two estimates are given for every curated gene and compartment:
               "ubiquitous" (glia_level_share), since the test cannot place them.
   measured    for genes on the brain's own spatial panel: fraction of the compartment's neurons
               above a background threshold, the 95th percentile of that gene in non-neuronal
-              cells of the same brain. About 5% is therefore expected by chance.
+              cells of the same brain. Ties at the cutoff can leave fewer than 5% of reference cells above it.
 
 Outputs (results/tables)
   compartment_composition.csv   neurons per brain, compartment and supertype
   gene_by_compartment.csv       both estimates for every gene, brain and compartment
   gene_by_ap.csv                projected fraction in the anterior, middle and posterior thirds of the core
-  sex_differences.csv           female vs male 10x libraries, per VMH supertype and gene
+  sex_differences.csv           female vs male 10x donors, per VMH supertype and gene
 and <data_root>/derived/cluster_projection.parquet (per-cluster values used for projection).
 """
 import sys
@@ -33,12 +33,10 @@ import scipy.sparse as sp
 from scipy.stats import rankdata
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import D, DATASETS, NON_NEURONAL, load_cells  # noqa: E402
+from common import COMPARTMENTS, CORE, DETECTION_MIN, D, DATASETS, NON_NEURONAL, load_cells  # noqa: E402
 from paths import CONFIG, RESULTS  # noqa: E402
 
 T = RESULTS / "tables"
-COMPARTMENTS = ["VMHDM", "VMHC", "VMHVL", "VMH", "VMHSh"]
-CORE = ["VMHDM", "VMHC", "VMHVL", "VMH"]
 
 
 def rank_sum_exact(a, b):
@@ -134,7 +132,7 @@ def main():
         X, panel = z["X"], list(z["genes"])
         assert (z["cell_label"] == c.cell_label.values).all()
         nn = c["class"].str.contains(NON_NEURONAL).values
-        thr = {g: float(np.percentile(X[nn, panel.index(g)], 95)) for g in genes if g in panel}
+        thr = {g: float(np.percentile(X[nn, panel.index(g)].astype(float), 95)) for g in genes if g in panel}
         n = c[c.neuron]
         Xn = X[c.neuron.values]
         groups = {k: (n.compartment == k).values for k in COMPARTMENTS}
@@ -155,7 +153,7 @@ def main():
                            cluster_level_coverage=cover, measured=g in panel)
                 if g in panel:
                     v = Xn[m, panel.index(g)]
-                    row.update(meas_frac=float((v > thr[g]).mean()), meas_mean=float(v.mean()), meas_threshold=thr[g])
+                    row.update(meas_frac=float((v.astype(float) > thr[g]).mean()), meas_mean=float(v.mean()), meas_threshold=thr[g])
                 gene_rows.append(row)
         # anterior / middle / posterior thirds of the core, equal neuron counts
         core = n[groups["core"] & n.ap_aligned.notna().values]
@@ -179,6 +177,13 @@ def main():
     # "ubiquitous": most neurons are of types that detect the gene but not above the non-neuronal level
     gb["call"] = np.select([gb.proj_frac >= 0.5, gb.proj_frac >= 0.2, gb.proj_frac >= 0.1, gb.glia_level_share >= 0.5],
                            ["broad", "subset", "sparse", "ubiquitous"], "low")
+    gb["projected_hit"] = gb.proj_frac >= DETECTION_MIN
+    gb["measured_hit"] = (gb.meas_frac >= DETECTION_MIN).astype("boolean").where(gb.measured)
+    measured_hit = gb.measured_hit.fillna(False).to_numpy(dtype=bool)
+    gb["evidence"] = np.select(
+        [~gb.measured, gb.projected_hit & measured_hit,
+         measured_hit, gb.projected_hit],
+        ["off panel", "both above", "measured only", "projected only"], default="both below")
     gb.to_csv(T / "gene_by_compartment.csv", index=False, float_format="%.4g")
     pd.DataFrame(ap_rows).to_csv(T / "gene_by_ap.csv", index=False, float_format="%.4g")
     cols = {"cluster": list(proj_types), "source": [v[2] for v in proj_types.values()]}
@@ -197,7 +202,7 @@ def main():
 
 
 def sex_differences(kind):
-    """Female vs male 10x v3 libraries for each VMH supertype: Mann-Whitney on per-library detection fraction."""
+    """Female vs male 10x v3 donors for each VMH supertype: exact rank-sum on per-donor detection fractions."""
     cells = pd.read_parquet(D / "tenx_cells.parquet").reset_index(drop=True)
     X = sp.load_npz(D / "tenx_expr.npz").tocsc()
     genes = pd.read_csv(D / "tenx_genes.csv").gene.tolist()
@@ -209,13 +214,13 @@ def sex_differences(kind):
     v3 = cells[(cells.library_method == "10Xv3") & cells.supertype.str.contains(" VMH ", na=False)]
     rows = []
     for st, d in v3.groupby("supertype"):
-        lib_n = d.groupby(["library_label", "donor_sex"]).size()
-        lib_n = lib_n[lib_n >= 15]
-        libs = lib_n.index.get_level_values(0)
-        sexes = pd.Series(lib_n.index.get_level_values(1), index=libs)
-        if (sexes == "F").sum() < 3 or (sexes == "M").sum() < 3:
+        # Keep the library coverage criterion, then pool eligible cells by biological donor.
+        eligible = d[d.groupby("library_label").cell_label.transform("size") >= 15]
+        donors = eligible.groupby(["donor_sex", "donor_label"]).groups
+        if any(sum(sex == key[0] for key in donors) < 3 for sex in ("F", "M")):
             continue
-        idx = {lib: d.index[d.library_label == lib].values for lib in libs}
+        libraries = eligible.groupby("donor_sex").library_label.nunique()
+        tested_cells = eligible.groupby("donor_sex").size()
         for j, g in enumerate(genes):
             if kind.get(g) not in ("ligand", "receptor") or (st, g) not in piv["F"].index or (st, g) not in piv["M"].index:
                 continue
@@ -224,11 +229,13 @@ def sex_differences(kind):
                 continue
             col = X[:, j]
             # integer count over integer size: equal fractions are exactly equal, so ties do not depend on the platform
-            fr = {lib: int((col[i] > 0).sum()) / len(i) for lib, i in idx.items()}
-            a = [fr[lib] for lib in libs if sexes[lib] == "F"]
-            b = [fr[lib] for lib in libs if sexes[lib] == "M"]
+            fractions = {key: int((col[idx] > 0).sum()) / len(idx) for key, idx in donors.items()}
+            a = [v for (sex, _), v in fractions.items() if sex == "F"]
+            b = [v for (sex, _), v in fractions.items() if sex == "M"]
             p = rank_sum_exact(a, b)
-            rows.append(dict(supertype=st, gene=g, kind=kind[g], n_libraries_F=len(a), n_libraries_M=len(b),
+            rows.append(dict(supertype=st, gene=g, kind=kind[g], n_donors_F=len(a), n_donors_M=len(b),
+                             n_libraries_F=libraries["F"], n_libraries_M=libraries["M"],
+                             tested_cells_F=tested_cells["F"], tested_cells_M=tested_cells["M"],
                              n_cells_F=int(f.n_cells), n_cells_M=int(m.n_cells), excess_frac_F=float(f.excess_frac),
                              excess_frac_M=float(m.excess_frac), difference_F_minus_M=float(f.excess_frac - m.excess_frac),
                              log2cpm_F=float(f.mean_log2cpm), log2cpm_M=float(m.mean_log2cpm), p_value=p))

@@ -29,12 +29,13 @@ Outputs (results/tables):
 import sys
 from pathlib import Path
 
+import h5py
 import numpy as np
 import pandas as pd
 import scipy.sparse as sp
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from paths import RESULTS, data_root  # noqa: E402
+from paths import RESULTS, abc_file, data_root  # noqa: E402
 
 D = data_root() / "derived"
 OUT = RESULTS / "tables"
@@ -49,12 +50,24 @@ def load():
     genes = pd.read_csv(D / "tenx_genes.csv").gene.tolist()
     C = X.copy()
     C.data = np.exp2(C.data) - 1.0                       # log2(CPM+1) -> CPM
-    # total counts per cell from the smallest nonzero CPM, which corresponds to one count
-    nz = np.diff(C.indptr)
-    one = np.full(C.shape[0], np.nan)
-    one[nz > 0] = np.minimum.reduceat(C.data, C.indptr[:-1][nz > 0])
-    cells["n_counts"] = 1e6 / one
-    cells["n_counts"] = cells.n_counts.fillna(cells.n_counts.median())
+    # Infer one UMI from the full transcriptome before selecting the curated genes.
+    for matrix, group in cells.groupby("feature_matrix_label"):
+        directory = matrix.rsplit("-HY", 1)[0]
+        with h5py.File(abc_file(directory, matrix + "/log2"), "r") as source:
+            labels = pd.Index(source["obs/cell_label"].asstr()[:])
+            positions = labels.get_indexer(group.cell_label)
+            if (positions < 0).any():
+                raise ValueError(f"Unmatched cell IDs in {matrix}")
+            ptr = source["X/indptr"][:]
+            depth = np.empty(len(labels))
+            for start in range(0, len(labels), 2000):
+                block = ptr[start:start + 2001]
+                if np.any(np.diff(block) == 0):
+                    raise ValueError(f"Empty transcriptome in {matrix}")
+                values = source["X/data"][block[0]:block[-1]]
+                minimum = np.minimum.reduceat(values, block[:-1] - block[0])
+                depth[start:start + len(minimum)] = np.rint(1e6 / np.expm1(minimum.astype(float) * np.log(2)))
+            cells.loc[group.index, "n_counts"] = depth[positions]
     cells["neuron"] = ~cells["class"].str.contains(NON_NEURONAL)
     return cells, C, genes
 
@@ -67,8 +80,8 @@ def background(cells, C, genes):
     nn = cells[~cells.neuron]
     glob = {}
     for chem, d in nn.groupby("library_method"):
-        per_class = [np.asarray(C[idx.values].mean(0)).ravel() for _, idx in
-                     d.groupby("class").apply(lambda x: pd.Series(x.index)).groupby(level=0) if len(idx) >= 200]
+        per_class = [np.asarray(C[group.index].mean(0)).ravel()
+                     for _, group in d.groupby("class") if len(group) >= 200]
         glob[chem] = np.min(per_class, axis=0)
     chem_of_lib = cells.groupby("library_label").library_method.first()
     for li, lib in enumerate(libs):
@@ -101,8 +114,9 @@ def summarise(cells, C, genes, A, lib_codes):
                 m = (cells.library_method == chem)
                 if sex != "all":
                     m &= cells.donor_sex == sex
-                for name, idx in cells[m].groupby(level).indices.items():
-                    groups.append((level, name, chem, sex, cells[m].index.values[idx]))
+                subset = cells[m]
+                for name, idx in subset.groupby(level).indices.items():
+                    groups.append((level, name, chem, sex, subset.index.values[idx]))
     for level, name, chem, sex, idx in groups:
         if len(idx) < 5:
             continue

@@ -17,14 +17,13 @@ import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import COMPARTMENT_COLOURS, COMPARTMENT_NAMES, DATASETS, VMH_SUPERTYPES  # noqa: E402
+from common import COMPARTMENTS as COMPS, COMPARTMENT_COLOURS, COMPARTMENT_NAMES, DATASETS, VMH_SUPERTYPES  # noqa: E402
 from paths import RESULTS  # noqa: E402
 
 T, F = RESULTS / "tables", RESULTS / "figures"
 SURFACE, INK, MUTED, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e6e5e0"
 SEQ = LinearSegmentedColormap.from_list("blue", ["#f3f6fb", "#cde2fb", "#86b6ef", "#3987e5", "#1c5cab", "#0d366b"])
-COMPS = ["VMHDM", "VMHC", "VMHVL", "VMHSh"]
-SHORT = {"VMHDM": "DM", "VMHC": "C", "VMHVL": "VL", "VMHSh": "shell"}
+SHORT = {"VMHDM": "DM", "VMHC": "C", "VMHVL": "VL", "VMHSh": "shell", "VMH": "ends"}
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.edgecolor": GRID, "axes.labelcolor": MUTED,
                      "xtick.color": MUTED, "ytick.color": INK, "text.color": INK, "figure.facecolor": SURFACE,
                      "axes.facecolor": SURFACE, "savefig.facecolor": SURFACE})
@@ -55,23 +54,19 @@ def heat(ax, M, title, annotate=True):
 def compartment_figure(gb, kind, fname):
     g = gb[gb.kind == kind]
     a = g[g.dataset == "allen_m"].pivot(index="gene", columns="compartment", values="proj_frac")
-    keep = a.index[a[COMPS].max(axis=1) >= 0.10]
+    keep = g.loc[g.compartment.isin(COMPS) & (g.projected_hit | g.measured_hit.fillna(False)), "gene"].unique()
     order = a.loc[keep, "core"].sort_values(ascending=False).index
-    panels = [
-        ("Projected\nmale brain (Allen)", a.loc[order, COMPS]),
-        ("Projected\nfemale brain (Zhuang 1)",
-         g[g.dataset == "zhuang1_f"].pivot(index="gene", columns="compartment", values="proj_frac").loc[order, COMPS]),
-        ("Measured in situ\nmale brain (Allen)",
-         g[g.dataset == "allen_m"].pivot(index="gene", columns="compartment", values="meas_frac").reindex(order)[COMPS]),
-        ("Measured in situ\nfemale brain (Zhuang 1)",
-         g[g.dataset == "zhuang1_f"].pivot(index="gene", columns="compartment", values="meas_frac").reindex(order)[COMPS]),
-    ]
-    fig, axs = plt.subplots(1, 4, figsize=(9.6, 1.5 + 0.24 * len(order)), sharey=True)
+    panels = []
+    for ds, label in (("allen_m", "Allen M"), ("zhuang1_f", "Zhuang 1 F"), ("zhuang2_m", "Zhuang 2 M")):
+        for column, method in (("proj_frac", "Projected"), ("meas_frac", "Measured")):
+            values = g[g.dataset == ds].pivot(index="gene", columns="compartment", values=column)
+            panels.append((f"{method}\n{label}", values.loc[order, COMPS]))
+    fig, axs = plt.subplots(1, len(panels), figsize=(15, 1.7 + 0.24 * len(order)), sharey=True)
     for ax, (title, M) in zip(axs, panels):
         heat(ax, M.rename(columns=SHORT), title)
     what = "Neuropeptide precursors" if kind == "ligand" else "Neuropeptide receptors"
-    fig.suptitle(f"{what}: percent of neurons expressing, by VMH compartment", x=0.01, ha="left", fontsize=11)
-    fig.text(0.01, 0.005, "Genes reaching 10% in at least one compartment (male projection). Projected: cell-type mix of the compartment\n"
+    fig.suptitle(f"{what}: transcript detection (%) by VMH compartment", x=0.01, ha="left", fontsize=11)
+    fig.text(0.01, 0.005, "Genes reaching 10% by either method in any brain and compartment. Projected: cell-type mix of the compartment\n"
              "x 10x expression of each type. Measured: neurons above the 95th percentile of non-neuronal cells; empty where the\n"
              "gene is not on that panel. Values under 10 are not printed.", fontsize=7, color=MUTED, va="bottom")
     fig.tight_layout(rect=(0, 0.05 + 0.35 / max(len(order), 6), 1, 0.97))
@@ -137,7 +132,7 @@ def composition_figure():
 
 def validation_figure(gb):
     # the five atlas compartments (the three divisions, the undivided ends and the shell), as in step 6
-    v = gb[gb.measured & gb.compartment.isin(COMPS + ["VMH"]) & gb.kind.isin(["ligand", "receptor"])]
+    v = gb[gb.measured & gb.compartment.isin(COMPS) & gb.kind.isin(["ligand", "receptor"])]
     fig, axs = plt.subplots(1, 3, figsize=(10.5, 3.7), sharex=True, sharey=True)
     for ax, (ds, meta) in zip(axs, DATASETS.items()):
         d = v[v.dataset == ds]

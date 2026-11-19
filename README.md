@@ -29,7 +29,7 @@ step has to be run natively. Standard library only, Python 3.8 or later:
 
     cd ~/local/repo/VMH_NP
     python3 scripts/00_download_data.py --dry-run     # optional: list files and sizes
-    python3 scripts/00_download_data.py               # core tier, 23.8 GB
+    python3 scripts/00_download_data.py               # core + Zhuang tiers for all three brains
 
 Downloads resume if interrupted, and every file is checked against the size and MD5 in
 `config/data_manifest.csv` (ABC Atlas release manifest 20250531).
@@ -50,7 +50,7 @@ extracts to `<data_root>/derived` and tables to `results/`.
 | 0 | `00_download_data.py` | Downloads the pinned Allen files |
 | 1 | `01_extract.py` | Cuts VMH-centred windows from the three spatial brains; pulls the curated genes for all 262,175 hypothalamus 10x cells; whole-brain cluster means; atlas crops |
 | 2 | `02_expression.py` | Expression of every curated gene per subclass, supertype and cluster, by chemistry and sex, with an ambient-RNA background model and calls |
-| 3 | `03_reference_atlas.py` | Labels every spatial cell with the unified atlas of Chon et al. 2019 (VMHDM, VMHC, VMHVL, VMHSh): interpolates the atlas between its plates, fits a per-brain rigid alignment, and writes labels and smooth compartment outlines per section |
+| 3 | `03_reference_atlas.py` | Labels every spatial cell with the unified atlas of Chon et al. 2019 (VMHDM, VMHC, VMHVL, VMH (undivided ends), VMHSh): interpolates the atlas between its plates, fits a per-brain rigid alignment, and writes labels and smooth compartment outlines per section |
 | 4 | `04_atlas_figure.py` | Figures of the aligned compartments over the cell types, and of the interpolated atlas against its plates |
 | 5 | `05_vmh_type_summary.py` | Readable tables per VMH supertype (`vmh_supertype_calls.csv`, `vmh_type_counts.csv`) |
 | 6 | `06_compartments.py` | Parts 1 and 2 in space: every gene by compartment (projected from the cell-type mix, and measured in situ where the gene is on a panel), by anterior-posterior position, and a sex comparison |
@@ -91,17 +91,14 @@ browser editor) is kept under `archive/hand_annotation/` and is no longer part o
    nearest plate stitches two or three drawings together in one section, with seams. The
    VMH labels are therefore interpolated (shape-based interpolation): each plate's
    compartments become signed distance fields, smoothed in the plane with a 15 um
-   Gaussian, and joined across plates by a monotone cubic. The result reproduces every
-   plate at its own position, is smooth in between, and never leaves the range of the two
-   neighbouring plates. The nucleus tapers to a point halfway beyond its first and last
+   Gaussian, and joined across plates by a monotone cubic. The smoothed fields approximate the published plate boundaries. The nucleus tapers to a point halfway beyond its first and last
    plates. Those end plates are undivided; the change from undivided to divided is placed
    halfway to the next plate. See `results/figures/atlas_interpolation.png`.
    *Alignment.* Labels read at the released CCF coordinates are unreliable, because in all
    three brains the VMH cell types are registered 0.1 to 0.4 mm anterior of the atlas VMH:
    only 55 to 77% of neurons in the core compartments are then of a VMH subclass. Each
    brain is therefore aligned by a rigid shift (three numbers) that maximises overlap
-   between neurons of the two VMH subclasses and the atlas VMH as a whole. Compartment
-   identity is not used in the fit.
+   between neurons of the two VMH subclasses and the atlas VMH as a whole. The same neurons determine the shift and its reported F1. Independent anatomical landmarks would be needed to validate subdivision borders.
    Three labels are kept per cell: `kim_raw` (nearest plate, released coordinates),
    `kim_aligned` (interpolated, shifted; used by every later step) and
    `kim_aligned_nearest` (nearest plate, same shift). Interpolation changes the label of
@@ -125,7 +122,7 @@ browser editor) is kept under `archive/hand_annotation/` and is no longer part o
    of a compartment are replaced by their cell types and each type contributes its 10x
    fraction of expressing cells above background (cluster level where the cluster has at
    least 20 cells, otherwise supertype, otherwise subclass); types whose call is background
-   contribute zero. *Measured*: for genes on a panel (Allen brain, male, 550 genes; Zhuang
+   contribute zero. *Measured*: for genes on a panel (Allen brain, male, 500 target genes and 50 blank controls; Zhuang
    brains 1 female and 2 male, 1,122 genes), the fraction of neurons above the 95th
    percentile of non-neuronal cells in the same brain. The two agree with Spearman
    correlations of 0.81 to 0.87. Compartments are DM, C, VL, shell, and the undivided
@@ -134,15 +131,20 @@ browser editor) is kept under `archive/hand_annotation/` and is no longer part o
    developmental lineages and do not respect compartment borders.
 4. **Arriving peptides (supplemental).** A cluster is taken to make a ligand when its
    whole-brain mean expression clears a threshold calibrated against the hypothalamic calls
-   of step 2 (F1 0.94), with a per-gene background floor and a stricter threshold for
+   of step 2 (the final calibration metrics are in ligand_calibration.csv), with a per-gene background floor and a stricter threshold for
    ambient-prone genes. A region is a source when at least 10% of its neurons belong to
    such clusters, or when it holds at least 10% of all neurons of those clusters in the
-   brain. Sources are then restricted to the 25 regions in `config/vmh_afferent_regions.csv`,
-   a hand-curated list of VMH afferents from the tracing literature. Each receptor found in
-   the VMH is scored as matched locally, by an afferent region, by an endocrine ligand, or
-   unmatched (`receptor_ligand_concordance.csv`). This is not projection-specific: it shows
-   that a region projecting to the VMH contains neurons making the ligand, not that those
-   particular neurons project there.
+   brain. Regional matches require a mouse tracing citation in the curated afferent list.
+   Distribution-only and uncited entries are provisional. Receptor complexes and proposed
+   partners are qualified separately. Endocrine evidence follows the peptide product.
+   Regional matches are candidates because ligand-producing cells may differ from the projecting cells.
+
+For local evidence, each of DM, C, VL, undivided ends and shell is screened independently
+in each brain. Either measured or projected transcript detection can reach the 10% threshold.
+Paired comparisons identify measured-only and projected-only results for that brain and compartment.
+Off-panel measurements are missing. Non-neuronal-level detection alone remains unresolved.
+The pooled core is a descriptive aggregate. The documentation also reports within-gene spatial
+rank agreement alongside the pooled correlation.
 
 ## Results
 
@@ -154,7 +156,7 @@ browser editor) is kept under `archive/hand_annotation/` and is no longer part o
 | `tables/atlas_alignment.csv`, `atlas_supertype_by_compartment.csv` | Per-brain shift, agreement with the cell types (raw, aligned, and aligned with the nearest plate), share of neurons relabelled by interpolation, and where each supertype sits |
 | `tables/compartment_composition.csv` | Cell-type mix of each compartment in each brain |
 | `tables/gene_by_compartment.csv`, `gene_by_ap.csv` | Projected and measured expression by compartment and by anterior-posterior bin |
-| `tables/sex_differences.csv` | Female against male libraries per supertype and gene |
+| `tables/sex_differences.csv` | Female against male donors per supertype and gene, pooling eligible libraries |
 | `tables/ligand_by_region.csv`, `ligand_sources.csv`, `receptor_ligand_concordance.csv` | Part 3 |
 | `figures/*.png` | The interpolated atlas against its plates, alignment per brain, supertype by compartment, ligands and receptors by compartment and by supertype, projected against measured |
 | `tables/atlas_comparison.csv`, `atlas_overlap.csv` | The unified atlas against the Allen CCF annotation: agreement with the VMH cell types, and how the two outlines overlap |
@@ -184,7 +186,7 @@ outside the VMH, and sparse receptor transcripts are under-detected by droplet s
 
 Known gaps: Part 3 has no projection-specific evidence (the Allen connectivity service was
 not reachable when this was built); the afferent list and the structure-name table are
-unchecked third-party or hand-curated inputs; the sex comparison has 3 to 7 libraries per
+unchecked third-party or hand-curated inputs; the sex comparison has few independent donors per
 sex and supertype and is underpowered; the imputed MERFISH tier is unused.
 
 ## Gene tables
@@ -202,3 +204,10 @@ The Allen whole-mouse-brain datasets are shared under the CC BY-NC 4.0 licence. 
 same terms: non-commercial use, with attribution to the Allen Institute, the Zhuang laboratory,
 and Chon et al. 2019 for the unified atlas. This repository does not yet carry a licence for its
 own code.
+
+## Checking a build
+
+Run `python -m unittest discover -s tests -v` after building the explorer. The checks compare
+the published evidence against the compartment table and the map’s background flags against
+the full-precision spatial extracts under the configured data root. A local fixture exercises
+checksum failures without downloading any atlas data.

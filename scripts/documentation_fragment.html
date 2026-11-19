@@ -34,19 +34,19 @@
 <p>The explorer (Map, All genes and Ligand sources, at the top of this page) has a gene list on the left, a view in the middle and a card for the selected gene on the right.</p>
 <h3>Views</h3>
 <ul>
-  <li><b>Map.</b> Neurons around the VMH in one tissue section of one brain, with the atlas compartments drawn as outlines. Neurons can be coloured by the selected gene, by compartment, or by VMH supertype. Pointing at a neuron (or tapping it) rings it and shows its cluster, its compartment after alignment, and its values for the selected gene. Where dots overlap, the note describes the one drawn on top.</li>
-  <li><b>All genes.</b> Every gene of the chosen class by compartment or by supertype, as a table.</li>
+  <li><b>Map.</b> Neurons around the VMH in one tissue section of one brain, with the atlas compartments drawn as outlines. Neurons can be coloured by the selected gene, by compartment, or by VMH supertype. Unregistered neurons have an unknown compartment. Pointing at a neuron (or tapping it) rings it and shows its cluster, its compartment after alignment, and its values for the selected gene. Where dots overlap, the note describes the one drawn on top.</li>
+  <li><b>All genes.</b> Genes meeting the screen by compartment or supertype. Compare projected brain mixes, or select a brain to compare its measured and projected fractions.</li>
   <li><b>Ligand sources.</b> For each receptor in VMH, where a matching peptide is made.</li>
 </ul>
 <h3>Measured in situ and Projected</h3>
 <p>When the map is coloured by a gene, the Estimate switch chooses between two things that are easy to confuse:</p>
 <ul>
-  <li><b>Measured in situ</b> shows each neuron's own signal for that gene in that brain. It exists only for genes on the brain's panel: {{panel_sentence}} Genes measured in the selected brain carry a dot in the gene list. For any other gene the button is disabled, and the toolbar offers the brains where the gene was measured.</li>
+  <li><b>Measured in situ</b> shows each neuron's own signal for that gene in that brain. It exists only for genes on the brain's panel: {{panel_sentence}} Genes measured in the selected brain carry a dot in the gene list. For any other gene the button is disabled, and the toolbar offers the brains where the gene was measured. Color intensity uses a gene-specific scale for the brain. The background test uses the original signal before display rounding.</li>
   <li><b>Projected</b> exists for every gene. Each neuron shows the share of cells of its transcriptomic cluster that express the gene in the single-cell sequencing data. It is a property of the neuron's cluster, not a measurement of that neuron.</li>
 </ul>
 <h3>Numbers</h3>
 <ul>
-  <li>Compartment values are percent of neurons in that compartment that express the gene.</li>
+  <li>Compartment values are percent of neurons in that compartment with transcript detection by the indicated method.</li>
   <li>Supertype values are percent of cells of that supertype expressing above background. The labels broad, subset and sparse mean at least 50%, 20 to 50%, and 10 to 20%; background means the gene is not called in that type.</li>
   <li>The gene list is ordered by the projected percent of core neurons in the male Allen brain.</li>
 </ul>
@@ -58,18 +58,18 @@
 <tbody>
 <tr><td>10x single-cell RNA sequencing, hypothalamus</td><td>About 262,000 cells from 14 female and 13 male donors, of which about 10,300 belong to the nine VMH supertypes</td><td>Expression of every gene in every cell type</td></tr>
 {{dataset_rows}}
-<tr><td>Unified atlas, Chon et al. 2019</td><td>Franklin and Paxinos labels in the Allen Common Coordinate Framework (CCF), as coronal plates 100 µm apart</td><td>Compartments: dorsomedial, central, ventrolateral, shell</td></tr>
+<tr><td>Unified atlas, Chon et al. 2019</td><td>Franklin and Paxinos labels in the Allen Common Coordinate Framework (CCF), as coronal plates 100 µm apart</td><td>Compartments: dorsomedial, central, ventrolateral, undivided ends, shell</td></tr>
 </tbody></table></div>
 <p>MERFISH is multiplexed error-robust fluorescence in situ hybridization. The cell types are those of the Allen whole-mouse-brain taxonomy: two VMH subclasses, named for <i>Nr5a1</i> and <i>Fezf1</i>, divided into nine supertypes. These are transcriptomic lineages and do not respect compartment borders, so results are given both by compartment and by supertype.</p>
 
 <h2 id="doc-vmh">Which cells count as VMH</h2>
 <p>A neuron belongs to the compartment whose atlas label covers its position, after two corrections.</p>
 <h3>Interpolation between plates</h3>
-<p>The atlas plates were each drawn separately, and tissue sections are not parallel to them: within one section the VMH spans 50 to 220 µm along the anterior-posterior axis. Reading the nearest plate would stitch two or three drawings together in one section, with seams. The compartments are therefore interpolated between plates. Each plate's outlines become signed distance fields, smoothed in the plane with a 15 µm Gaussian, and joined across plates by a monotone cubic. The interpolated atlas reproduces every plate at its own position and never leaves the range of the two neighbouring plates. Against a nearest-plate reading it changes the label of {{relabel_range}} of the neurons in or next to VMH, nearly all at compartment borders or the outer edge.</p>
+<p>The atlas plates were each drawn separately, and tissue sections are not parallel to them: within one section the VMH spans 50 to 220 µm along the anterior-posterior axis. Reading the nearest plate would stitch two or three drawings together in one section, with seams. The compartments are therefore interpolated between plates. Each plate's outlines become signed distance fields, smoothed in the plane with a 15 µm Gaussian, and joined across plates by a monotone cubic. Smoothing can shift boundary pixels at a published plate. Against a nearest-plate reading it changes the label of {{relabel_range}} of the neurons in or next to VMH, nearly all at compartment borders or the outer edge.</p>
 <figure><img src="figures/atlas_interpolation.png" alt="The VMH of the unified atlas at each plate, halfway between plates, and cut along the anterior-posterior axis with nearest-plate and interpolated labels">
 <figcaption>Top: at each plate, the interpolated atlas (lines) over the published drawing (fill). Middle: halfway between plates. Bottom: horizontal and sagittal cuts, read from the nearest plate and from the interpolated atlas. The two vertical seams that remain are where the undivided end plates give way to the divided ones.</figcaption></figure>
 <h3>Alignment</h3>
-<p>Read at the released coordinates, the atlas VMH sits posterior of the VMH cell types in every brain. Each brain is therefore aligned by one rigid shift of its cells, chosen to maximise overlap between neurons of the two VMH subclasses and the atlas VMH as a whole. Compartment identity plays no part in the fit.</p>
+<p>Read at the released coordinates, the atlas VMH sits posterior of the VMH cell types in every brain. Each brain is therefore aligned by one rigid shift of its cells, chosen to maximise overlap between neurons of the two VMH subclasses and the atlas VMH as a whole. The same neurons determine the shift and its F1 score. Independent anatomical landmarks would be needed to validate the subdivision borders.</p>
 <div class="tscroll"><table>
 <thead><tr><th>Brain</th><th class="n">Shift, anterior-posterior</th><th class="n">Dorsal-ventral</th><th class="n">Medial-lateral</th><th class="n">Core neurons that are VMH types, released</th><th class="n">Aligned</th></tr></thead>
 <tbody>
@@ -82,7 +82,7 @@
 <figcaption>Where each supertype's neurons fall after alignment.</figcaption></figure>
 
 <h2 id="doc-atlases">The two atlases compared</h2>
-<p>The Allen CCF annotation has a VMH without subdivisions; the unified atlas has the compartments. Both are drawn in the same CCF space, so they can be compared directly, and each can be given its own best shift so that neither is penalised for the registration offset of the cells. The Allen VMH and the unified core have the same volume but do not coincide: {{overlap_sentence}}</p>
+<p>The Allen CCF annotation has a VMH without subdivisions; the unified atlas has the compartments. The comparison uses nearest-plate unified labels. Both atlases are drawn in the same CCF space, so they can be compared directly, and each can be given its own best shift so that neither is penalised for the registration offset of the cells. The Allen VMH and the unified core have the same volume but do not coincide: {{overlap_sentence}}</p>
 <div class="tscroll"><table>
 <thead><tr><th>Brain</th><th>VMH definition</th><th class="n">F1, released</th><th class="n">VMH types inside, released</th><th class="n">Own best shift (AP)</th><th class="n">F1, shifted</th><th class="n">VMH types inside, shifted</th></tr></thead>
 <tbody>
@@ -91,40 +91,41 @@
 <p>F1 is the harmonic mean of two shares: neurons inside the outline that are VMH types, and VMH-type neurons that fall inside the outline. Once each outline has its own best shift, the Allen CCF VMH has the highest F1 in every brain, and a larger share of the neurons inside it are VMH types than inside the unified core. The unified atlas is used here for its compartments, which the Allen annotation lacks, and not because its outer boundary is more accurate. One caution applies to the test itself: the anatomical names in the cell-type taxonomy were assigned partly from where cells fall in Allen CCF space, so agreement with the Allen annotation is not fully independent.</p>
 
 <h2 id="doc-calls">Calling expression</h2>
-<p>Abundant hypothalamic peptide transcripts leak into every droplet during single-cell sequencing, so a nonzero count is not evidence of expression. For each gene and library, the background is the lowest mean among non-neuronal cell classes. A cell type is called expressing when at least 10% of its cells exceed what that background predicts and its mean is at least 3 times the background. Sparse calls must also be at least twice the typical neuronal type. Two receptors, <i>Insr</i> and <i>Igf1r</i>, are detected in most neurons but no higher than in non-neuronal cells, so the test cannot place them.</p>
+<p>Abundant hypothalamic peptide transcripts leak into every droplet during single-cell sequencing, so a nonzero count is not evidence of expression. For each gene and library, the background is the lowest mean among non-neuronal cell classes. A cell type is called expressing when at least 10% of its cells exceed what that background predicts and its mean is at least 3 times the background. When the excess fraction reaches 50%, a 1.5-fold enrichment also qualifies. Sparse calls must also be at least twice the typical neuronal type. Two receptors, <i>Insr</i> and <i>Igf1r</i>, are detected in most neurons but no higher than in non-neuronal cells, so the test cannot place them.</p>
 
 <h2 id="doc-estimates">Measured and projected</h2>
 <ul>
-  <li><b>Projected.</b> The compartment's mix of cell types, from the spatial data, times each type's fraction of expressing cells, from the sequencing data. Available for all genes.</li>
+  <li><b>Projected.</b> The compartment's mix of cell types, from the spatial data, times each type's ambient-adjusted detection fraction from the sequencing data. Types below the call threshold contribute zero. Droplet dropout can hide genuinely expressing cells. Available for all genes.</li>
   <li><b>Measured.</b> For genes on a spatial panel, the fraction of the compartment's neurons whose signal exceeds the 95th percentile of non-neuronal cells in the same brain.</li>
 </ul>
-<p>Across genes and compartments the two agree with Spearman correlations of {{spearman_sentence}}. Measured levels are platform-specific, so a difference between the Allen brain and the Zhuang brains is not a sex difference.</p>
+<p>Pooling genes and compartments gives Spearman correlations of {{spearman_sentence}}. Ranking the five compartments within each gene gives median correlations of {{within_gene}}. Genes with a constant estimate have no defined rank correlation. Measured levels are platform-specific, so a difference between the Allen brain and the Zhuang brains is not a sex difference.</p>
 <figure><img src="figures/projected_vs_measured.png" alt="Projected against measured fraction of neurons expressing, one panel per brain">
 <figcaption>Projected against measured, one point per gene and compartment.</figcaption></figure>
 
 <h2 id="doc-results">Main results</h2>
-<p>{{n_lig_hit}} of {{n_lig}} precursor genes and {{n_rec_hit}} of {{n_rec}} receptor genes reach 10% of neurons in at least one compartment. Values are percent of neurons, projected from the male Allen brain's cell-type mix.</p>
+<p>{{n_lig_hit}} of {{n_lig}} precursor genes and {{n_rec_hit}} of {{n_rec}} receptor genes reach 10% by either method in at least one of the five compartments across three brains. The evidence column summarizes the full screen. Numeric columns show the Allen male projection. Gene cards identify each brain and compartment where the methods fall on opposite sides of 10%.</p>
 <h3>Peptide precursors</h3>
 <div class="tscroll"><table>
-<thead><tr><th>Precursor</th><th>Peptide</th><th class="n">Dorsomedial</th><th class="n">Central</th><th class="n">Ventrolateral</th><th class="n">Shell</th></tr></thead>
+<thead><tr><th>Precursor</th><th>Peptide</th><th>VMH evidence</th><th class="n">Dorsomedial</th><th class="n">Central</th><th class="n">Ventrolateral</th><th class="n">Undivided ends</th><th class="n">Shell</th></tr></thead>
 <tbody>
 {{ligand_rows}}
 </tbody></table></div>
 <figure><img src="figures/compartment_ligands.png" alt="Peptide precursors by compartment: projected for the male and female brains, and measured in situ where on a panel">
-<figcaption>The same precursors with the female cell-type mix and the in situ measurements beside the male projection.</figcaption></figure>
+<figcaption>Each brain’s projected precursor detection next to its measured fraction where available.</figcaption></figure>
 <h3>Receptors</h3>
 <p>"Leans" marks a receptor whose dorsomedial and ventrolateral values differ by at least 5 points and a factor of 1.5.</p>
 <div class="tscroll"><table>
-<thead><tr><th>Receptor</th><th>Family</th><th>Leans</th><th class="n">Dorsomedial</th><th class="n">Central</th><th class="n">Ventrolateral</th><th class="n">Shell</th></tr></thead>
+<thead><tr><th>Receptor</th><th>Family</th><th>Leans</th><th>VMH evidence</th><th class="n">Dorsomedial</th><th class="n">Central</th><th class="n">Ventrolateral</th><th class="n">Undivided ends</th><th class="n">Shell</th></tr></thead>
 <tbody>
 {{receptor_rows}}
 </tbody></table></div>
 <figure><img src="figures/compartment_receptors.png" alt="Receptors by compartment: projected for the male and female brains, and measured in situ where on a panel">
-<figcaption>The same receptors with the female cell-type mix and the in situ measurements.</figcaption></figure>
-<p>No sex difference in expression survives correction for multiple testing ({{sex_sentence}}). That test compares 3 to 7 sequencing libraries per sex and could only detect large differences.</p>
+<figcaption>Projected and measured receptor detection in all three brains.</figcaption></figure>
+<p>No sex difference in expression survives correction for multiple testing ({{sex_sentence}}). The exact permutation test compares donors. Libraries contributing at least 15 cells of a supertype are pooled within each mouse. The small donor counts limit power.</p>
 
 <h2 id="doc-sources">Where ligands come from</h2>
-<p>Release cannot be read from transcript data. Three kinds of availability stand in for it. <b>Local</b>: VMH neurons make the peptide. <b>Afferent</b>: neurons in a region reported to project to VMH make it; the {{n_regions}} regions are a hand-curated list. <b>Endocrine</b>: the ligand is made mainly outside the brain.</p>
+<p>Local evidence requires a measured or projected fraction of at least 10% in any brain and compartment. Ambiguous non-neuronal background alone gives an unresolved call. Afferent candidates require ligand-producing clusters in a region with a mouse tracing citation ({{n_tracing}} of {{n_regions}} curated regions). The final cluster classifier achieves {{calibration}} on the data used to choose its threshold. Five-fold validation holding out entire hypothalamic clusters gives F1 {{held_out_f1}}. Transfer accuracy in other regions is unknown.</p>
+<p>Endocrine sources are curated by peptide product, including intestinal GLP-1 from <i>Gcg</i>. Receptor complexes require evidence for same-cell partners. Conditional and proposed partners are listed separately on receptor cards.</p>
 <div class="tscroll"><table>
 <thead><tr><th>Source of a matching peptide</th><th class="n">Receptors</th><th>Which</th></tr></thead>
 <tbody>
@@ -135,10 +136,10 @@
 <h2 id="doc-limits">Limits</h2>
 <ul>
   <li><b>Transcript, not protein.</b> A precursor needs processing before it yields a peptide, one precursor can yield several peptides, and a receptor's protein may be trafficked to terminals outside VMH.</li>
-  <li><b>Sparse receptors are under-counted.</b> Droplet sequencing misses low-abundance transcripts, so receptor percentages are lower bounds. Values below 20% are the least secure.</li>
+  <li><b>Sparse receptors are under-counted.</b> Droplet sequencing misses low-abundance transcripts, so a detection fraction can underestimate prevalence. Values below 20% are the least secure.</li>
   <li><b>Compartments stand in for molecular territories.</b> The atlas ventrolateral compartment is narrower than the territory of the <i>Esr1</i>-rich supertypes. For questions about that population, read the supertype numbers.</li>
   <li><b>Alignment is a rigid shift, and the atlas between plates is interpolated.</b> The shift corrects the offset but not local distortion. Positions between plates follow an interpolation of the published drawings, not a published label.</li>
-  <li><b>The ligand-source table is not projection-specific</b>, and its list of afferent regions was curated by hand and has not been checked against tracing data.</li>
+  <li><b>The ligand-source table is not projection-specific</b>, and the strength and species of the supporting evidence vary. Distribution-only and uncited entries remain provisional.</li>
   <li><b>Unchecked inputs.</b> The receptor coupling shown in the explorer is from general pharmacology and has not been checked against a reference.</li>
 </ul>
 
@@ -162,6 +163,7 @@
 <h2 id="doc-refs">Sources</h2>
 <ul>
   <li>Allen Brain Cell Atlas, release 20250531: whole-mouse-brain 10x and MERFISH data (Allen Institute; Zhuang laboratory). <a href="https://alleninstitute.github.io/abc_atlas_access/intro.html">data access documentation</a></li>
+  <li>Peptide products and receptor components: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8140521/">intestinal proglucagon in mice</a> and <a href="https://www.guidetopharmacology.org/GRAC/FamilyIntroductionForward?familyId=11">IUPHAR calcitonin-family receptors</a>.</li>
   <li>Chon, Vanselow, Cheng and Kim 2019, unified anatomical atlas: <a href="https://doi.org/10.5061/dryad.t1g1jwsxw">Dryad dataset</a></li>
   <li>Afferent regions were drawn from the tracing literature, including <a href="https://doi.org/10.1073/pnas.1817503116">Lo et al. 2019</a>, <a href="https://doi.org/10.1016/j.cmet.2014.11.006">Garfield et al. 2014</a> and <a href="https://doi.org/10.1523/JNEUROSCI.22-03-00991.2002">Li et al. 2002</a> (retrieved from PubMed).</li>
 </ul>

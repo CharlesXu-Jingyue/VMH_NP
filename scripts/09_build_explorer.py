@@ -23,13 +23,13 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from common import (COMPARTMENT_COLOURS, COMPARTMENT_NAMES, D, DATASETS, NON_NEURONAL, VMH_SUPERTYPES,  # noqa: E402
+from common import (COMPARTMENTS, COMPARTMENT_COLOURS, COMPARTMENT_NAMES, D, DATASETS, NON_NEURONAL, VMH_SUPERTYPES,  # noqa: E402
                     load_cells)
 from paths import CONFIG, REPO, RESULTS  # noqa: E402
 
 T, OUT = RESULTS / "tables", REPO / "docs"
-COMPS = ["VMHDM", "VMHC", "VMHVL", "VMHSh", "core"]
-COMP_CODE = {"outside": 0, "VMHDM": 1, "VMHC": 2, "VMHVL": 3, "VMH": 4, "VMHSh": 5}
+COMPS = COMPARTMENTS + ["core"]
+COMP_CODE = {"outside": 0, "VMHDM": 1, "VMHC": 2, "VMHVL": 3, "VMH": 4, "VMHSh": 5, "no_ccf": 6}
 CROP_MM = 0.35
 MIN_VMH_TYPE = 30
 
@@ -51,6 +51,9 @@ def gene_tables():
     for r in lig.itertuples():
         genes[r.gene] = dict(kind="ligand", family=r.family, what=r.peptides, tag=r.source_class, note=r.note,
                              partners=list(dict.fromkeys(pairs[pairs.ligand_gene == r.gene].receptor_gene)))
+        conditional = pairs[(pairs.ligand_gene == r.gene) & pairs.qualification.notna()]
+        genes[r.gene]["pairNotes"] = "; ".join(f"{p.peptide}, {p.receptor_gene}: {p.qualification}"
+                                               for p in conditional.itertuples())
     for r in rec.itertuples():
         genes.setdefault(r.gene, dict(kind="receptor", family=r.family, what=r.principal_coupling, tag="", note=r.note,
                                       partners=list(dict.fromkeys(pairs[pairs.receptor_gene == r.gene].ligand_gene))))
@@ -74,8 +77,11 @@ def main():
         for g in names:
             genes[g].setdefault("proj", {})[ds] = [r1(P.loc[g, c]) for c in COMPS]
             genes[g].setdefault("meas", {})[ds] = ([r1(M.loc[g, c]) for c in COMPS] if bool(d[d.gene == g].measured.iloc[0]) else None)
-            if ds == "allen_m":
-                genes[g]["ubiquitous"] = bool((C.loc[g, COMPS] == "ubiquitous").any())
+            gene_rows = d[(d.gene == g) & d.compartment.isin(COMPARTMENTS)]
+            disagreements = gene_rows[gene_rows.evidence.isin(["measured only", "projected only"])]
+            genes[g].setdefault("discordant", {})[ds] = dict(zip(disagreements.compartment, disagreements.evidence))
+            if (C.loc[g, COMPARTMENTS] == "ubiquitous").any():
+                genes[g]["ubiquitous"] = True
     e = pd.read_parquet(T / "expr_by_type.parquet")
     for c in ("level", "type", "chemistry", "sex", "gene", "call"):
         e[c] = e[c].astype(str)
@@ -92,11 +98,14 @@ def main():
         if g in src.index and genes[g]["kind"] == "ligand":
             r = src.loc[g]
             genes[g]["src"] = dict(local=bool(r.local), afferent=r.afferent_regions, endocrine=bool(r.endocrine),
-                                   top=r.top_regions_brainwide, where=r.local_where)
+                                   top=r.top_regions_brainwide, provisional=r.provisional_regions)
         if g in con.index and genes[g]["kind"] == "receptor":
             r = con.loc[g]
             genes[g]["src"] = dict(inVmh=bool(r.in_vmh), verdict=r.ligand_sources, local=r.local_ligands,
-                                   afferent=r.afferent_ligands, endocrine=r.endocrine_ligands)
+                                   afferent=r.afferent_ligands, endocrine=r.endocrine_ligands, conditional=r.conditional_partners)
+        if "src" in genes[g]:
+            genes[g]["src"].update(evidence=r.spatial_evidence, hit=bool(r.spatial_hit), peak=r1(r.peak_fraction),
+                                   brain=r.peak_dataset, compartment=r.peak_compartment, method=r.peak_method)
 
     # ---- spatial cells
     lab = pd.read_parquet(D / "atlas_labels.parquet")
@@ -115,7 +124,7 @@ def main():
         c["ap"] = c.x_ccf + shifts.loc[ds, "shift_ap_mm"]
         nv = c[c.neuron & c.vmh_type].groupby("brain_section_label").size()
         secs = [s for s in nv.index if nv[s] >= MIN_VMH_TYPE]
-        inv = c[c.comp != "outside"]
+        inv = c[c.comp.isin(COMPARTMENTS)]
         x0, x1, y0, y1 = inv.px.min() - CROP_MM, inv.px.max() + CROP_MM, inv.py.min() - CROP_MM, inv.py.max() + CROP_MM
         keep = (c.neuron & c.brain_section_label.isin(secs) & c.px.between(x0, x1) & c.py.between(y0, y1)).values
         k = c[keep].copy()
@@ -133,8 +142,8 @@ def main():
                 v = col[k.row.values]
                 top = float(np.percentile(v[v > 0], 99.5)) if (v > 0).any() else 1.0
                 top = max(top, thr * 1.05, 1e-6)
-                measured[g] = dict(v=enc(np.round(255 * np.clip(v / top, 0, 1)).astype(np.uint8)), max=round(top, 2),
-                                   thr=int(round(255 * min(thr / top, 1))))
+                measured[g] = dict(v=enc(np.round(255 * np.clip(v / top, 0, 1)).astype(np.uint8)), max=top, thr=thr,
+                                   above=enc(np.packbits(v > thr, bitorder="little")))
         sections, off = [], 0
         for sname in order:
             d = k[k.brain_section_label == sname]

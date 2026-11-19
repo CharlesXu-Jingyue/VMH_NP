@@ -14,9 +14,7 @@ anterior-posterior axis. Reading the nearest plate therefore stitches two or thr
 drawings together in one section, with seams. To avoid that, the VMH labels are interpolated
 between plates (shape-based interpolation): each plate's compartments become signed distance
 fields (positive inside), lightly smoothed in the plane (SMOOTH_PX), and a monotone cubic
-through the plates gives a continuous field at any position. It reproduces each plate at its
-own position, is smooth across plates, and never leaves the range of the two neighbouring
-plates, so it adds no structure that neither neighbour shows.
+through the plates gives a continuous field at any position. It interpolates smoothed plate fields; smoothing can shift boundary pixels.
 
 Three labels are stored per cell:
   kim_raw               nearest plate at the cell's released CCF coordinates
@@ -26,8 +24,8 @@ Three labels are stored per cell:
 Why a shift: in all three brains the VMH cell types are registered 0.1 to 0.4 mm anterior
 of the atlas VMH, so raw labels put most Esr1-rich neurons in the shell or outside. The
 shift (three numbers per brain: AP, DV, ML) maximises F1 between "neuron of a VMH subclass"
-and "inside the interpolated atlas VMH, any compartment". Compartment identity is not used in the fit, so
-the agreement between compartments and supertypes afterwards is an independent check
+and "inside the interpolated atlas VMH, any compartment". Compartment identity is not used in the fit, and
+the resulting compartment composition describes this molecular fit
 (results/tables/atlas_supertype_by_compartment.csv).
 
 Slice position: slice k of the atlas is CCF 10 um plane 10*(k-1) + AP0. AP0 = 93 was
