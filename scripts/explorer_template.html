@@ -94,7 +94,10 @@ select { padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; ba
 .step { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 3px 9px; cursor: pointer; }
 #stage { position: relative; flex: 1; min-height: 300px; }
 canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-#tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--surface); padding: 5px 8px; border-radius: 5px; font-size: 12px; line-height: 1.35; max-width: 250px; display: none; z-index: 2; }
+#tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--surface); padding: 6px 9px; border-radius: 5px; font-size: 12px; line-height: 1.4; width: max-content; max-width: 270px; display: none; z-index: 2; }
+#tip b { font-weight: 600; }
+#tip .dim { opacity: .72; }
+#ring { position: absolute; pointer-events: none; border-radius: 50%; border: 1.5px solid var(--ink); box-shadow: 0 0 0 1.5px var(--surface); display: none; z-index: 1; }
 #legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 8px 14px 4px; font-size: 12.5px; color: var(--muted); }
 #legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
 #legend .ln { display: inline-block; width: 16px; height: 0; border-top: 2px solid; margin-right: 5px; vertical-align: 3px; }
@@ -276,7 +279,7 @@ function renderCard() {
 }
 
 // ---------------------------------------------------------------- map
-let frame = {};
+let frame = {}, stageWatch = null;
 function measuredHere() { return B().measured[S.gene]; }
 function setBrain(k, est) { S.ds = k; S.sec = Math.floor(B().sections.length / 2); if (est) S.est = est; save(); renderGenes(); renderMap(); }
 function renderMap() {
@@ -303,11 +306,14 @@ function renderMap() {
       tb.append(note);
     }
   }
-  const stage = el('div', { id: 'stage' }, el('canvas', { id: 'cv', role: 'img', 'aria-label': `Neurons around the VMH in section ${S.sec + 1}, coloured by ${S.color === 'gene' ? S.gene : S.color}` }), el('div', { id: 'tip' }));
+  const stage = el('div', { id: 'stage' }, el('canvas', { id: 'cv', role: 'img', 'aria-label': `Neurons around the VMH in section ${S.sec + 1}, coloured by ${S.color === 'gene' ? S.gene : S.color}` }), el('div', { id: 'ring' }), el('div', { id: 'tip' }));
   v.append(tb, stage, el('div', { id: 'legend' }), el('div', { id: 'caption' }));
   draw(est);
   const cv = $('#cv');
-  cv.addEventListener('mousemove', e => hover(e, est)); cv.addEventListener('mouseleave', () => { $('#tip').style.display = 'none'; });
+  cv.addEventListener('pointermove', hover); cv.addEventListener('pointerdown', hover);
+  cv.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hideTip(); });
+  if (stageWatch) stageWatch.disconnect();
+  if (window.ResizeObserver) { stageWatch = new ResizeObserver(() => { const c = $('#cv'); if (c && (c.clientWidth !== frame.w || c.clientHeight !== frame.h)) draw(frame.est); }); stageWatch.observe(stage); }
 }
 function fit(cv) {
   const b = B(); if (!b.box) { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (let i = 0; i < b.n; i++) { const x = b.X[i], y = b.Y[i]; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } b.box = [x0, x1, y0, y1]; }
@@ -316,24 +322,33 @@ function fit(cv) {
 }
 function cellValue(i, est) {       // returns [t in 0..1 or -1 for "none", text]
   const b = B();
-  if (est === 'measured') { const m = b.measured[S.gene], v = m.V[i]; return v > m.thr ? [(v - m.thr) / Math.max(1, 255 - m.thr), 'above background in situ'] : [-1, 'at background in situ']; }
-  const p = DATA.P[S.gene][b.CL[i]]; return p >= 5 ? [p / 100, `${p}% of cells of its cluster express ${S.gene}`] : [-1, `its cluster does not express ${S.gene}`];
+  if (est === 'measured') {
+    const m = b.measured[S.gene], v = m.V[i], sig = (v / 255 * m.max).toFixed(1), cut = (m.thr / 255 * m.max).toFixed(1);
+    return v > m.thr ? [(v - m.thr) / Math.max(1, 255 - m.thr), `its own signal ${v >= 255 ? 'at least ' : ''}${sig} (log2), above the background cut-off of ${cut}`]
+      : [-1, `its own signal ${sig} (log2), at or below the background cut-off of ${cut}`];
+  }
+  const c = b.CL[i], src = DATA.PS[c], of = ['its cluster', 'its supertype (too few sequenced cells of its cluster)', 'its subclass (too few sequenced cells of its cluster)'][src];
+  if (src === 3) return [-1, 'no sequencing data for its cell type'];
+  const p = DATA.P[S.gene][c];
+  return p >= 5 ? [p / 100, `${p}% of sequenced cells of ${of} express ${S.gene}`] : [-1, `${of} does not express ${S.gene}`];
 }
 function draw(est) {
   const cv = $('#cv'); if (!cv) return;
+  legend(est);                     // before measuring: the legend and caption take their height from the map
+  hideTip();
   const r = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; cv.width = Math.round(w * r); cv.height = Math.round(h * r);
   const ctx = cv.getContext('2d'); ctx.setTransform(r, 0, 0, r, 0, 0); ctx.clearRect(0, 0, w, h);
   const b = B(), sec = b.sections[S.sec], f = fit(cv), th = theme(), zero = cssv('--zero'), surf = cssv('--surface'), ink = cssv('--ink');
-  frame = { f, sec, est };
   const pts = [];
   for (let i = sec.off; i < sec.off + sec.n; i++) {
     let col, big = false, z = 0;
     if (S.color === 'gene') { const [t] = cellValue(i, est); if (t < 0) col = zero; else { col = ramp(0.25 + 0.75 * t); big = true; z = 1 + t; } }
     else if (S.color === 'comp') { col = COMP_COL[th][b.CP[i]]; big = b.CP[i] > 0; z = big ? 1 : 0; }
     else { col = ST_COL[th][b.ST[i]]; big = b.ST[i] > 0; z = big ? 1 : 0; }
-    pts.push([(b.X[i] - f.ox) * f.k, (b.Y[i] - f.oy) * f.k, col, big, z]);
+    pts.push([(b.X[i] - f.ox) * f.k, (b.Y[i] - f.oy) * f.k, col, big, z, i]);
   }
   pts.sort((a, c) => a[4] - c[4]);
+  frame = { f, sec, est, w, h, pts };      // pts in drawing order: the last one is on top
   for (const [x, y, col, big] of pts) { ctx.beginPath(); ctx.arc(x, y, big ? 3.1 : 2, 0, 6.2832); ctx.fillStyle = col; ctx.fill(); if (big) { ctx.lineWidth = 0.8; ctx.strokeStyle = surf; ctx.stroke(); } }
   // compartment outlines
   ctx.lineJoin = 'round';
@@ -348,7 +363,6 @@ function draw(est) {
   // scale bar
   ctx.fillStyle = ink; ctx.fillRect(14, h - 20, 0.2 * 1000 * f.k, 2); ctx.font = `11px ${cssv('--body')}`; ctx.fillText('200 µm', 14, h - 26);
   ctx.fillStyle = cssv('--muted'); ctx.textAlign = 'right'; ctx.fillText('dorsal up · midline between the two hemispheres', w - 12, h - 12); ctx.textAlign = 'left';
-  legend(est);
 }
 function legend(est) {
   const L = $('#legend'), th = theme(); L.textContent = '';
@@ -366,15 +380,34 @@ function legend(est) {
     : `${measuredHere() ? '' : S.gene + ' is not on this brain’s panel. '}Projected: each neuron shows the share of its 10x cluster that expresses ${S.gene}, not its own signal.`;
   $('#caption').textContent = txt;
 }
-function hover(e, est) {
-  const cv = $('#cv'), rc = cv.getBoundingClientRect(), mx = e.clientX - rc.left, my = e.clientY - rc.top, b = B(), { f, sec } = frame;
-  let best = -1, bd = 81;
-  for (let i = sec.off; i < sec.off + sec.n; i++) { const dx = (b.X[i] - f.ox) * f.k - mx, dy = (b.Y[i] - f.oy) * f.k - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = i; } }
-  const tip = $('#tip'); if (best < 0) { tip.style.display = 'none'; return; }
-  const name = DATA.clusters[b.CL[best]].replace(/^\d+ /, ''), comp = COMP_LABEL[COMP_KEYS[b.CP[best]]];
-  tip.textContent = ''; tip.append(el('div', { text: name }), el('div', { text: comp }));
-  if (S.color === 'gene') tip.append(el('div', { text: cellValue(best, est)[1] }));
-  tip.style.display = 'block'; tip.style.left = Math.min(mx + 12, cv.clientWidth - 255) + 'px'; tip.style.top = (my + 12) + 'px';
+function hideTip() { for (const id of ['#tip', '#ring']) { const n = $(id); if (n) n.style.display = 'none'; } }
+function hover(e) {
+  const cv = $('#cv'), rc = cv.getBoundingClientRect(), { pts, w, h, est } = frame; if (!pts || !rc.width) return;
+  // pointer position in the coordinates the map was drawn in (identical to CSS pixels unless a resize is pending)
+  const sx = w / rc.width, sy = h / rc.height, mx = (e.clientX - rc.left) * sx, my = (e.clientY - rc.top) * sy;
+  // the dot under the pointer, topmost first; failing that, the nearest dot within 8 px
+  let hit = null;
+  for (let k = pts.length - 1; k >= 0; k--) { const q = pts[k], dx = q[0] - mx, dy = q[1] - my, rad = (q[3] ? 3.1 : 2) + 1.2; if (dx * dx + dy * dy <= rad * rad) { hit = q; break; } }
+  if (!hit) { let bd = 64; for (const q of pts) { const dx = q[0] - mx, dy = q[1] - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; hit = q; } } }
+  if (!hit) { hideTip(); return; }
+  const b = B(), i = hit[5], full = DATA.clusters[b.CL[i]], id = full.match(/^\d+/), tip = $('#tip'), ring = $('#ring');
+  tip.textContent = '';
+  tip.append(el('div', {}, el('b', { text: full.replace(/^\d+ /, '') }), id ? el('span', { class: 'dim', text: ` · cluster ${id[0]}` }) : ''),
+    el('div', { text: ({ outside: 'outside the VMH compartments', VMH: 'undivided end of the VMH', VMHSh: 'VMH shell' })[COMP_KEYS[b.CP[i]]] || `${COMP_LABEL[COMP_KEYS[b.CP[i]]]} compartment` }));
+  if (S.color === 'gene') {
+    const m = measuredHere(), other = est === 'measured' ? 'projected' : 'measured';
+    tip.append(el('div', {}, el('b', { text: est === 'measured' ? 'Measured: ' : 'Projected: ' }), cellValue(i, est)[1]));
+    if (m) tip.append(el('div', { class: 'dim' }, other === 'measured' ? 'Measured: ' : 'Projected: ', cellValue(i, other)[1]));
+  }
+  // mark the neuron the text is about, and keep the text beside it and inside the map
+  const cx = hit[0] / sx, cy = hit[1] / sy, rr = (hit[3] ? 3.1 : 2) + 3.5;
+  ring.dataset.cell = i; ring.style.display = 'block'; ring.style.width = ring.style.height = 2 * rr + 'px'; ring.style.left = cx - rr - 1.5 + 'px'; ring.style.top = cy - rr - 1.5 + 'px';
+  tip.style.display = 'block';
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = cx + 12, y = cy + 12;
+  if (x + tw > rc.width - 4) x = cx - 12 - tw;
+  if (y + th > rc.height - 4) y = cy - 12 - th;
+  tip.style.left = Math.max(4, x) + 'px'; tip.style.top = Math.max(4, y) + 'px';
 }
 
 // ---------------------------------------------------------------- all genes
@@ -451,6 +484,7 @@ async function boot() {
     for (const m of Object.values(b.measured)) m.V = b64(m.v, Uint8Array);
   }
   DATA.P = {}; for (const g in DATA.projected) DATA.P[g] = b64(DATA.projected[g], Uint8Array);
+  DATA.PS = b64(DATA.projSrc, Uint8Array);
   try { const s = JSON.parse(localStorage.getItem('vmh_np_explorer') || 'null'); if (s && DATA.genes[s.gene] && DATA.brains[s.ds]) { S.gene = s.gene; S.ds = s.ds; S.color = s.color || 'gene'; S.kind = DATA.genes[s.gene].kind; } } catch (e) {}
   S.sec = Math.floor(B().sections.length / 2);
   document.querySelectorAll('.tab[data-view]').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.view; if (S.view !== b.dataset.view) { S.view = b.dataset.view; renderAll(); } }));

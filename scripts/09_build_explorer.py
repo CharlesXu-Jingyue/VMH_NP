@@ -152,12 +152,15 @@ def main():
     cl_names = sorted(clusters, key=clusters.get)
     P = proj.reindex(cl_names)
     projected = {g: enc(np.round(100 * P[f"frac:{g}"].fillna(0).values).astype(np.uint8)) for g in names}
+    # where each cluster's projected value comes from: its own sequenced cells, its supertype's or its
+    # subclass's (too few cells of its own), or nowhere (not in the hypothalamus sequencing data)
+    proj_src = enc(P.source.str.split(":").str[0].map({"cluster": 0, "supertype": 1, "subclass": 2}).fillna(3).values.astype(np.uint8))
 
     data = dict(
         built="Allen Brain Cell Atlas release 20250531; unified atlas of Chon et al. 2019",
         genes=genes, order=names, comps=COMPS, compNames=[COMPARTMENT_NAMES.get(c, "core (three compartments and ends)") for c in COMPS],
         compColours=COMPARTMENT_COLOURS, compCode=COMP_CODE,
-        supertypes=[s[9:].replace(" Glut", "") for s in VMH_SUPERTYPES], clusters=cl_names, projected=projected, brains=brains)
+        supertypes=[s[9:].replace(" Glut", "") for s in VMH_SUPERTYPES], clusters=cl_names, projected=projected, projSrc=proj_src, brains=brains)
     blob = json.dumps(data, separators=(",", ":"))
     tpl = (HERE / "explorer_template.html").read_text()
     (OUT / "data.js").write_text("window.__DATA__ = " + blob + ";\n")
