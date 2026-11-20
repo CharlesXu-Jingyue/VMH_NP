@@ -28,9 +28,13 @@ and "inside the interpolated atlas VMH, any compartment". Compartment identity i
 the resulting compartment composition describes this molecular fit
 (results/tables/atlas_supertype_by_compartment.csv).
 
-Slice position: slice k of the atlas is CCF 10 um plane 10*(k-1) + AP0. AP0 = 93 was
-estimated by matching structures the atlas shares with the Allen annotation (ventricles,
-fibre tracts) across eight slices (estimates 91 to 95); run with --verify-ap to repeat.
+Slice position: slice k of the atlas is CCF 10 um plane 10*(k-1) + AP0, planes counted from
+zero, with AP0 = 94. This is exact: the atlas ships the CCF template images its labels were
+drawn on (2_AllenCCF_background.zip), and all 123 are identical, pixel for pixel, to those
+planes of the Allen template. Run with --verify-ap to repeat (needs that archive beside the
+labels and average_template_10.nii.gz from the Allen Brain Cell Atlas release). The file names
+of the plates give bregma positions, which do not fix a CCF plane, and an earlier estimate
+from structures shared with the Allen annotation had put AP0 at 93.
 
 Outputs
   <data_root>/derived/atlas_labels.parquet          per cell: raw, aligned and aligned-nearest label
@@ -57,7 +61,7 @@ from common import D, DATASETS, load_cells  # noqa: E402
 from paths import CONFIG, RESULTS, abc_root  # noqa: E402
 
 ZIP = D / "reference" / "kim_unified_atlas" / "1_Anatomical_Labels.zip"
-AP0 = 93                     # CCF 10 um AP voxel of atlas slice 1
+AP0 = 94                     # CCF 10 um AP plane (from zero) of atlas slice 1; verified against the template
 K0, K1 = 40, 80              # slices loaded (AP about 4.8 to 8.9 mm), ample around the hypothalamus
 VMH_IDS = {777: "VMHDM", 769: "VMHC", 785: "VMHVL", 693: "VMH", 2044: "VMHSh"}
 CORE = ("VMHDM", "VMHC", "VMHVL", "VMH")     # "VMH" = undivided nucleus at its anterior and posterior ends
@@ -268,33 +272,31 @@ def section_outlines(A, cells, shift):
 
 
 def verify_ap():
-    """Re-estimate AP0 from structures shared with the Allen annotation (needs about 3 GB of memory)."""
+    """Check AP0 against the Allen template itself. The atlas ships the CCF template images its labels were
+    drawn on (2_AllenCCF_background.zip, beside the labels); each must be identical to exactly one plane of
+    image_volumes/Allen-CCF-2020/*/average_template_10.nii.gz. Needs about 3 GB of memory."""
     import nibabel as nib
-    memb = pd.read_csv(sorted((abc_root() / "metadata/Allen-CCF-2020").glob("*/parcellation_to_parcellation_term_membership.csv"))[0])
-    memb = memb.drop_duplicates("parcellation_index")
-    A = np.asarray(nib.load(sorted((abc_root() / "image_volumes/Allen-CCF-2020").glob("*/annotation_10.nii.gz"))[0]).dataobj)
-    lut = np.zeros(int(A.max()) + 1, dtype=np.int64)
-    lut[memb.parcellation_index.values] = memb.parcellation_label.str.rsplit("-", n=1).str[1].astype(np.int64).values
-    z = zipfile.ZipFile(ZIP)
-    names = {int(n.rsplit("/", 1)[-1].split("_")[0]): n for n in z.namelist() if n.endswith(".tif")}
-    shared = [129, 436, 690, 125, 81, 6, 924, 117, 603]        # V3, fx, mtt, opt, VL, int, cpd, och, fi
-    est = []
-    for k in (40, 50, 55, 58, 60, 62, 65, 70):
-        K = tifffile.imread(io.BytesIO(z.read(names[k])))
-        ids = [i for i in shared if (K == i).sum() > 300]
-        cand = range(10 * (k - 1) + AP0 - 25, 10 * (k - 1) + AP0 + 26)
-        sc = []
-        for a in cand:
-            Pl = lut[A[a]]
-            sc.append(np.mean([2 * ((Pl == i) & (K == i)).sum() / max((Pl == i).sum() + (K == i).sum(), 1) for i in ids]))
-        est.append(cand[int(np.argmax(sc))] - 10 * (k - 1))
-        print(f"slice {k}: best CCF plane {cand[int(np.argmax(sc))]}, AP0 estimate {est[-1]}, Dice {max(sc):.2f}")
-    print(f"AP0 estimates {est}, median {np.median(est):.0f}; configured {AP0}")
+    tpl = sorted((abc_root() / "image_volumes/Allen-CCF-2020").glob("*/average_template_10.nii.gz"))
+    bg = ZIP.with_name("2_AllenCCF_background.zip")
+    if not tpl or not bg.exists():
+        raise SystemExit(f"needs {bg} and average_template_10.nii.gz under image_volumes/Allen-CCF-2020/")
+    T = np.asanyarray(nib.load(tpl[0]).dataobj)                      # AP, DV, ML at 10 um
+    z = zipfile.ZipFile(bg)
+    names = sorted(n for n in z.namelist() if n.endswith(".tif"))    # AllenCCF_Z001 ... : image k belongs to label plate k
+    good = 0
+    for k, n in enumerate(names, start=1):
+        img = tifffile.imread(io.BytesIO(z.read(n)))
+        want = 10 * (k - 1) + AP0
+        same = [a for a in range(max(want - 6, 0), min(want + 7, T.shape[0])) if np.array_equal(T[a], img)]
+        good += same == [want]
+        if same != [want]:
+            print(f"image {k}: identical to template plane(s) {same}, expected {want}")
+    print(f"{good} of {len(names)} background images are identical to template plane 10*(k-1) + {AP0} and to no plane near it")
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--verify-ap", action="store_true", help="re-estimate the slice position constant and exit")
+    ap.add_argument("--verify-ap", action="store_true", help="check the slice position constant against the Allen template and exit")
     args = ap.parse_args()
     if args.verify_ap:
         return verify_ap()

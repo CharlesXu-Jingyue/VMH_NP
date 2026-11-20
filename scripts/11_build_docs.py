@@ -137,13 +137,18 @@ def main():
     status = pd.concat([src.spatial_evidence, conc.set_index("receptor").spatial_evidence])
     weak, ends_only = status[status.str.startswith("Measured signal not above controls")].index, status[status.str.startswith("Undivided ends only")].index
     fill["weak_genes"], fill["ends_genes"] = genes(sorted(weak)), genes(sorted(ends_only))
+    marg = pd.concat([src[["borderline", "local"]].rename(columns={"local": "listed"}),
+                      conc.set_index("receptor")[["borderline", "in_vmh"]].rename(columns={"in_vmh": "listed"})])
+    fill["borderline_listed"] = genes(sorted(marg.index[marg.borderline & marg.listed])) or "none"
+    fill["borderline_unlisted"] = genes(sorted(marg.index[marg.borderline & ~marg.listed])) or "none"
     alone = sorted(status[status.str.startswith("Measured only")].index)
     fill["measured_alone"] = (f"{genes(alone)} rest{'s' if len(alone) == 1 else ''} on a measured value alone" if alone
                               else "No listed gene rests on a measured value alone")
     # whether the brains without blank probes see the same thing
     other = gb[gb.gene.isin(alone) & (gb.dataset != "allen_m") & gb.measured & gb.compartment.isin(SCREENED)]
-    fill["measured_alone_elsewhere"] = "; ".join(
-        f"the Zhuang brains measure <i>{g}</i> in at most {100 * d.meas_frac.max():.0f}% of a compartment's neurons" for g, d in other.groupby("gene"))
+    fill["measured_alone_elsewhere"] = ("in the Zhuang brains the highest measured share of a compartment's neurons is "
+                                        + ", ".join(f"{100 * d.meas_frac.max():.0f}% for <i>{g}</i>" for g, d in other.groupby("gene"))
+                                        if len(other) else "none of them is on the Zhuang panels")
     L, R = hit[hit.kind == "ligand"].sort_values("top", ascending=False), hit[hit.kind == "receptor"].copy()
     fill["n_lig_hit"], fill["n_rec_hit"] = len(L), len(R)
 

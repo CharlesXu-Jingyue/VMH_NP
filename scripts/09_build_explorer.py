@@ -105,6 +105,7 @@ def main():
                                    afferent=r.afferent_ligands, endocrine=r.endocrine_ligands, conditional=r.conditional_partners)
         if "src" in genes[g]:
             genes[g]["src"].update(evidence=r.spatial_evidence, hit=bool(r.spatial_hit), peak=r1(r.peak_fraction),
+                                   borderline=bool(r.borderline), margin=r1(r.screen_margin),
                                    brain=r.peak_dataset, compartment=r.peak_compartment, method=r.peak_method)
 
     # ---- spatial cells

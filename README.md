@@ -85,6 +85,11 @@ browser editor) is kept under `archive/hand_annotation/` and is no longer part o
    atlas of Chon et al. 2019 (Franklin-Paxinos labels in Allen CCF space): dorsomedial,
    central, ventrolateral, and a surrounding shell. Two corrections are applied before a
    cell is labelled.
+   *Position of the plates.* Plate k of the atlas is CCF coronal plane 10 (k - 1) + 94,
+   counted from zero. This is exact: the template images shipped with the atlas
+   (`2_AllenCCF_background.zip`) are identical to those planes of the Allen template
+   (`python scripts/03_reference_atlas.py --verify-ap`, which needs that archive and
+   `average_template_10.nii.gz`).
    *Interpolation between plates.* The atlas is a stack of coronal plates 100 um apart,
    each drawn on its own, and the tissue sections are not parallel to them: within one
    section the VMH spans 50 to 220 um along the anterior-posterior axis. Reading the

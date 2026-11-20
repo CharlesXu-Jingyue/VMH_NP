@@ -310,6 +310,7 @@ function renderCard() {
   if (g.src) {
     c.append(el('h4', { text: g.kind === 'ligand' ? 'Where it could come from' : 'Where its ligands could come from' }));
     c.append(el('p', { text: `VMH transcript screen (10%): ${g.src.evidence}.` }));
+    if (g.src.borderline) c.append(el('p', { class: 'muted', text: `Borderline: its best observation is ${Math.abs(g.src.margin).toFixed(1)} points ${g.src.margin >= 0 ? 'above' : 'below'} the threshold, so a small change in alignment can move it across.` }));
     if (g.src.conditional) c.append(el('p', { class: 'muted', text: g.src.conditional }));
     if (g.kind === 'ligand') {
       if (g.src.provisional) c.append(el('p', { class: 'muted', text: 'Provisional regional links: ' + g.src.provisional }));

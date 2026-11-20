@@ -37,7 +37,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import COMPARTMENTS, D, DATASETS, NON_NEURONAL, SCREENED  # noqa: E402
+from common import BORDERLINE, COMPARTMENTS, D, DATASETS, DETECTION_MIN, NON_NEURONAL, SCREENED  # noqa: E402
 from paths import CONFIG, RESULTS  # noqa: E402
 
 T = RESULTS / "tables"
@@ -133,7 +133,14 @@ def spatial_evidence(d):
         peaks = s.set_index(["dataset", "compartment"])[["meas_frac", "proj_frac"]].stack().dropna()
         (ds, comp, column), peak = peaks.idxmax(), peaks.max()
     discordant = d[d.evidence.str.startswith(("measured only", "projected only"))]
-    return dict(spatial_evidence=status, spatial_hit=bool(proj or meas), peak_dataset=ds,
+    # How far the best screened observation is from its threshold: 10% for a projection; for a measurement,
+    # 10% and the blank-probe floor, where there is one. Negative when nothing counts.
+    margins = pd.concat([s.proj_frac - DETECTION_MIN,
+                         (s.meas_frac - np.maximum(s.meas_blank_floor, DETECTION_MIN))[s.meas_blank_floor.notna()]])
+    margin = float(margins.max())
+    assert (margin >= 0) == bool(proj or meas) or abs(margin) < 1e-9, (status, margin)
+    return dict(spatial_evidence=status, spatial_hit=bool(proj or meas), screen_margin=margin,
+                borderline=bool(abs(margin) < BORDERLINE), peak_dataset=ds,
                 peak_compartment=comp, peak_method="measured" if column == "meas_frac" else "projected",
                 peak_fraction=peak, n_discordant=len(discordant))
 

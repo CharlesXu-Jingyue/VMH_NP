@@ -1,767 +1,772 @@
 dataset,compartment,supertype,n_neurons,share
-allen_m,VMHDM,0568 VMH Nr5a1 Glut_3,698,0.5976
-allen_m,VMHDM,0569 VMH Nr5a1 Glut_4,145,0.1241
-allen_m,VMHDM,0570 VMH Nr5a1 Glut_5,106,0.09075
-allen_m,VMHDM,0571 VMH Nr5a1 Glut_6,55,0.04709
-allen_m,VMHDM,0564 VMH Fezf1 Glut_2,30,0.02568
-allen_m,VMHDM,0478 TU-ARH Otp Six6 Gaba_1,26,0.02226
-allen_m,VMHDM,0488 DMH Hmx2 Gaba_2,12,0.01027
-allen_m,VMHDM,0442 PVHd-SBPV Six3 Prox1 Gaba_1,9,0.007705
-allen_m,VMHDM,0566 VMH Nr5a1 Glut_1,9,0.007705
-allen_m,VMHDM,0553 DMH Hmx2 Glut_2,8,0.006849
-allen_m,VMHDM,0472 DMH-LHA Gsx1 Gaba_3,5,0.004281
-allen_m,VMHDM,0480 TU-ARH Otp Six6 Gaba_3,5,0.004281
-allen_m,VMHDM,0565 VMH Fezf1 Glut_3,5,0.004281
-allen_m,VMHDM,0456 AHN Onecut3 Gaba_1,4,0.003425
-allen_m,VMHDM,0457 AHN Onecut3 Gaba_2,4,0.003425
-allen_m,VMHDM,0458 AHN Onecut3 Gaba_3,4,0.003425
-allen_m,VMHDM,0557 ARH-PVp Tbx3 Glut_4,4,0.003425
-allen_m,VMHDM,0455 SBPV-PVa Six6 Satb2 Gaba_3,3,0.002568
-allen_m,VMHDM,0495 ARH-PVp Tbx3 Gaba_3,3,0.002568
-allen_m,VMHDM,0555 ARH-PVp Tbx3 Glut_2,3,0.002568
-allen_m,VMHDM,0562 DMH-LHA Vgll2 Glut_4,3,0.002568
-allen_m,VMHDM,0563 VMH Fezf1 Glut_1,3,0.002568
-allen_m,VMHDM,0454 SBPV-PVa Six6 Satb2 Gaba_2,2,0.001712
-allen_m,VMHDM,0567 VMH Nr5a1 Glut_2,2,0.001712
-allen_m,VMHDM,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,2,0.001712
-allen_m,VMHDM,0595 PH-ant-LHA Otp Bsx Glut_5,2,0.001712
-allen_m,VMHDM,0341 MEA-BST Sox6 Gaba_5,1,0.0008562
-allen_m,VMHDM,0427 ARH-PVi Six6 Dopa-Gaba_1,1,0.0008562
-allen_m,VMHDM,0443 PVHd-SBPV Six3 Prox1 Gaba_2,1,0.0008562
-allen_m,VMHDM,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,1,0.0008562
-allen_m,VMHDM,0468 ZI Pax6 Gaba_10,1,0.0008562
-allen_m,VMHDM,0476 PVHd-DMH Lhx6 Gaba_3,1,0.0008562
-allen_m,VMHDM,0479 TU-ARH Otp Six6 Gaba_2,1,0.0008562
-allen_m,VMHDM,0489 DMH Hmx2 Gaba_3,1,0.0008562
-allen_m,VMHDM,0492 DMH Hmx2 Gaba_6,1,0.0008562
-allen_m,VMHDM,0493 ARH-PVp Tbx3 Gaba_1,1,0.0008562
-allen_m,VMHDM,0518 MS-SF Bsx Glut_1,1,0.0008562
-allen_m,VMHDM,0544 DMH Nkx2-4 Glut_1,1,0.0008562
-allen_m,VMHDM,0554 ARH-PVp Tbx3 Glut_1,1,0.0008562
-allen_m,VMHDM,0572 LHA Pmch Glut_1,1,0.0008562
-allen_m,VMHDM,0590 PVH-SO-PVa Otp Glut_6,1,0.0008562
-allen_m,VMHDM,0611 PH Pitx2 Glut_2,1,0.0008562
-allen_m,VMHC,0568 VMH Nr5a1 Glut_3,1025,0.704
-allen_m,VMHC,0569 VMH Nr5a1 Glut_4,132,0.09066
-allen_m,VMHC,0570 VMH Nr5a1 Glut_5,74,0.05082
-allen_m,VMHC,0564 VMH Fezf1 Glut_2,60,0.04121
-allen_m,VMHC,0565 VMH Fezf1 Glut_3,40,0.02747
-allen_m,VMHC,0567 VMH Nr5a1 Glut_2,23,0.0158
-allen_m,VMHC,0478 TU-ARH Otp Six6 Gaba_1,15,0.0103
-allen_m,VMHC,0566 VMH Nr5a1 Glut_1,14,0.009615
-allen_m,VMHC,0563 VMH Fezf1 Glut_1,10,0.006868
-allen_m,VMHC,0571 VMH Nr5a1 Glut_6,7,0.004808
-allen_m,VMHC,0480 TU-ARH Otp Six6 Gaba_3,6,0.004121
-allen_m,VMHC,0557 ARH-PVp Tbx3 Glut_4,6,0.004121
-allen_m,VMHC,0456 AHN Onecut3 Gaba_1,5,0.003434
-allen_m,VMHC,0555 ARH-PVp Tbx3 Glut_2,5,0.003434
-allen_m,VMHC,0457 AHN Onecut3 Gaba_2,4,0.002747
-allen_m,VMHC,0488 DMH Hmx2 Gaba_2,3,0.00206
-allen_m,VMHC,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,3,0.00206
-allen_m,VMHC,0442 PVHd-SBPV Six3 Prox1 Gaba_1,2,0.001374
-allen_m,VMHC,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,2,0.001374
-allen_m,VMHC,0454 SBPV-PVa Six6 Satb2 Gaba_2,2,0.001374
-allen_m,VMHC,0479 TU-ARH Otp Six6 Gaba_2,2,0.001374
-allen_m,VMHC,0554 ARH-PVp Tbx3 Glut_1,2,0.001374
-allen_m,VMHC,0422 BST-MPN Six3 Nrgn Gaba_3,1,0.0006868
-allen_m,VMHC,0458 AHN Onecut3 Gaba_3,1,0.0006868
-allen_m,VMHC,0473 DMH-LHA Gsx1 Gaba_4,1,0.0006868
-allen_m,VMHC,0474 PVHd-DMH Lhx6 Gaba_1,1,0.0006868
-allen_m,VMHC,0491 DMH Hmx2 Gaba_5,1,0.0006868
-allen_m,VMHC,0492 DMH Hmx2 Gaba_6,1,0.0006868
-allen_m,VMHC,0518 MS-SF Bsx Glut_1,1,0.0006868
-allen_m,VMHC,0553 DMH Hmx2 Glut_2,1,0.0006868
-allen_m,VMHC,0561 DMH-LHA Vgll2 Glut_3,1,0.0006868
-allen_m,VMHC,0562 DMH-LHA Vgll2 Glut_4,1,0.0006868
-allen_m,VMHC,0572 LHA Pmch Glut_1,1,0.0006868
-allen_m,VMHC,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.0006868
-allen_m,VMHC,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,1,0.0006868
-allen_m,VMHC,0607 PMv-TMv Pitx2 Glut_3,1,0.0006868
-allen_m,VMHVL,0568 VMH Nr5a1 Glut_3,259,0.2726
-allen_m,VMHVL,0565 VMH Fezf1 Glut_3,244,0.2568
-allen_m,VMHVL,0564 VMH Fezf1 Glut_2,186,0.1958
-allen_m,VMHVL,0563 VMH Fezf1 Glut_1,101,0.1063
-allen_m,VMHVL,0567 VMH Nr5a1 Glut_2,51,0.05368
-allen_m,VMHVL,0569 VMH Nr5a1 Glut_4,49,0.05158
-allen_m,VMHVL,0479 TU-ARH Otp Six6 Gaba_2,26,0.02737
-allen_m,VMHVL,0478 TU-ARH Otp Six6 Gaba_1,13,0.01368
-allen_m,VMHVL,0570 VMH Nr5a1 Glut_5,5,0.005263
-allen_m,VMHVL,0458 AHN Onecut3 Gaba_3,3,0.003158
-allen_m,VMHVL,0457 AHN Onecut3 Gaba_2,2,0.002105
-allen_m,VMHVL,0488 DMH Hmx2 Gaba_2,2,0.002105
-allen_m,VMHVL,0557 ARH-PVp Tbx3 Glut_4,2,0.002105
-allen_m,VMHVL,0431 RT-ZI Gnb3 Gaba_1,1,0.001053
-allen_m,VMHVL,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.001053
-allen_m,VMHVL,0456 AHN Onecut3 Gaba_1,1,0.001053
-allen_m,VMHVL,0471 DMH-LHA Gsx1 Gaba_2,1,0.001053
-allen_m,VMHVL,0492 DMH Hmx2 Gaba_6,1,0.001053
-allen_m,VMHVL,0554 ARH-PVp Tbx3 Glut_1,1,0.001053
-allen_m,VMHVL,0566 VMH Nr5a1 Glut_1,1,0.001053
-allen_m,VMH,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,70,0.2692
-allen_m,VMH,0456 AHN Onecut3 Gaba_1,44,0.1692
-allen_m,VMH,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,17,0.06538
-allen_m,VMH,0454 SBPV-PVa Six6 Satb2 Gaba_2,14,0.05385
-allen_m,VMH,0488 DMH Hmx2 Gaba_2,10,0.03846
-allen_m,VMH,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,8,0.03077
-allen_m,VMH,0458 AHN Onecut3 Gaba_3,8,0.03077
-allen_m,VMH,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,7,0.02692
-allen_m,VMH,0423 BST-MPN Six3 Nrgn Gaba_4,5,0.01923
-allen_m,VMH,0457 AHN Onecut3 Gaba_2,5,0.01923
-allen_m,VMH,0480 TU-ARH Otp Six6 Gaba_3,5,0.01923
-allen_m,VMH,0411 PVR Six3 Sox3 Gaba_1,4,0.01538
-allen_m,VMH,0438 SCH Six6 Cdc14a Gaba_3,4,0.01538
-allen_m,VMH,0479 TU-ARH Otp Six6 Gaba_2,4,0.01538
-allen_m,VMH,0558 ARH-PVp Tbx3 Glut_5,4,0.01538
-allen_m,VMH,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,4,0.01538
-allen_m,VMH,0422 BST-MPN Six3 Nrgn Gaba_3,3,0.01154
-allen_m,VMH,0430 TMv-PMv Tbx3 Hist-Gaba_2,3,0.01154
-allen_m,VMH,0573 LHA Pmch Glut_2,3,0.01154
-allen_m,VMH,0412 PVR Six3 Sox3 Gaba_2,2,0.007692
-allen_m,VMH,0444 PVHd-SBPV Six3 Prox1 Gaba_3,2,0.007692
-allen_m,VMH,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,2,0.007692
-allen_m,VMH,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,2,0.007692
-allen_m,VMH,0471 DMH-LHA Gsx1 Gaba_2,2,0.007692
-allen_m,VMH,0477 PVHd-DMH Lhx6 Gaba_4,2,0.007692
-allen_m,VMH,0487 DMH Hmx2 Gaba_1,2,0.007692
-allen_m,VMH,0493 ARH-PVp Tbx3 Gaba_1,2,0.007692
-allen_m,VMH,0564 VMH Fezf1 Glut_2,2,0.007692
-allen_m,VMH,0567 VMH Nr5a1 Glut_2,2,0.007692
-allen_m,VMH,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,2,0.007692
-allen_m,VMH,0408 MPN-MPO-LPO Lhx6 Zfhx3 Gaba_2,1,0.003846
-allen_m,VMH,0413 PVR Six3 Sox3 Gaba_3,1,0.003846
-allen_m,VMH,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.003846
-allen_m,VMH,0436 SCH Six6 Cdc14a Gaba_1,1,0.003846
-allen_m,VMH,0470 DMH-LHA Gsx1 Gaba_1,1,0.003846
-allen_m,VMH,0481 TMd-DMH Foxd2 Gaba_1,1,0.003846
-allen_m,VMH,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.003846
-allen_m,VMH,0489 DMH Hmx2 Gaba_3,1,0.003846
-allen_m,VMH,0491 DMH Hmx2 Gaba_5,1,0.003846
-allen_m,VMH,0495 ARH-PVp Tbx3 Gaba_3,1,0.003846
-allen_m,VMH,0554 ARH-PVp Tbx3 Glut_1,1,0.003846
-allen_m,VMH,0557 ARH-PVp Tbx3 Glut_4,1,0.003846
-allen_m,VMH,0575 LHA-AHN-PVH Otp Trh Glut_2,1,0.003846
-allen_m,VMH,0576 LHA-AHN-PVH Otp Trh Glut_3,1,0.003846
-allen_m,VMH,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.003846
-allen_m,VMH,0610 PH Pitx2 Glut_1,1,0.003846
-allen_m,VMHSh,0568 VMH Nr5a1 Glut_3,254,0.1671
-allen_m,VMHSh,0564 VMH Fezf1 Glut_2,102,0.06711
-allen_m,VMHSh,0569 VMH Nr5a1 Glut_4,87,0.05724
-allen_m,VMHSh,0567 VMH Nr5a1 Glut_2,86,0.05658
-allen_m,VMHSh,0570 VMH Nr5a1 Glut_5,80,0.05263
-allen_m,VMHSh,0456 AHN Onecut3 Gaba_1,77,0.05066
-allen_m,VMHSh,0565 VMH Fezf1 Glut_3,72,0.04737
-allen_m,VMHSh,0555 ARH-PVp Tbx3 Glut_2,58,0.03816
-allen_m,VMHSh,0478 TU-ARH Otp Six6 Gaba_1,57,0.0375
-allen_m,VMHSh,0436 SCH Six6 Cdc14a Gaba_1,48,0.03158
-allen_m,VMHSh,0488 DMH Hmx2 Gaba_2,40,0.02632
-allen_m,VMHSh,0480 TU-ARH Otp Six6 Gaba_3,38,0.025
-allen_m,VMHSh,0566 VMH Nr5a1 Glut_1,37,0.02434
-allen_m,VMHSh,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,35,0.02303
-allen_m,VMHSh,0479 TU-ARH Otp Six6 Gaba_2,34,0.02237
-allen_m,VMHSh,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,28,0.01842
-allen_m,VMHSh,0454 SBPV-PVa Six6 Satb2 Gaba_2,27,0.01776
-allen_m,VMHSh,0563 VMH Fezf1 Glut_1,22,0.01447
-allen_m,VMHSh,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,21,0.01382
-allen_m,VMHSh,0457 AHN Onecut3 Gaba_2,20,0.01316
-allen_m,VMHSh,0442 PVHd-SBPV Six3 Prox1 Gaba_1,15,0.009868
-allen_m,VMHSh,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,15,0.009868
-allen_m,VMHSh,0571 VMH Nr5a1 Glut_6,15,0.009868
-allen_m,VMHSh,0557 ARH-PVp Tbx3 Glut_4,14,0.009211
-allen_m,VMHSh,0495 ARH-PVp Tbx3 Gaba_3,13,0.008553
-allen_m,VMHSh,0455 SBPV-PVa Six6 Satb2 Gaba_3,11,0.007237
-allen_m,VMHSh,0458 AHN Onecut3 Gaba_3,11,0.007237
-allen_m,VMHSh,0437 SCH Six6 Cdc14a Gaba_2,10,0.006579
-allen_m,VMHSh,0470 DMH-LHA Gsx1 Gaba_1,10,0.006579
-allen_m,VMHSh,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,9,0.005921
-allen_m,VMHSh,0553 DMH Hmx2 Glut_2,9,0.005921
-allen_m,VMHSh,0428 ARH-PVi Six6 Dopa-Gaba_2,8,0.005263
-allen_m,VMHSh,0489 DMH Hmx2 Gaba_3,8,0.005263
-allen_m,VMHSh,0492 DMH Hmx2 Gaba_6,8,0.005263
-allen_m,VMHSh,0443 PVHd-SBPV Six3 Prox1 Gaba_2,7,0.004605
-allen_m,VMHSh,0413 PVR Six3 Sox3 Gaba_3,6,0.003947
-allen_m,VMHSh,0427 ARH-PVi Six6 Dopa-Gaba_1,6,0.003947
-allen_m,VMHSh,0491 DMH Hmx2 Gaba_5,6,0.003947
-allen_m,VMHSh,0556 ARH-PVp Tbx3 Glut_3,6,0.003947
-allen_m,VMHSh,0423 BST-MPN Six3 Nrgn Gaba_4,5,0.003289
-allen_m,VMHSh,0438 SCH Six6 Cdc14a Gaba_3,5,0.003289
-allen_m,VMHSh,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,5,0.003289
-allen_m,VMHSh,0453 SBPV-PVa Six6 Satb2 Gaba_1,5,0.003289
-allen_m,VMHSh,0493 ARH-PVp Tbx3 Gaba_1,5,0.003289
-allen_m,VMHSh,0554 ARH-PVp Tbx3 Glut_1,5,0.003289
-allen_m,VMHSh,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,5,0.003289
-allen_m,VMHSh,0422 BST-MPN Six3 Nrgn Gaba_3,4,0.002632
-allen_m,VMHSh,0429 TMv-PMv Tbx3 Hist-Gaba_1,4,0.002632
-allen_m,VMHSh,0472 DMH-LHA Gsx1 Gaba_3,4,0.002632
-allen_m,VMHSh,0561 DMH-LHA Vgll2 Glut_3,4,0.002632
-allen_m,VMHSh,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,4,0.002632
-allen_m,VMHSh,0444 PVHd-SBPV Six3 Prox1 Gaba_3,3,0.001974
-allen_m,VMHSh,0445 PVHd-SBPV Six3 Prox1 Gaba_4,3,0.001974
-allen_m,VMHSh,0468 ZI Pax6 Gaba_10,3,0.001974
-allen_m,VMHSh,0471 DMH-LHA Gsx1 Gaba_2,3,0.001974
-allen_m,VMHSh,0518 MS-SF Bsx Glut_1,3,0.001974
-allen_m,VMHSh,0560 DMH-LHA Vgll2 Glut_2,3,0.001974
-allen_m,VMHSh,0590 PVH-SO-PVa Otp Glut_6,3,0.001974
-allen_m,VMHSh,0404 MPO-ADP Lhx8 Gaba_3,2,0.001316
-allen_m,VMHSh,0474 PVHd-DMH Lhx6 Gaba_1,2,0.001316
-allen_m,VMHSh,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,2,0.001316
-allen_m,VMHSh,0558 ARH-PVp Tbx3 Glut_5,2,0.001316
-allen_m,VMHSh,0562 DMH-LHA Vgll2 Glut_4,2,0.001316
-allen_m,VMHSh,0572 LHA Pmch Glut_1,2,0.001316
-allen_m,VMHSh,0573 LHA Pmch Glut_2,2,0.001316
-allen_m,VMHSh,0576 LHA-AHN-PVH Otp Trh Glut_3,2,0.001316
-allen_m,VMHSh,0411 PVR Six3 Sox3 Gaba_1,1,0.0006579
-allen_m,VMHSh,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.0006579
-allen_m,VMHSh,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.0006579
-allen_m,VMHSh,0431 RT-ZI Gnb3 Gaba_1,1,0.0006579
-allen_m,VMHSh,0441 PVHd Gsc Gaba_1,1,0.0006579
-allen_m,VMHSh,0466 ZI Pax6 Gaba_8,1,0.0006579
-allen_m,VMHSh,0484 PVpo-VMPO-MPN Hmx2 Gaba_3,1,0.0006579
-allen_m,VMHSh,0545 DMH Nkx2-4 Glut_2,1,0.0006579
-allen_m,VMHSh,0547 MPN-MPO-PVpo Hmx2 Glut_2,1,0.0006579
-allen_m,VMHSh,0552 DMH Hmx2 Glut_1,1,0.0006579
-allen_m,VMHSh,0574 LHA-AHN-PVH Otp Trh Glut_1,1,0.0006579
-allen_m,VMHSh,0577 LHA-AHN-PVH Otp Trh Glut_4,1,0.0006579
-allen_m,VMHSh,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.0006579
-allen_m,VMHSh,0593 PH-ant-LHA Otp Bsx Glut_3,1,0.0006579
-allen_m,VMHSh,0595 PH-ant-LHA Otp Bsx Glut_5,1,0.0006579
-allen_m,VMHSh,0607 PMv-TMv Pitx2 Glut_3,1,0.0006579
-allen_m,VMHSh,0610 PH Pitx2 Glut_1,1,0.0006579
-allen_m,VMHSh,0628 HY Gnrh1 Glut_1,1,0.0006579
-allen_m,core,0568 VMH Nr5a1 Glut_3,1982,0.517
-allen_m,core,0569 VMH Nr5a1 Glut_4,326,0.08503
-allen_m,core,0565 VMH Fezf1 Glut_3,289,0.07538
-allen_m,core,0564 VMH Fezf1 Glut_2,278,0.07251
-allen_m,core,0570 VMH Nr5a1 Glut_5,185,0.04825
-allen_m,core,0563 VMH Fezf1 Glut_1,114,0.02973
-allen_m,core,0567 VMH Nr5a1 Glut_2,78,0.02034
-allen_m,core,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,70,0.01826
-allen_m,core,0571 VMH Nr5a1 Glut_6,62,0.01617
-allen_m,core,0456 AHN Onecut3 Gaba_1,54,0.01408
-allen_m,core,0478 TU-ARH Otp Six6 Gaba_1,54,0.01408
-allen_m,core,0479 TU-ARH Otp Six6 Gaba_2,33,0.008607
-allen_m,core,0488 DMH Hmx2 Gaba_2,27,0.007042
-allen_m,core,0566 VMH Nr5a1 Glut_1,24,0.00626
-allen_m,core,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,22,0.005738
-allen_m,core,0454 SBPV-PVa Six6 Satb2 Gaba_2,18,0.004695
-allen_m,core,0458 AHN Onecut3 Gaba_3,16,0.004173
-allen_m,core,0480 TU-ARH Otp Six6 Gaba_3,16,0.004173
-allen_m,core,0457 AHN Onecut3 Gaba_2,15,0.003912
-allen_m,core,0557 ARH-PVp Tbx3 Glut_4,13,0.003391
-allen_m,core,0442 PVHd-SBPV Six3 Prox1 Gaba_1,11,0.002869
-allen_m,core,0553 DMH Hmx2 Glut_2,9,0.002347
-allen_m,core,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,8,0.002087
-allen_m,core,0555 ARH-PVp Tbx3 Glut_2,8,0.002087
-allen_m,core,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,7,0.001826
-allen_m,core,0423 BST-MPN Six3 Nrgn Gaba_4,5,0.001304
-allen_m,core,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,5,0.001304
-allen_m,core,0472 DMH-LHA Gsx1 Gaba_3,5,0.001304
-allen_m,core,0554 ARH-PVp Tbx3 Glut_1,5,0.001304
-allen_m,core,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,5,0.001304
-allen_m,core,0411 PVR Six3 Sox3 Gaba_1,4,0.001043
-allen_m,core,0422 BST-MPN Six3 Nrgn Gaba_3,4,0.001043
-allen_m,core,0438 SCH Six6 Cdc14a Gaba_3,4,0.001043
-allen_m,core,0495 ARH-PVp Tbx3 Gaba_3,4,0.001043
-allen_m,core,0558 ARH-PVp Tbx3 Glut_5,4,0.001043
-allen_m,core,0562 DMH-LHA Vgll2 Glut_4,4,0.001043
-allen_m,core,0430 TMv-PMv Tbx3 Hist-Gaba_2,3,0.0007825
-allen_m,core,0455 SBPV-PVa Six6 Satb2 Gaba_3,3,0.0007825
-allen_m,core,0471 DMH-LHA Gsx1 Gaba_2,3,0.0007825
-allen_m,core,0492 DMH Hmx2 Gaba_6,3,0.0007825
-allen_m,core,0493 ARH-PVp Tbx3 Gaba_1,3,0.0007825
-allen_m,core,0573 LHA Pmch Glut_2,3,0.0007825
-allen_m,core,0412 PVR Six3 Sox3 Gaba_2,2,0.0005216
-allen_m,core,0444 PVHd-SBPV Six3 Prox1 Gaba_3,2,0.0005216
-allen_m,core,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,2,0.0005216
-allen_m,core,0477 PVHd-DMH Lhx6 Gaba_4,2,0.0005216
-allen_m,core,0487 DMH Hmx2 Gaba_1,2,0.0005216
-allen_m,core,0489 DMH Hmx2 Gaba_3,2,0.0005216
-allen_m,core,0491 DMH Hmx2 Gaba_5,2,0.0005216
-allen_m,core,0518 MS-SF Bsx Glut_1,2,0.0005216
-allen_m,core,0572 LHA Pmch Glut_1,2,0.0005216
-allen_m,core,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,2,0.0005216
-allen_m,core,0595 PH-ant-LHA Otp Bsx Glut_5,2,0.0005216
-allen_m,core,0341 MEA-BST Sox6 Gaba_5,1,0.0002608
-allen_m,core,0408 MPN-MPO-LPO Lhx6 Zfhx3 Gaba_2,1,0.0002608
-allen_m,core,0413 PVR Six3 Sox3 Gaba_3,1,0.0002608
-allen_m,core,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.0002608
-allen_m,core,0427 ARH-PVi Six6 Dopa-Gaba_1,1,0.0002608
-allen_m,core,0431 RT-ZI Gnb3 Gaba_1,1,0.0002608
-allen_m,core,0436 SCH Six6 Cdc14a Gaba_1,1,0.0002608
-allen_m,core,0443 PVHd-SBPV Six3 Prox1 Gaba_2,1,0.0002608
-allen_m,core,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.0002608
-allen_m,core,0468 ZI Pax6 Gaba_10,1,0.0002608
-allen_m,core,0470 DMH-LHA Gsx1 Gaba_1,1,0.0002608
-allen_m,core,0473 DMH-LHA Gsx1 Gaba_4,1,0.0002608
-allen_m,core,0474 PVHd-DMH Lhx6 Gaba_1,1,0.0002608
-allen_m,core,0476 PVHd-DMH Lhx6 Gaba_3,1,0.0002608
-allen_m,core,0481 TMd-DMH Foxd2 Gaba_1,1,0.0002608
-allen_m,core,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.0002608
-allen_m,core,0544 DMH Nkx2-4 Glut_1,1,0.0002608
-allen_m,core,0561 DMH-LHA Vgll2 Glut_3,1,0.0002608
-allen_m,core,0575 LHA-AHN-PVH Otp Trh Glut_2,1,0.0002608
-allen_m,core,0576 LHA-AHN-PVH Otp Trh Glut_3,1,0.0002608
-allen_m,core,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,1,0.0002608
-allen_m,core,0590 PVH-SO-PVa Otp Glut_6,1,0.0002608
-allen_m,core,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.0002608
-allen_m,core,0607 PMv-TMv Pitx2 Glut_3,1,0.0002608
-allen_m,core,0610 PH Pitx2 Glut_1,1,0.0002608
-allen_m,core,0611 PH Pitx2 Glut_2,1,0.0002608
-zhuang1_f,VMHDM,0568 VMH Nr5a1 Glut_3,680,0.6869
-zhuang1_f,VMHDM,0569 VMH Nr5a1 Glut_4,95,0.09596
-zhuang1_f,VMHDM,0570 VMH Nr5a1 Glut_5,87,0.08788
-zhuang1_f,VMHDM,0456 AHN Onecut3 Gaba_1,17,0.01717
-zhuang1_f,VMHDM,0571 VMH Nr5a1 Glut_6,17,0.01717
-zhuang1_f,VMHDM,0457 AHN Onecut3 Gaba_2,14,0.01414
-zhuang1_f,VMHDM,0566 VMH Nr5a1 Glut_1,13,0.01313
-zhuang1_f,VMHDM,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,11,0.01111
-zhuang1_f,VMHDM,0564 VMH Fezf1 Glut_2,6,0.006061
-zhuang1_f,VMHDM,0429 TMv-PMv Tbx3 Hist-Gaba_1,4,0.00404
-zhuang1_f,VMHDM,0544 DMH Nkx2-4 Glut_1,4,0.00404
-zhuang1_f,VMHDM,0567 VMH Nr5a1 Glut_2,4,0.00404
-zhuang1_f,VMHDM,0478 TU-ARH Otp Six6 Gaba_1,3,0.00303
-zhuang1_f,VMHDM,0488 DMH Hmx2 Gaba_2,3,0.00303
-zhuang1_f,VMHDM,0492 DMH Hmx2 Gaba_6,3,0.00303
-zhuang1_f,VMHDM,0545 DMH Nkx2-4 Glut_2,3,0.00303
-zhuang1_f,VMHDM,0552 DMH Hmx2 Glut_1,3,0.00303
-zhuang1_f,VMHDM,0561 DMH-LHA Vgll2 Glut_3,3,0.00303
-zhuang1_f,VMHDM,0428 ARH-PVi Six6 Dopa-Gaba_2,2,0.00202
-zhuang1_f,VMHDM,0455 SBPV-PVa Six6 Satb2 Gaba_3,2,0.00202
-zhuang1_f,VMHDM,0487 DMH Hmx2 Gaba_1,2,0.00202
-zhuang1_f,VMHDM,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,2,0.00202
-zhuang1_f,VMHDM,0404 MPO-ADP Lhx8 Gaba_3,1,0.00101
-zhuang1_f,VMHDM,0438 SCH Six6 Cdc14a Gaba_3,1,0.00101
-zhuang1_f,VMHDM,0442 PVHd-SBPV Six3 Prox1 Gaba_1,1,0.00101
-zhuang1_f,VMHDM,0454 SBPV-PVa Six6 Satb2 Gaba_2,1,0.00101
-zhuang1_f,VMHDM,0458 AHN Onecut3 Gaba_3,1,0.00101
-zhuang1_f,VMHDM,0470 DMH-LHA Gsx1 Gaba_1,1,0.00101
-zhuang1_f,VMHDM,0489 DMH Hmx2 Gaba_3,1,0.00101
-zhuang1_f,VMHDM,0505 MEA-COA-BMA Ccdc42 Glut_1,1,0.00101
-zhuang1_f,VMHDM,0557 ARH-PVp Tbx3 Glut_4,1,0.00101
-zhuang1_f,VMHDM,0565 VMH Fezf1 Glut_3,1,0.00101
-zhuang1_f,VMHDM,0573 LHA Pmch Glut_2,1,0.00101
-zhuang1_f,VMHDM,0585 PVH-SO-PVa Otp Glut_1,1,0.00101
-zhuang1_f,VMHC,0568 VMH Nr5a1 Glut_3,527,0.576
-zhuang1_f,VMHC,0569 VMH Nr5a1 Glut_4,87,0.09508
-zhuang1_f,VMHC,0564 VMH Fezf1 Glut_2,49,0.05355
-zhuang1_f,VMHC,0567 VMH Nr5a1 Glut_2,48,0.05246
-zhuang1_f,VMHC,0570 VMH Nr5a1 Glut_5,42,0.0459
-zhuang1_f,VMHC,0478 TU-ARH Otp Six6 Gaba_1,25,0.02732
-zhuang1_f,VMHC,0458 AHN Onecut3 Gaba_3,19,0.02077
-zhuang1_f,VMHC,0563 VMH Fezf1 Glut_1,18,0.01967
-zhuang1_f,VMHC,0456 AHN Onecut3 Gaba_1,17,0.01858
-zhuang1_f,VMHC,0565 VMH Fezf1 Glut_3,16,0.01749
-zhuang1_f,VMHC,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,11,0.01202
-zhuang1_f,VMHC,0566 VMH Nr5a1 Glut_1,10,0.01093
-zhuang1_f,VMHC,0457 AHN Onecut3 Gaba_2,8,0.008743
-zhuang1_f,VMHC,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,5,0.005464
-zhuang1_f,VMHC,0555 ARH-PVp Tbx3 Glut_2,4,0.004372
-zhuang1_f,VMHC,0480 TU-ARH Otp Six6 Gaba_3,3,0.003279
-zhuang1_f,VMHC,0488 DMH Hmx2 Gaba_2,3,0.003279
-zhuang1_f,VMHC,0552 DMH Hmx2 Glut_1,3,0.003279
-zhuang1_f,VMHC,0487 DMH Hmx2 Gaba_1,2,0.002186
-zhuang1_f,VMHC,0507 MEA-COA-BMA Ccdc42 Glut_3,2,0.002186
-zhuang1_f,VMHC,0571 VMH Nr5a1 Glut_6,2,0.002186
-zhuang1_f,VMHC,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,2,0.002186
-zhuang1_f,VMHC,0137 DG Glut_2,1,0.001093
-zhuang1_f,VMHC,0287 STR-PAL Chst9 Gaba_3,1,0.001093
-zhuang1_f,VMHC,0428 ARH-PVi Six6 Dopa-Gaba_2,1,0.001093
-zhuang1_f,VMHC,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,1,0.001093
-zhuang1_f,VMHC,0472 DMH-LHA Gsx1 Gaba_3,1,0.001093
-zhuang1_f,VMHC,0473 DMH-LHA Gsx1 Gaba_4,1,0.001093
-zhuang1_f,VMHC,0476 PVHd-DMH Lhx6 Gaba_3,1,0.001093
-zhuang1_f,VMHC,0479 TU-ARH Otp Six6 Gaba_2,1,0.001093
-zhuang1_f,VMHC,0491 DMH Hmx2 Gaba_5,1,0.001093
-zhuang1_f,VMHC,0511 COAa-PAA-MEA Barhl2 Glut_3,1,0.001093
-zhuang1_f,VMHC,0560 DMH-LHA Vgll2 Glut_2,1,0.001093
-zhuang1_f,VMHC,0561 DMH-LHA Vgll2 Glut_3,1,0.001093
-zhuang1_f,VMHVL,0563 VMH Fezf1 Glut_1,109,0.2417
-zhuang1_f,VMHVL,0565 VMH Fezf1 Glut_3,92,0.204
-zhuang1_f,VMHVL,0564 VMH Fezf1 Glut_2,88,0.1951
-zhuang1_f,VMHVL,0567 VMH Nr5a1 Glut_2,36,0.07982
-zhuang1_f,VMHVL,0568 VMH Nr5a1 Glut_3,32,0.07095
-zhuang1_f,VMHVL,0479 TU-ARH Otp Six6 Gaba_2,18,0.03991
-zhuang1_f,VMHVL,0569 VMH Nr5a1 Glut_4,12,0.02661
-zhuang1_f,VMHVL,0478 TU-ARH Otp Six6 Gaba_1,11,0.02439
-zhuang1_f,VMHVL,0480 TU-ARH Otp Six6 Gaba_3,9,0.01996
-zhuang1_f,VMHVL,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,9,0.01996
-zhuang1_f,VMHVL,0458 AHN Onecut3 Gaba_3,8,0.01774
-zhuang1_f,VMHVL,0472 DMH-LHA Gsx1 Gaba_3,2,0.004435
-zhuang1_f,VMHVL,0487 DMH Hmx2 Gaba_1,2,0.004435
-zhuang1_f,VMHVL,0491 DMH Hmx2 Gaba_5,2,0.004435
-zhuang1_f,VMHVL,0555 ARH-PVp Tbx3 Glut_2,2,0.004435
-zhuang1_f,VMHVL,0570 VMH Nr5a1 Glut_5,2,0.004435
-zhuang1_f,VMHVL,0573 LHA Pmch Glut_2,2,0.004435
-zhuang1_f,VMHVL,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,2,0.004435
-zhuang1_f,VMHVL,0429 TMv-PMv Tbx3 Hist-Gaba_1,1,0.002217
-zhuang1_f,VMHVL,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.002217
-zhuang1_f,VMHVL,0455 SBPV-PVa Six6 Satb2 Gaba_3,1,0.002217
-zhuang1_f,VMHVL,0456 AHN Onecut3 Gaba_1,1,0.002217
-zhuang1_f,VMHVL,0457 AHN Onecut3 Gaba_2,1,0.002217
-zhuang1_f,VMHVL,0470 DMH-LHA Gsx1 Gaba_1,1,0.002217
-zhuang1_f,VMHVL,0473 DMH-LHA Gsx1 Gaba_4,1,0.002217
-zhuang1_f,VMHVL,0477 PVHd-DMH Lhx6 Gaba_4,1,0.002217
-zhuang1_f,VMHVL,0488 DMH Hmx2 Gaba_2,1,0.002217
-zhuang1_f,VMHVL,0489 DMH Hmx2 Gaba_3,1,0.002217
-zhuang1_f,VMHVL,0492 DMH Hmx2 Gaba_6,1,0.002217
-zhuang1_f,VMHVL,0561 DMH-LHA Vgll2 Glut_3,1,0.002217
-zhuang1_f,VMHVL,0566 VMH Nr5a1 Glut_1,1,0.002217
-zhuang1_f,VMH,0456 AHN Onecut3 Gaba_1,36,0.1773
-zhuang1_f,VMH,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,32,0.1576
-zhuang1_f,VMH,0487 DMH Hmx2 Gaba_1,14,0.06897
-zhuang1_f,VMH,0458 AHN Onecut3 Gaba_3,13,0.06404
-zhuang1_f,VMH,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,12,0.05911
-zhuang1_f,VMH,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,10,0.04926
-zhuang1_f,VMH,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,8,0.03941
-zhuang1_f,VMH,0552 DMH Hmx2 Glut_1,8,0.03941
-zhuang1_f,VMH,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,5,0.02463
-zhuang1_f,VMH,0492 DMH Hmx2 Gaba_6,4,0.0197
-zhuang1_f,VMH,0557 ARH-PVp Tbx3 Glut_4,4,0.0197
-zhuang1_f,VMH,0564 VMH Fezf1 Glut_2,4,0.0197
-zhuang1_f,VMH,0429 TMv-PMv Tbx3 Hist-Gaba_1,3,0.01478
-zhuang1_f,VMH,0480 TU-ARH Otp Six6 Gaba_3,3,0.01478
-zhuang1_f,VMH,0489 DMH Hmx2 Gaba_3,3,0.01478
-zhuang1_f,VMH,0569 VMH Nr5a1 Glut_4,3,0.01478
-zhuang1_f,VMH,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,3,0.01478
-zhuang1_f,VMH,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,2,0.009852
-zhuang1_f,VMH,0454 SBPV-PVa Six6 Satb2 Gaba_2,2,0.009852
-zhuang1_f,VMH,0478 TU-ARH Otp Six6 Gaba_1,2,0.009852
-zhuang1_f,VMH,0553 DMH Hmx2 Glut_2,2,0.009852
-zhuang1_f,VMH,0554 ARH-PVp Tbx3 Glut_1,2,0.009852
-zhuang1_f,VMH,0567 VMH Nr5a1 Glut_2,2,0.009852
-zhuang1_f,VMH,0568 VMH Nr5a1 Glut_3,2,0.009852
-zhuang1_f,VMH,0573 LHA Pmch Glut_2,2,0.009852
-zhuang1_f,VMH,0594 PH-ant-LHA Otp Bsx Glut_4,2,0.009852
-zhuang1_f,VMH,0394 BST-SI-AAA Six3 Slc22a3 Gaba_1,1,0.004926
-zhuang1_f,VMH,0413 PVR Six3 Sox3 Gaba_3,1,0.004926
-zhuang1_f,VMH,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.004926
-zhuang1_f,VMH,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,1,0.004926
-zhuang1_f,VMH,0451 AHN-SBPV-PVHd Pdrm12 Gaba_6,1,0.004926
-zhuang1_f,VMH,0470 DMH-LHA Gsx1 Gaba_1,1,0.004926
-zhuang1_f,VMH,0471 DMH-LHA Gsx1 Gaba_2,1,0.004926
-zhuang1_f,VMH,0477 PVHd-DMH Lhx6 Gaba_4,1,0.004926
-zhuang1_f,VMH,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.004926
-zhuang1_f,VMH,0488 DMH Hmx2 Gaba_2,1,0.004926
-zhuang1_f,VMH,0491 DMH Hmx2 Gaba_5,1,0.004926
-zhuang1_f,VMH,0507 MEA-COA-BMA Ccdc42 Glut_3,1,0.004926
-zhuang1_f,VMH,0545 DMH Nkx2-4 Glut_2,1,0.004926
-zhuang1_f,VMH,0558 ARH-PVp Tbx3 Glut_5,1,0.004926
-zhuang1_f,VMH,0565 VMH Fezf1 Glut_3,1,0.004926
-zhuang1_f,VMH,0570 VMH Nr5a1 Glut_5,1,0.004926
-zhuang1_f,VMH,0579 AHN-RCH-LHA Otp Fezf1 Glut_1,1,0.004926
-zhuang1_f,VMH,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.004926
-zhuang1_f,VMH,0608 PH-an Pitx2 Glut_1,1,0.004926
-zhuang1_f,VMH,0611 PH Pitx2 Glut_2,1,0.004926
-zhuang1_f,VMHSh,0568 VMH Nr5a1 Glut_3,156,0.1501
-zhuang1_f,VMHSh,0567 VMH Nr5a1 Glut_2,74,0.07122
-zhuang1_f,VMHSh,0570 VMH Nr5a1 Glut_5,72,0.0693
-zhuang1_f,VMHSh,0456 AHN Onecut3 Gaba_1,63,0.06064
-zhuang1_f,VMHSh,0569 VMH Nr5a1 Glut_4,55,0.05294
-zhuang1_f,VMHSh,0480 TU-ARH Otp Six6 Gaba_3,47,0.04524
-zhuang1_f,VMHSh,0563 VMH Fezf1 Glut_1,44,0.04235
-zhuang1_f,VMHSh,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,38,0.03657
-zhuang1_f,VMHSh,0564 VMH Fezf1 Glut_2,36,0.03465
-zhuang1_f,VMHSh,0566 VMH Nr5a1 Glut_1,35,0.03369
-zhuang1_f,VMHSh,0478 TU-ARH Otp Six6 Gaba_1,31,0.02984
-zhuang1_f,VMHSh,0458 AHN Onecut3 Gaba_3,24,0.0231
-zhuang1_f,VMHSh,0479 TU-ARH Otp Six6 Gaba_2,23,0.02214
-zhuang1_f,VMHSh,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,23,0.02214
-zhuang1_f,VMHSh,0436 SCH Six6 Cdc14a Gaba_1,20,0.01925
-zhuang1_f,VMHSh,0457 AHN Onecut3 Gaba_2,20,0.01925
-zhuang1_f,VMHSh,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,18,0.01732
-zhuang1_f,VMHSh,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,18,0.01732
-zhuang1_f,VMHSh,0545 DMH Nkx2-4 Glut_2,17,0.01636
-zhuang1_f,VMHSh,0565 VMH Fezf1 Glut_3,17,0.01636
-zhuang1_f,VMHSh,0454 SBPV-PVa Six6 Satb2 Gaba_2,15,0.01444
-zhuang1_f,VMHSh,0487 DMH Hmx2 Gaba_1,15,0.01444
-zhuang1_f,VMHSh,0455 SBPV-PVa Six6 Satb2 Gaba_3,14,0.01347
-zhuang1_f,VMHSh,0438 SCH Six6 Cdc14a Gaba_3,9,0.008662
-zhuang1_f,VMHSh,0472 DMH-LHA Gsx1 Gaba_3,9,0.008662
-zhuang1_f,VMHSh,0555 ARH-PVp Tbx3 Glut_2,8,0.0077
-zhuang1_f,VMHSh,0429 TMv-PMv Tbx3 Hist-Gaba_1,7,0.006737
-zhuang1_f,VMHSh,0488 DMH Hmx2 Gaba_2,7,0.006737
-zhuang1_f,VMHSh,0561 DMH-LHA Vgll2 Glut_3,7,0.006737
-zhuang1_f,VMHSh,0562 DMH-LHA Vgll2 Glut_4,7,0.006737
-zhuang1_f,VMHSh,0553 DMH Hmx2 Glut_2,6,0.005775
-zhuang1_f,VMHSh,0571 VMH Nr5a1 Glut_6,6,0.005775
-zhuang1_f,VMHSh,0412 PVR Six3 Sox3 Gaba_2,5,0.004812
-zhuang1_f,VMHSh,0437 SCH Six6 Cdc14a Gaba_2,5,0.004812
-zhuang1_f,VMHSh,0489 DMH Hmx2 Gaba_3,5,0.004812
-zhuang1_f,VMHSh,0492 DMH Hmx2 Gaba_6,5,0.004812
-zhuang1_f,VMHSh,0552 DMH Hmx2 Glut_1,5,0.004812
-zhuang1_f,VMHSh,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,4,0.00385
-zhuang1_f,VMHSh,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,4,0.00385
-zhuang1_f,VMHSh,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,4,0.00385
-zhuang1_f,VMHSh,0557 ARH-PVp Tbx3 Glut_4,4,0.00385
-zhuang1_f,VMHSh,0428 ARH-PVi Six6 Dopa-Gaba_2,3,0.002887
-zhuang1_f,VMHSh,0442 PVHd-SBPV Six3 Prox1 Gaba_1,3,0.002887
-zhuang1_f,VMHSh,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,3,0.002887
-zhuang1_f,VMHSh,0493 ARH-PVp Tbx3 Gaba_1,3,0.002887
-zhuang1_f,VMHSh,0495 ARH-PVp Tbx3 Gaba_3,3,0.002887
-zhuang1_f,VMHSh,0560 DMH-LHA Vgll2 Glut_2,3,0.002887
-zhuang1_f,VMHSh,0573 LHA Pmch Glut_2,3,0.002887
-zhuang1_f,VMHSh,0576 LHA-AHN-PVH Otp Trh Glut_3,3,0.002887
-zhuang1_f,VMHSh,0579 AHN-RCH-LHA Otp Fezf1 Glut_1,3,0.002887
-zhuang1_f,VMHSh,0413 PVR Six3 Sox3 Gaba_3,2,0.001925
-zhuang1_f,VMHSh,0431 RT-ZI Gnb3 Gaba_1,2,0.001925
-zhuang1_f,VMHSh,0470 DMH-LHA Gsx1 Gaba_1,2,0.001925
-zhuang1_f,VMHSh,0481 TMd-DMH Foxd2 Gaba_1,2,0.001925
-zhuang1_f,VMHSh,0518 MS-SF Bsx Glut_1,2,0.001925
-zhuang1_f,VMHSh,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,2,0.001925
-zhuang1_f,VMHSh,0411 PVR Six3 Sox3 Gaba_1,1,0.0009625
-zhuang1_f,VMHSh,0422 BST-MPN Six3 Nrgn Gaba_3,1,0.0009625
-zhuang1_f,VMHSh,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.0009625
-zhuang1_f,VMHSh,0427 ARH-PVi Six6 Dopa-Gaba_1,1,0.0009625
-zhuang1_f,VMHSh,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.0009625
-zhuang1_f,VMHSh,0439 DMH Prdm13 Gaba_1,1,0.0009625
-zhuang1_f,VMHSh,0443 PVHd-SBPV Six3 Prox1 Gaba_2,1,0.0009625
-zhuang1_f,VMHSh,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,1,0.0009625
-zhuang1_f,VMHSh,0451 AHN-SBPV-PVHd Pdrm12 Gaba_6,1,0.0009625
-zhuang1_f,VMHSh,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.0009625
-zhuang1_f,VMHSh,0471 DMH-LHA Gsx1 Gaba_2,1,0.0009625
-zhuang1_f,VMHSh,0491 DMH Hmx2 Gaba_5,1,0.0009625
-zhuang1_f,VMHSh,0499 LGv-ZI Otx2 Gaba_4,1,0.0009625
-zhuang1_f,VMHSh,0515 COAa-PAA-MEA Barhl2 Glut_7,1,0.0009625
-zhuang1_f,VMHSh,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.0009625
-zhuang1_f,VMHSh,0606 PMv-TMv Pitx2 Glut_2,1,0.0009625
-zhuang1_f,VMHSh,0643 PVT-PT Ntrk1 Glut_1,1,0.0009625
-zhuang1_f,VMHSh,1033 CS-RPO Meis2 Gaba_3,1,0.0009625
-zhuang1_f,core,0568 VMH Nr5a1 Glut_3,1241,0.485
-zhuang1_f,core,0569 VMH Nr5a1 Glut_4,197,0.07698
-zhuang1_f,core,0564 VMH Fezf1 Glut_2,147,0.05744
-zhuang1_f,core,0570 VMH Nr5a1 Glut_5,132,0.05158
-zhuang1_f,core,0563 VMH Fezf1 Glut_1,127,0.04963
-zhuang1_f,core,0565 VMH Fezf1 Glut_3,110,0.04299
-zhuang1_f,core,0567 VMH Nr5a1 Glut_2,90,0.03517
-zhuang1_f,core,0456 AHN Onecut3 Gaba_1,71,0.02775
-zhuang1_f,core,0458 AHN Onecut3 Gaba_3,41,0.01602
-zhuang1_f,core,0478 TU-ARH Otp Six6 Gaba_1,41,0.01602
-zhuang1_f,core,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,36,0.01407
-zhuang1_f,core,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,32,0.0125
-zhuang1_f,core,0566 VMH Nr5a1 Glut_1,24,0.009379
-zhuang1_f,core,0457 AHN Onecut3 Gaba_2,23,0.008988
-zhuang1_f,core,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,21,0.008206
-zhuang1_f,core,0487 DMH Hmx2 Gaba_1,20,0.007816
-zhuang1_f,core,0479 TU-ARH Otp Six6 Gaba_2,19,0.007425
-zhuang1_f,core,0571 VMH Nr5a1 Glut_6,19,0.007425
-zhuang1_f,core,0480 TU-ARH Otp Six6 Gaba_3,15,0.005862
-zhuang1_f,core,0552 DMH Hmx2 Glut_1,14,0.005471
-zhuang1_f,core,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,13,0.00508
-zhuang1_f,core,0429 TMv-PMv Tbx3 Hist-Gaba_1,8,0.003126
-zhuang1_f,core,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,8,0.003126
-zhuang1_f,core,0488 DMH Hmx2 Gaba_2,8,0.003126
-zhuang1_f,core,0492 DMH Hmx2 Gaba_6,8,0.003126
-zhuang1_f,core,0555 ARH-PVp Tbx3 Glut_2,6,0.002345
-zhuang1_f,core,0489 DMH Hmx2 Gaba_3,5,0.001954
-zhuang1_f,core,0557 ARH-PVp Tbx3 Glut_4,5,0.001954
-zhuang1_f,core,0561 DMH-LHA Vgll2 Glut_3,5,0.001954
-zhuang1_f,core,0573 LHA Pmch Glut_2,5,0.001954
-zhuang1_f,core,0491 DMH Hmx2 Gaba_5,4,0.001563
-zhuang1_f,core,0544 DMH Nkx2-4 Glut_1,4,0.001563
-zhuang1_f,core,0545 DMH Nkx2-4 Glut_2,4,0.001563
-zhuang1_f,core,0428 ARH-PVi Six6 Dopa-Gaba_2,3,0.001172
-zhuang1_f,core,0454 SBPV-PVa Six6 Satb2 Gaba_2,3,0.001172
-zhuang1_f,core,0455 SBPV-PVa Six6 Satb2 Gaba_3,3,0.001172
-zhuang1_f,core,0470 DMH-LHA Gsx1 Gaba_1,3,0.001172
-zhuang1_f,core,0472 DMH-LHA Gsx1 Gaba_3,3,0.001172
-zhuang1_f,core,0507 MEA-COA-BMA Ccdc42 Glut_3,3,0.001172
-zhuang1_f,core,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,3,0.001172
-zhuang1_f,core,0430 TMv-PMv Tbx3 Hist-Gaba_2,2,0.0007816
-zhuang1_f,core,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,2,0.0007816
-zhuang1_f,core,0473 DMH-LHA Gsx1 Gaba_4,2,0.0007816
-zhuang1_f,core,0477 PVHd-DMH Lhx6 Gaba_4,2,0.0007816
-zhuang1_f,core,0553 DMH Hmx2 Glut_2,2,0.0007816
-zhuang1_f,core,0554 ARH-PVp Tbx3 Glut_1,2,0.0007816
-zhuang1_f,core,0594 PH-ant-LHA Otp Bsx Glut_4,2,0.0007816
-zhuang1_f,core,0137 DG Glut_2,1,0.0003908
-zhuang1_f,core,0287 STR-PAL Chst9 Gaba_3,1,0.0003908
-zhuang1_f,core,0394 BST-SI-AAA Six3 Slc22a3 Gaba_1,1,0.0003908
-zhuang1_f,core,0404 MPO-ADP Lhx8 Gaba_3,1,0.0003908
-zhuang1_f,core,0413 PVR Six3 Sox3 Gaba_3,1,0.0003908
-zhuang1_f,core,0438 SCH Six6 Cdc14a Gaba_3,1,0.0003908
-zhuang1_f,core,0442 PVHd-SBPV Six3 Prox1 Gaba_1,1,0.0003908
-zhuang1_f,core,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,1,0.0003908
-zhuang1_f,core,0451 AHN-SBPV-PVHd Pdrm12 Gaba_6,1,0.0003908
-zhuang1_f,core,0471 DMH-LHA Gsx1 Gaba_2,1,0.0003908
-zhuang1_f,core,0476 PVHd-DMH Lhx6 Gaba_3,1,0.0003908
-zhuang1_f,core,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.0003908
-zhuang1_f,core,0505 MEA-COA-BMA Ccdc42 Glut_1,1,0.0003908
-zhuang1_f,core,0511 COAa-PAA-MEA Barhl2 Glut_3,1,0.0003908
-zhuang1_f,core,0558 ARH-PVp Tbx3 Glut_5,1,0.0003908
-zhuang1_f,core,0560 DMH-LHA Vgll2 Glut_2,1,0.0003908
-zhuang1_f,core,0579 AHN-RCH-LHA Otp Fezf1 Glut_1,1,0.0003908
-zhuang1_f,core,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.0003908
-zhuang1_f,core,0585 PVH-SO-PVa Otp Glut_1,1,0.0003908
-zhuang1_f,core,0608 PH-an Pitx2 Glut_1,1,0.0003908
-zhuang1_f,core,0611 PH Pitx2 Glut_2,1,0.0003908
-zhuang2_m,VMHDM,0568 VMH Nr5a1 Glut_3,84,0.497
-zhuang2_m,VMHDM,0569 VMH Nr5a1 Glut_4,32,0.1893
-zhuang2_m,VMHDM,0487 DMH Hmx2 Gaba_1,7,0.04142
-zhuang2_m,VMHDM,0470 DMH-LHA Gsx1 Gaba_1,6,0.0355
-zhuang2_m,VMHDM,0570 VMH Nr5a1 Glut_5,6,0.0355
-zhuang2_m,VMHDM,0492 DMH Hmx2 Gaba_6,4,0.02367
-zhuang2_m,VMHDM,0480 TU-ARH Otp Six6 Gaba_3,3,0.01775
-zhuang2_m,VMHDM,0566 VMH Nr5a1 Glut_1,3,0.01775
-zhuang2_m,VMHDM,0428 ARH-PVi Six6 Dopa-Gaba_2,2,0.01183
-zhuang2_m,VMHDM,0429 TMv-PMv Tbx3 Hist-Gaba_1,2,0.01183
-zhuang2_m,VMHDM,0478 TU-ARH Otp Six6 Gaba_1,2,0.01183
-zhuang2_m,VMHDM,0479 TU-ARH Otp Six6 Gaba_2,2,0.01183
-zhuang2_m,VMHDM,0552 DMH Hmx2 Glut_1,2,0.01183
-zhuang2_m,VMHDM,0564 VMH Fezf1 Glut_2,2,0.01183
-zhuang2_m,VMHDM,0571 VMH Nr5a1 Glut_6,2,0.01183
-zhuang2_m,VMHDM,0472 DMH-LHA Gsx1 Gaba_3,1,0.005917
-zhuang2_m,VMHDM,0491 DMH Hmx2 Gaba_5,1,0.005917
-zhuang2_m,VMHDM,0545 DMH Nkx2-4 Glut_2,1,0.005917
-zhuang2_m,VMHDM,0553 DMH Hmx2 Glut_2,1,0.005917
-zhuang2_m,VMHDM,0556 ARH-PVp Tbx3 Glut_3,1,0.005917
-zhuang2_m,VMHDM,0557 ARH-PVp Tbx3 Glut_4,1,0.005917
-zhuang2_m,VMHDM,0558 ARH-PVp Tbx3 Glut_5,1,0.005917
-zhuang2_m,VMHDM,0567 VMH Nr5a1 Glut_2,1,0.005917
-zhuang2_m,VMHDM,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,1,0.005917
-zhuang2_m,VMHDM,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.005917
-zhuang2_m,VMHC,0568 VMH Nr5a1 Glut_3,149,0.6208
-zhuang2_m,VMHC,0569 VMH Nr5a1 Glut_4,24,0.1
-zhuang2_m,VMHC,0480 TU-ARH Otp Six6 Gaba_3,18,0.075
-zhuang2_m,VMHC,0570 VMH Nr5a1 Glut_5,8,0.03333
-zhuang2_m,VMHC,0565 VMH Fezf1 Glut_3,7,0.02917
-zhuang2_m,VMHC,0478 TU-ARH Otp Six6 Gaba_1,5,0.02083
-zhuang2_m,VMHC,0564 VMH Fezf1 Glut_2,5,0.02083
-zhuang2_m,VMHC,0479 TU-ARH Otp Six6 Gaba_2,4,0.01667
-zhuang2_m,VMHC,0430 TMv-PMv Tbx3 Hist-Gaba_2,3,0.0125
-zhuang2_m,VMHC,0567 VMH Nr5a1 Glut_2,3,0.0125
-zhuang2_m,VMHC,0566 VMH Nr5a1 Glut_1,2,0.008333
-zhuang2_m,VMHC,0458 AHN Onecut3 Gaba_3,1,0.004167
-zhuang2_m,VMHC,0472 DMH-LHA Gsx1 Gaba_3,1,0.004167
-zhuang2_m,VMHC,0507 MEA-COA-BMA Ccdc42 Glut_3,1,0.004167
-zhuang2_m,VMHC,0553 DMH Hmx2 Glut_2,1,0.004167
-zhuang2_m,VMHC,0554 ARH-PVp Tbx3 Glut_1,1,0.004167
-zhuang2_m,VMHC,0557 ARH-PVp Tbx3 Glut_4,1,0.004167
-zhuang2_m,VMHC,0558 ARH-PVp Tbx3 Glut_5,1,0.004167
-zhuang2_m,VMHC,0563 VMH Fezf1 Glut_1,1,0.004167
-zhuang2_m,VMHC,0571 VMH Nr5a1 Glut_6,1,0.004167
-zhuang2_m,VMHC,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,1,0.004167
-zhuang2_m,VMHC,0607 PMv-TMv Pitx2 Glut_3,1,0.004167
-zhuang2_m,VMHC,0645 PVT-PT Ntrk1 Glut_3,1,0.004167
-zhuang2_m,VMHVL,0480 TU-ARH Otp Six6 Gaba_3,11,0.2037
-zhuang2_m,VMHVL,0568 VMH Nr5a1 Glut_3,8,0.1481
-zhuang2_m,VMHVL,0479 TU-ARH Otp Six6 Gaba_2,7,0.1296
-zhuang2_m,VMHVL,0569 VMH Nr5a1 Glut_4,5,0.09259
-zhuang2_m,VMHVL,0565 VMH Fezf1 Glut_3,4,0.07407
-zhuang2_m,VMHVL,0478 TU-ARH Otp Six6 Gaba_1,3,0.05556
-zhuang2_m,VMHVL,0429 TMv-PMv Tbx3 Hist-Gaba_1,2,0.03704
-zhuang2_m,VMHVL,0564 VMH Fezf1 Glut_2,2,0.03704
-zhuang2_m,VMHVL,0567 VMH Nr5a1 Glut_2,2,0.03704
-zhuang2_m,VMHVL,0305 LSX Otx2 Gaba_5,1,0.01852
-zhuang2_m,VMHVL,0384 CEA-BST Ebf1 Pdyn Gaba_1,1,0.01852
-zhuang2_m,VMHVL,0472 DMH-LHA Gsx1 Gaba_3,1,0.01852
-zhuang2_m,VMHVL,0488 DMH Hmx2 Gaba_2,1,0.01852
-zhuang2_m,VMHVL,0492 DMH Hmx2 Gaba_6,1,0.01852
-zhuang2_m,VMHVL,0557 ARH-PVp Tbx3 Glut_4,1,0.01852
-zhuang2_m,VMHVL,0558 ARH-PVp Tbx3 Glut_5,1,0.01852
-zhuang2_m,VMHVL,0563 VMH Fezf1 Glut_1,1,0.01852
-zhuang2_m,VMHVL,0570 VMH Nr5a1 Glut_5,1,0.01852
-zhuang2_m,VMHVL,0607 PMv-TMv Pitx2 Glut_3,1,0.01852
-zhuang2_m,VMH,0568 VMH Nr5a1 Glut_3,85,0.4971
-zhuang2_m,VMH,0570 VMH Nr5a1 Glut_5,16,0.09357
-zhuang2_m,VMH,0456 AHN Onecut3 Gaba_1,11,0.06433
-zhuang2_m,VMH,0569 VMH Nr5a1 Glut_4,11,0.06433
-zhuang2_m,VMH,0567 VMH Nr5a1 Glut_2,8,0.04678
-zhuang2_m,VMH,0458 AHN Onecut3 Gaba_3,7,0.04094
-zhuang2_m,VMH,0478 TU-ARH Otp Six6 Gaba_1,5,0.02924
-zhuang2_m,VMH,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,5,0.02924
-zhuang2_m,VMH,0457 AHN Onecut3 Gaba_2,4,0.02339
-zhuang2_m,VMH,0566 VMH Nr5a1 Glut_1,4,0.02339
-zhuang2_m,VMH,0480 TU-ARH Otp Six6 Gaba_3,3,0.01754
-zhuang2_m,VMH,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,3,0.01754
-zhuang2_m,VMH,0488 DMH Hmx2 Gaba_2,2,0.0117
-zhuang2_m,VMH,0507 MEA-COA-BMA Ccdc42 Glut_3,2,0.0117
-zhuang2_m,VMH,0479 TU-ARH Otp Six6 Gaba_2,1,0.005848
-zhuang2_m,VMH,0489 DMH Hmx2 Gaba_3,1,0.005848
-zhuang2_m,VMH,0492 DMH Hmx2 Gaba_6,1,0.005848
-zhuang2_m,VMH,0561 DMH-LHA Vgll2 Glut_3,1,0.005848
-zhuang2_m,VMH,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.005848
-zhuang2_m,VMHSh,0568 VMH Nr5a1 Glut_3,59,0.2
-zhuang2_m,VMHSh,0569 VMH Nr5a1 Glut_4,35,0.1186
-zhuang2_m,VMHSh,0567 VMH Nr5a1 Glut_2,33,0.1119
-zhuang2_m,VMHSh,0570 VMH Nr5a1 Glut_5,29,0.09831
-zhuang2_m,VMHSh,0564 VMH Fezf1 Glut_2,24,0.08136
-zhuang2_m,VMHSh,0478 TU-ARH Otp Six6 Gaba_1,16,0.05424
-zhuang2_m,VMHSh,0480 TU-ARH Otp Six6 Gaba_3,12,0.04068
-zhuang2_m,VMHSh,0566 VMH Nr5a1 Glut_1,8,0.02712
-zhuang2_m,VMHSh,0470 DMH-LHA Gsx1 Gaba_1,6,0.02034
-zhuang2_m,VMHSh,0545 DMH Nkx2-4 Glut_2,6,0.02034
-zhuang2_m,VMHSh,0565 VMH Fezf1 Glut_3,6,0.02034
-zhuang2_m,VMHSh,0457 AHN Onecut3 Gaba_2,5,0.01695
-zhuang2_m,VMHSh,0458 AHN Onecut3 Gaba_3,5,0.01695
-zhuang2_m,VMHSh,0428 ARH-PVi Six6 Dopa-Gaba_2,4,0.01356
-zhuang2_m,VMHSh,0487 DMH Hmx2 Gaba_1,3,0.01017
-zhuang2_m,VMHSh,0488 DMH Hmx2 Gaba_2,3,0.01017
-zhuang2_m,VMHSh,0492 DMH Hmx2 Gaba_6,3,0.01017
-zhuang2_m,VMHSh,0553 DMH Hmx2 Glut_2,3,0.01017
-zhuang2_m,VMHSh,0427 ARH-PVi Six6 Dopa-Gaba_1,2,0.00678
-zhuang2_m,VMHSh,0429 TMv-PMv Tbx3 Hist-Gaba_1,2,0.00678
-zhuang2_m,VMHSh,0493 ARH-PVp Tbx3 Gaba_1,2,0.00678
-zhuang2_m,VMHSh,0495 ARH-PVp Tbx3 Gaba_3,2,0.00678
-zhuang2_m,VMHSh,0555 ARH-PVp Tbx3 Glut_2,2,0.00678
-zhuang2_m,VMHSh,0556 ARH-PVp Tbx3 Glut_3,2,0.00678
-zhuang2_m,VMHSh,0561 DMH-LHA Vgll2 Glut_3,2,0.00678
-zhuang2_m,VMHSh,0562 DMH-LHA Vgll2 Glut_4,2,0.00678
-zhuang2_m,VMHSh,0605 PMv-TMv Pitx2 Glut_1,2,0.00678
-zhuang2_m,VMHSh,0419 PVR Six3 Sox3 Gaba_9,1,0.00339
-zhuang2_m,VMHSh,0442 PVHd-SBPV Six3 Prox1 Gaba_1,1,0.00339
-zhuang2_m,VMHSh,0454 SBPV-PVa Six6 Satb2 Gaba_2,1,0.00339
-zhuang2_m,VMHSh,0456 AHN Onecut3 Gaba_1,1,0.00339
-zhuang2_m,VMHSh,0471 DMH-LHA Gsx1 Gaba_2,1,0.00339
-zhuang2_m,VMHSh,0472 DMH-LHA Gsx1 Gaba_3,1,0.00339
-zhuang2_m,VMHSh,0489 DMH Hmx2 Gaba_3,1,0.00339
-zhuang2_m,VMHSh,0547 MPN-MPO-PVpo Hmx2 Glut_2,1,0.00339
-zhuang2_m,VMHSh,0552 DMH Hmx2 Glut_1,1,0.00339
-zhuang2_m,VMHSh,0560 DMH-LHA Vgll2 Glut_2,1,0.00339
-zhuang2_m,VMHSh,0563 VMH Fezf1 Glut_1,1,0.00339
-zhuang2_m,VMHSh,0572 LHA Pmch Glut_1,1,0.00339
-zhuang2_m,VMHSh,0577 LHA-AHN-PVH Otp Trh Glut_4,1,0.00339
-zhuang2_m,VMHSh,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,1,0.00339
-zhuang2_m,VMHSh,0585 PVH-SO-PVa Otp Glut_1,1,0.00339
-zhuang2_m,VMHSh,0594 PH-ant-LHA Otp Bsx Glut_4,1,0.00339
-zhuang2_m,VMHSh,0607 PMv-TMv Pitx2 Glut_3,1,0.00339
-zhuang2_m,core,0568 VMH Nr5a1 Glut_3,326,0.5142
-zhuang2_m,core,0569 VMH Nr5a1 Glut_4,72,0.1136
-zhuang2_m,core,0480 TU-ARH Otp Six6 Gaba_3,35,0.05521
-zhuang2_m,core,0570 VMH Nr5a1 Glut_5,31,0.0489
-zhuang2_m,core,0478 TU-ARH Otp Six6 Gaba_1,15,0.02366
-zhuang2_m,core,0479 TU-ARH Otp Six6 Gaba_2,14,0.02208
-zhuang2_m,core,0567 VMH Nr5a1 Glut_2,14,0.02208
-zhuang2_m,core,0456 AHN Onecut3 Gaba_1,11,0.01735
-zhuang2_m,core,0565 VMH Fezf1 Glut_3,11,0.01735
-zhuang2_m,core,0564 VMH Fezf1 Glut_2,9,0.0142
-zhuang2_m,core,0566 VMH Nr5a1 Glut_1,9,0.0142
-zhuang2_m,core,0458 AHN Onecut3 Gaba_3,8,0.01262
-zhuang2_m,core,0487 DMH Hmx2 Gaba_1,7,0.01104
-zhuang2_m,core,0470 DMH-LHA Gsx1 Gaba_1,6,0.009464
-zhuang2_m,core,0492 DMH Hmx2 Gaba_6,6,0.009464
-zhuang2_m,core,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,6,0.009464
-zhuang2_m,core,0429 TMv-PMv Tbx3 Hist-Gaba_1,4,0.006309
-zhuang2_m,core,0457 AHN Onecut3 Gaba_2,4,0.006309
-zhuang2_m,core,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,4,0.006309
-zhuang2_m,core,0430 TMv-PMv Tbx3 Hist-Gaba_2,3,0.004732
-zhuang2_m,core,0472 DMH-LHA Gsx1 Gaba_3,3,0.004732
-zhuang2_m,core,0488 DMH Hmx2 Gaba_2,3,0.004732
-zhuang2_m,core,0507 MEA-COA-BMA Ccdc42 Glut_3,3,0.004732
-zhuang2_m,core,0557 ARH-PVp Tbx3 Glut_4,3,0.004732
-zhuang2_m,core,0558 ARH-PVp Tbx3 Glut_5,3,0.004732
-zhuang2_m,core,0571 VMH Nr5a1 Glut_6,3,0.004732
-zhuang2_m,core,0428 ARH-PVi Six6 Dopa-Gaba_2,2,0.003155
-zhuang2_m,core,0552 DMH Hmx2 Glut_1,2,0.003155
-zhuang2_m,core,0553 DMH Hmx2 Glut_2,2,0.003155
-zhuang2_m,core,0563 VMH Fezf1 Glut_1,2,0.003155
-zhuang2_m,core,0607 PMv-TMv Pitx2 Glut_3,2,0.003155
-zhuang2_m,core,0305 LSX Otx2 Gaba_5,1,0.001577
-zhuang2_m,core,0384 CEA-BST Ebf1 Pdyn Gaba_1,1,0.001577
-zhuang2_m,core,0489 DMH Hmx2 Gaba_3,1,0.001577
-zhuang2_m,core,0491 DMH Hmx2 Gaba_5,1,0.001577
-zhuang2_m,core,0545 DMH Nkx2-4 Glut_2,1,0.001577
-zhuang2_m,core,0554 ARH-PVp Tbx3 Glut_1,1,0.001577
-zhuang2_m,core,0556 ARH-PVp Tbx3 Glut_3,1,0.001577
-zhuang2_m,core,0561 DMH-LHA Vgll2 Glut_3,1,0.001577
-zhuang2_m,core,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.001577
-zhuang2_m,core,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.001577
-zhuang2_m,core,0645 PVT-PT Ntrk1 Glut_3,1,0.001577
+allen_m,VMHDM,0568 VMH Nr5a1 Glut_3,684,0.5979
+allen_m,VMHDM,0569 VMH Nr5a1 Glut_4,151,0.132
+allen_m,VMHDM,0570 VMH Nr5a1 Glut_5,105,0.09178
+allen_m,VMHDM,0571 VMH Nr5a1 Glut_6,55,0.04808
+allen_m,VMHDM,0564 VMH Fezf1 Glut_2,30,0.02622
+allen_m,VMHDM,0478 TU-ARH Otp Six6 Gaba_1,24,0.02098
+allen_m,VMHDM,0566 VMH Nr5a1 Glut_1,11,0.009615
+allen_m,VMHDM,0442 PVHd-SBPV Six3 Prox1 Gaba_1,8,0.006993
+allen_m,VMHDM,0488 DMH Hmx2 Gaba_2,8,0.006993
+allen_m,VMHDM,0553 DMH Hmx2 Glut_2,6,0.005245
+allen_m,VMHDM,0456 AHN Onecut3 Gaba_1,5,0.004371
+allen_m,VMHDM,0472 DMH-LHA Gsx1 Gaba_3,5,0.004371
+allen_m,VMHDM,0565 VMH Fezf1 Glut_3,5,0.004371
+allen_m,VMHDM,0457 AHN Onecut3 Gaba_2,4,0.003497
+allen_m,VMHDM,0458 AHN Onecut3 Gaba_3,4,0.003497
+allen_m,VMHDM,0480 TU-ARH Otp Six6 Gaba_3,4,0.003497
+allen_m,VMHDM,0557 ARH-PVp Tbx3 Glut_4,4,0.003497
+allen_m,VMHDM,0562 DMH-LHA Vgll2 Glut_4,3,0.002622
+allen_m,VMHDM,0563 VMH Fezf1 Glut_1,3,0.002622
+allen_m,VMHDM,0567 VMH Nr5a1 Glut_2,3,0.002622
+allen_m,VMHDM,0454 SBPV-PVa Six6 Satb2 Gaba_2,2,0.001748
+allen_m,VMHDM,0555 ARH-PVp Tbx3 Glut_2,2,0.001748
+allen_m,VMHDM,0341 MEA-BST Sox6 Gaba_5,1,0.0008741
+allen_m,VMHDM,0428 ARH-PVi Six6 Dopa-Gaba_2,1,0.0008741
+allen_m,VMHDM,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,1,0.0008741
+allen_m,VMHDM,0468 ZI Pax6 Gaba_10,1,0.0008741
+allen_m,VMHDM,0476 PVHd-DMH Lhx6 Gaba_3,1,0.0008741
+allen_m,VMHDM,0479 TU-ARH Otp Six6 Gaba_2,1,0.0008741
+allen_m,VMHDM,0489 DMH Hmx2 Gaba_3,1,0.0008741
+allen_m,VMHDM,0492 DMH Hmx2 Gaba_6,1,0.0008741
+allen_m,VMHDM,0493 ARH-PVp Tbx3 Gaba_1,1,0.0008741
+allen_m,VMHDM,0495 ARH-PVp Tbx3 Gaba_3,1,0.0008741
+allen_m,VMHDM,0544 DMH Nkx2-4 Glut_1,1,0.0008741
+allen_m,VMHDM,0554 ARH-PVp Tbx3 Glut_1,1,0.0008741
+allen_m,VMHDM,0572 LHA Pmch Glut_1,1,0.0008741
+allen_m,VMHDM,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,1,0.0008741
+allen_m,VMHDM,0590 PVH-SO-PVa Otp Glut_6,1,0.0008741
+allen_m,VMHDM,0595 PH-ant-LHA Otp Bsx Glut_5,1,0.0008741
+allen_m,VMHDM,0611 PH Pitx2 Glut_2,1,0.0008741
+allen_m,VMHDM,0628 HY Gnrh1 Glut_1,1,0.0008741
+allen_m,VMHC,0568 VMH Nr5a1 Glut_3,1035,0.7099
+allen_m,VMHC,0569 VMH Nr5a1 Glut_4,122,0.08368
+allen_m,VMHC,0570 VMH Nr5a1 Glut_5,72,0.04938
+allen_m,VMHC,0564 VMH Fezf1 Glut_2,64,0.0439
+allen_m,VMHC,0565 VMH Fezf1 Glut_3,38,0.02606
+allen_m,VMHC,0567 VMH Nr5a1 Glut_2,22,0.01509
+allen_m,VMHC,0478 TU-ARH Otp Six6 Gaba_1,15,0.01029
+allen_m,VMHC,0566 VMH Nr5a1 Glut_1,13,0.008916
+allen_m,VMHC,0563 VMH Fezf1 Glut_1,11,0.007545
+allen_m,VMHC,0571 VMH Nr5a1 Glut_6,9,0.006173
+allen_m,VMHC,0456 AHN Onecut3 Gaba_1,7,0.004801
+allen_m,VMHC,0480 TU-ARH Otp Six6 Gaba_3,6,0.004115
+allen_m,VMHC,0557 ARH-PVp Tbx3 Glut_4,6,0.004115
+allen_m,VMHC,0488 DMH Hmx2 Gaba_2,4,0.002743
+allen_m,VMHC,0555 ARH-PVp Tbx3 Glut_2,4,0.002743
+allen_m,VMHC,0457 AHN Onecut3 Gaba_2,3,0.002058
+allen_m,VMHC,0442 PVHd-SBPV Six3 Prox1 Gaba_1,2,0.001372
+allen_m,VMHC,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,2,0.001372
+allen_m,VMHC,0454 SBPV-PVa Six6 Satb2 Gaba_2,2,0.001372
+allen_m,VMHC,0458 AHN Onecut3 Gaba_3,2,0.001372
+allen_m,VMHC,0479 TU-ARH Otp Six6 Gaba_2,2,0.001372
+allen_m,VMHC,0518 MS-SF Bsx Glut_1,2,0.001372
+allen_m,VMHC,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,2,0.001372
+allen_m,VMHC,0422 BST-MPN Six3 Nrgn Gaba_3,1,0.0006859
+allen_m,VMHC,0473 DMH-LHA Gsx1 Gaba_4,1,0.0006859
+allen_m,VMHC,0474 PVHd-DMH Lhx6 Gaba_1,1,0.0006859
+allen_m,VMHC,0491 DMH Hmx2 Gaba_5,1,0.0006859
+allen_m,VMHC,0492 DMH Hmx2 Gaba_6,1,0.0006859
+allen_m,VMHC,0553 DMH Hmx2 Glut_2,1,0.0006859
+allen_m,VMHC,0554 ARH-PVp Tbx3 Glut_1,1,0.0006859
+allen_m,VMHC,0561 DMH-LHA Vgll2 Glut_3,1,0.0006859
+allen_m,VMHC,0562 DMH-LHA Vgll2 Glut_4,1,0.0006859
+allen_m,VMHC,0572 LHA Pmch Glut_1,1,0.0006859
+allen_m,VMHC,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.0006859
+allen_m,VMHC,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,1,0.0006859
+allen_m,VMHC,0607 PMv-TMv Pitx2 Glut_3,1,0.0006859
+allen_m,VMHVL,0568 VMH Nr5a1 Glut_3,252,0.2655
+allen_m,VMHVL,0565 VMH Fezf1 Glut_3,241,0.254
+allen_m,VMHVL,0564 VMH Fezf1 Glut_2,193,0.2034
+allen_m,VMHVL,0563 VMH Fezf1 Glut_1,98,0.1033
+allen_m,VMHVL,0567 VMH Nr5a1 Glut_2,51,0.05374
+allen_m,VMHVL,0569 VMH Nr5a1 Glut_4,49,0.05163
+allen_m,VMHVL,0479 TU-ARH Otp Six6 Gaba_2,29,0.03056
+allen_m,VMHVL,0478 TU-ARH Otp Six6 Gaba_1,14,0.01475
+allen_m,VMHVL,0570 VMH Nr5a1 Glut_5,5,0.005269
+allen_m,VMHVL,0458 AHN Onecut3 Gaba_3,3,0.003161
+allen_m,VMHVL,0457 AHN Onecut3 Gaba_2,2,0.002107
+allen_m,VMHVL,0488 DMH Hmx2 Gaba_2,2,0.002107
+allen_m,VMHVL,0557 ARH-PVp Tbx3 Glut_4,2,0.002107
+allen_m,VMHVL,0431 RT-ZI Gnb3 Gaba_1,1,0.001054
+allen_m,VMHVL,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.001054
+allen_m,VMHVL,0471 DMH-LHA Gsx1 Gaba_2,1,0.001054
+allen_m,VMHVL,0492 DMH Hmx2 Gaba_6,1,0.001054
+allen_m,VMHVL,0554 ARH-PVp Tbx3 Glut_1,1,0.001054
+allen_m,VMHVL,0555 ARH-PVp Tbx3 Glut_2,1,0.001054
+allen_m,VMHVL,0556 ARH-PVp Tbx3 Glut_3,1,0.001054
+allen_m,VMHVL,0566 VMH Nr5a1 Glut_1,1,0.001054
+allen_m,VMH,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,68,0.2282
+allen_m,VMH,0456 AHN Onecut3 Gaba_1,44,0.1477
+allen_m,VMH,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,20,0.06711
+allen_m,VMH,0454 SBPV-PVa Six6 Satb2 Gaba_2,16,0.05369
+allen_m,VMH,0488 DMH Hmx2 Gaba_2,15,0.05034
+allen_m,VMH,0480 TU-ARH Otp Six6 Gaba_3,9,0.0302
+allen_m,VMH,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,8,0.02685
+allen_m,VMH,0479 TU-ARH Otp Six6 Gaba_2,8,0.02685
+allen_m,VMH,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,6,0.02013
+allen_m,VMH,0457 AHN Onecut3 Gaba_2,6,0.02013
+allen_m,VMH,0458 AHN Onecut3 Gaba_3,6,0.02013
+allen_m,VMH,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,6,0.02013
+allen_m,VMH,0423 BST-MPN Six3 Nrgn Gaba_4,5,0.01678
+allen_m,VMH,0438 SCH Six6 Cdc14a Gaba_3,5,0.01678
+allen_m,VMH,0557 ARH-PVp Tbx3 Glut_4,5,0.01678
+allen_m,VMH,0558 ARH-PVp Tbx3 Glut_5,5,0.01678
+allen_m,VMH,0573 LHA Pmch Glut_2,5,0.01678
+allen_m,VMH,0430 TMv-PMv Tbx3 Hist-Gaba_2,4,0.01342
+allen_m,VMH,0470 DMH-LHA Gsx1 Gaba_1,4,0.01342
+allen_m,VMH,0564 VMH Fezf1 Glut_2,4,0.01342
+allen_m,VMH,0411 PVR Six3 Sox3 Gaba_1,3,0.01007
+allen_m,VMH,0422 BST-MPN Six3 Nrgn Gaba_3,3,0.01007
+allen_m,VMH,0436 SCH Six6 Cdc14a Gaba_1,3,0.01007
+allen_m,VMH,0477 PVHd-DMH Lhx6 Gaba_4,3,0.01007
+allen_m,VMH,0412 PVR Six3 Sox3 Gaba_2,2,0.006711
+allen_m,VMH,0444 PVHd-SBPV Six3 Prox1 Gaba_3,2,0.006711
+allen_m,VMH,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,2,0.006711
+allen_m,VMH,0471 DMH-LHA Gsx1 Gaba_2,2,0.006711
+allen_m,VMH,0487 DMH Hmx2 Gaba_1,2,0.006711
+allen_m,VMH,0493 ARH-PVp Tbx3 Gaba_1,2,0.006711
+allen_m,VMH,0554 ARH-PVp Tbx3 Glut_1,2,0.006711
+allen_m,VMH,0567 VMH Nr5a1 Glut_2,2,0.006711
+allen_m,VMH,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,2,0.006711
+allen_m,VMH,0408 MPN-MPO-LPO Lhx6 Zfhx3 Gaba_2,1,0.003356
+allen_m,VMH,0413 PVR Six3 Sox3 Gaba_3,1,0.003356
+allen_m,VMH,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.003356
+allen_m,VMH,0429 TMv-PMv Tbx3 Hist-Gaba_1,1,0.003356
+allen_m,VMH,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,1,0.003356
+allen_m,VMH,0472 DMH-LHA Gsx1 Gaba_3,1,0.003356
+allen_m,VMH,0478 TU-ARH Otp Six6 Gaba_1,1,0.003356
+allen_m,VMH,0481 TMd-DMH Foxd2 Gaba_1,1,0.003356
+allen_m,VMH,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.003356
+allen_m,VMH,0489 DMH Hmx2 Gaba_3,1,0.003356
+allen_m,VMH,0491 DMH Hmx2 Gaba_5,1,0.003356
+allen_m,VMH,0495 ARH-PVp Tbx3 Gaba_3,1,0.003356
+allen_m,VMH,0552 DMH Hmx2 Glut_1,1,0.003356
+allen_m,VMH,0566 VMH Nr5a1 Glut_1,1,0.003356
+allen_m,VMH,0569 VMH Nr5a1 Glut_4,1,0.003356
+allen_m,VMH,0576 LHA-AHN-PVH Otp Trh Glut_3,1,0.003356
+allen_m,VMH,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.003356
+allen_m,VMH,0610 PH Pitx2 Glut_1,1,0.003356
+allen_m,VMH,0611 PH Pitx2 Glut_2,1,0.003356
+allen_m,VMHSh,0568 VMH Nr5a1 Glut_3,275,0.1746
+allen_m,VMHSh,0564 VMH Fezf1 Glut_2,103,0.0654
+allen_m,VMHSh,0569 VMH Nr5a1 Glut_4,96,0.06095
+allen_m,VMHSh,0570 VMH Nr5a1 Glut_5,86,0.0546
+allen_m,VMHSh,0567 VMH Nr5a1 Glut_2,79,0.05016
+allen_m,VMHSh,0565 VMH Fezf1 Glut_3,76,0.04825
+allen_m,VMHSh,0456 AHN Onecut3 Gaba_1,72,0.04571
+allen_m,VMHSh,0436 SCH Six6 Cdc14a Gaba_1,61,0.03873
+allen_m,VMHSh,0555 ARH-PVp Tbx3 Glut_2,57,0.03619
+allen_m,VMHSh,0478 TU-ARH Otp Six6 Gaba_1,51,0.03238
+allen_m,VMHSh,0480 TU-ARH Otp Six6 Gaba_3,46,0.02921
+allen_m,VMHSh,0488 DMH Hmx2 Gaba_2,39,0.02476
+allen_m,VMHSh,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,37,0.02349
+allen_m,VMHSh,0479 TU-ARH Otp Six6 Gaba_2,35,0.02222
+allen_m,VMHSh,0566 VMH Nr5a1 Glut_1,31,0.01968
+allen_m,VMHSh,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,23,0.0146
+allen_m,VMHSh,0454 SBPV-PVa Six6 Satb2 Gaba_2,23,0.0146
+allen_m,VMHSh,0563 VMH Fezf1 Glut_1,20,0.0127
+allen_m,VMHSh,0571 VMH Nr5a1 Glut_6,18,0.01143
+allen_m,VMHSh,0442 PVHd-SBPV Six3 Prox1 Gaba_1,17,0.01079
+allen_m,VMHSh,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,17,0.01079
+allen_m,VMHSh,0457 AHN Onecut3 Gaba_2,17,0.01079
+allen_m,VMHSh,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,17,0.01079
+allen_m,VMHSh,0495 ARH-PVp Tbx3 Gaba_3,16,0.01016
+allen_m,VMHSh,0455 SBPV-PVa Six6 Satb2 Gaba_3,14,0.008889
+allen_m,VMHSh,0470 DMH-LHA Gsx1 Gaba_1,14,0.008889
+allen_m,VMHSh,0557 ARH-PVp Tbx3 Glut_4,14,0.008889
+allen_m,VMHSh,0458 AHN Onecut3 Gaba_3,12,0.007619
+allen_m,VMHSh,0554 ARH-PVp Tbx3 Glut_1,11,0.006984
+allen_m,VMHSh,0437 SCH Six6 Cdc14a Gaba_2,10,0.006349
+allen_m,VMHSh,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,10,0.006349
+allen_m,VMHSh,0553 DMH Hmx2 Glut_2,10,0.006349
+allen_m,VMHSh,0428 ARH-PVi Six6 Dopa-Gaba_2,8,0.005079
+allen_m,VMHSh,0430 TMv-PMv Tbx3 Hist-Gaba_2,8,0.005079
+allen_m,VMHSh,0443 PVHd-SBPV Six3 Prox1 Gaba_2,8,0.005079
+allen_m,VMHSh,0489 DMH Hmx2 Gaba_3,7,0.004444
+allen_m,VMHSh,0492 DMH Hmx2 Gaba_6,7,0.004444
+allen_m,VMHSh,0493 ARH-PVp Tbx3 Gaba_1,7,0.004444
+allen_m,VMHSh,0556 ARH-PVp Tbx3 Glut_3,7,0.004444
+allen_m,VMHSh,0423 BST-MPN Six3 Nrgn Gaba_4,6,0.00381
+allen_m,VMHSh,0491 DMH Hmx2 Gaba_5,6,0.00381
+allen_m,VMHSh,0427 ARH-PVi Six6 Dopa-Gaba_1,5,0.003175
+allen_m,VMHSh,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,5,0.003175
+allen_m,VMHSh,0561 DMH-LHA Vgll2 Glut_3,5,0.003175
+allen_m,VMHSh,0413 PVR Six3 Sox3 Gaba_3,4,0.00254
+allen_m,VMHSh,0422 BST-MPN Six3 Nrgn Gaba_3,4,0.00254
+allen_m,VMHSh,0438 SCH Six6 Cdc14a Gaba_3,4,0.00254
+allen_m,VMHSh,0471 DMH-LHA Gsx1 Gaba_2,4,0.00254
+allen_m,VMHSh,0472 DMH-LHA Gsx1 Gaba_3,4,0.00254
+allen_m,VMHSh,0558 ARH-PVp Tbx3 Glut_5,4,0.00254
+allen_m,VMHSh,0562 DMH-LHA Vgll2 Glut_4,4,0.00254
+allen_m,VMHSh,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,4,0.00254
+allen_m,VMHSh,0429 TMv-PMv Tbx3 Hist-Gaba_1,3,0.001905
+allen_m,VMHSh,0444 PVHd-SBPV Six3 Prox1 Gaba_3,3,0.001905
+allen_m,VMHSh,0468 ZI Pax6 Gaba_10,3,0.001905
+allen_m,VMHSh,0560 DMH-LHA Vgll2 Glut_2,3,0.001905
+allen_m,VMHSh,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,3,0.001905
+allen_m,VMHSh,0590 PVH-SO-PVa Otp Glut_6,3,0.001905
+allen_m,VMHSh,0404 MPO-ADP Lhx8 Gaba_3,2,0.00127
+allen_m,VMHSh,0411 PVR Six3 Sox3 Gaba_1,2,0.00127
+allen_m,VMHSh,0445 PVHd-SBPV Six3 Prox1 Gaba_4,2,0.00127
+allen_m,VMHSh,0487 DMH Hmx2 Gaba_1,2,0.00127
+allen_m,VMHSh,0518 MS-SF Bsx Glut_1,2,0.00127
+allen_m,VMHSh,0552 DMH Hmx2 Glut_1,2,0.00127
+allen_m,VMHSh,0572 LHA Pmch Glut_1,2,0.00127
+allen_m,VMHSh,0574 LHA-AHN-PVH Otp Trh Glut_1,2,0.00127
+allen_m,VMHSh,0595 PH-ant-LHA Otp Bsx Glut_5,2,0.00127
+allen_m,VMHSh,0409 BST Tac2 Gaba_1,1,0.0006349
+allen_m,VMHSh,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.0006349
+allen_m,VMHSh,0431 RT-ZI Gnb3 Gaba_1,1,0.0006349
+allen_m,VMHSh,0441 PVHd Gsc Gaba_1,1,0.0006349
+allen_m,VMHSh,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.0006349
+allen_m,VMHSh,0466 ZI Pax6 Gaba_8,1,0.0006349
+allen_m,VMHSh,0474 PVHd-DMH Lhx6 Gaba_1,1,0.0006349
+allen_m,VMHSh,0477 PVHd-DMH Lhx6 Gaba_4,1,0.0006349
+allen_m,VMHSh,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.0006349
+allen_m,VMHSh,0484 PVpo-VMPO-MPN Hmx2 Gaba_3,1,0.0006349
+allen_m,VMHSh,0545 DMH Nkx2-4 Glut_2,1,0.0006349
+allen_m,VMHSh,0547 MPN-MPO-PVpo Hmx2 Glut_2,1,0.0006349
+allen_m,VMHSh,0575 LHA-AHN-PVH Otp Trh Glut_2,1,0.0006349
+allen_m,VMHSh,0576 LHA-AHN-PVH Otp Trh Glut_3,1,0.0006349
+allen_m,VMHSh,0577 LHA-AHN-PVH Otp Trh Glut_4,1,0.0006349
+allen_m,VMHSh,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.0006349
+allen_m,VMHSh,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,1,0.0006349
+allen_m,VMHSh,0593 PH-ant-LHA Otp Bsx Glut_3,1,0.0006349
+allen_m,VMHSh,0605 PMv-TMv Pitx2 Glut_1,1,0.0006349
+allen_m,VMHSh,0607 PMv-TMv Pitx2 Glut_3,1,0.0006349
+allen_m,VMHSh,0610 PH Pitx2 Glut_1,1,0.0006349
+allen_m,core,0568 VMH Nr5a1 Glut_3,1971,0.5121
+allen_m,core,0569 VMH Nr5a1 Glut_4,323,0.08392
+allen_m,core,0564 VMH Fezf1 Glut_2,291,0.0756
+allen_m,core,0565 VMH Fezf1 Glut_3,284,0.07379
+allen_m,core,0570 VMH Nr5a1 Glut_5,182,0.04729
+allen_m,core,0563 VMH Fezf1 Glut_1,112,0.0291
+allen_m,core,0567 VMH Nr5a1 Glut_2,78,0.02027
+allen_m,core,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,68,0.01767
+allen_m,core,0571 VMH Nr5a1 Glut_6,64,0.01663
+allen_m,core,0456 AHN Onecut3 Gaba_1,56,0.01455
+allen_m,core,0478 TU-ARH Otp Six6 Gaba_1,54,0.01403
+allen_m,core,0479 TU-ARH Otp Six6 Gaba_2,40,0.01039
+allen_m,core,0488 DMH Hmx2 Gaba_2,29,0.007534
+allen_m,core,0566 VMH Nr5a1 Glut_1,26,0.006755
+allen_m,core,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,23,0.005976
+allen_m,core,0454 SBPV-PVa Six6 Satb2 Gaba_2,20,0.005196
+allen_m,core,0480 TU-ARH Otp Six6 Gaba_3,19,0.004936
+allen_m,core,0557 ARH-PVp Tbx3 Glut_4,17,0.004417
+allen_m,core,0457 AHN Onecut3 Gaba_2,15,0.003897
+allen_m,core,0458 AHN Onecut3 Gaba_3,15,0.003897
+allen_m,core,0442 PVHd-SBPV Six3 Prox1 Gaba_1,10,0.002598
+allen_m,core,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,8,0.002078
+allen_m,core,0553 DMH Hmx2 Glut_2,7,0.001819
+allen_m,core,0555 ARH-PVp Tbx3 Glut_2,7,0.001819
+allen_m,core,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,7,0.001819
+allen_m,core,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,6,0.001559
+allen_m,core,0472 DMH-LHA Gsx1 Gaba_3,6,0.001559
+allen_m,core,0423 BST-MPN Six3 Nrgn Gaba_4,5,0.001299
+allen_m,core,0438 SCH Six6 Cdc14a Gaba_3,5,0.001299
+allen_m,core,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,5,0.001299
+allen_m,core,0554 ARH-PVp Tbx3 Glut_1,5,0.001299
+allen_m,core,0558 ARH-PVp Tbx3 Glut_5,5,0.001299
+allen_m,core,0573 LHA Pmch Glut_2,5,0.001299
+allen_m,core,0422 BST-MPN Six3 Nrgn Gaba_3,4,0.001039
+allen_m,core,0430 TMv-PMv Tbx3 Hist-Gaba_2,4,0.001039
+allen_m,core,0470 DMH-LHA Gsx1 Gaba_1,4,0.001039
+allen_m,core,0562 DMH-LHA Vgll2 Glut_4,4,0.001039
+allen_m,core,0411 PVR Six3 Sox3 Gaba_1,3,0.0007794
+allen_m,core,0436 SCH Six6 Cdc14a Gaba_1,3,0.0007794
+allen_m,core,0471 DMH-LHA Gsx1 Gaba_2,3,0.0007794
+allen_m,core,0477 PVHd-DMH Lhx6 Gaba_4,3,0.0007794
+allen_m,core,0492 DMH Hmx2 Gaba_6,3,0.0007794
+allen_m,core,0493 ARH-PVp Tbx3 Gaba_1,3,0.0007794
+allen_m,core,0412 PVR Six3 Sox3 Gaba_2,2,0.0005196
+allen_m,core,0444 PVHd-SBPV Six3 Prox1 Gaba_3,2,0.0005196
+allen_m,core,0487 DMH Hmx2 Gaba_1,2,0.0005196
+allen_m,core,0489 DMH Hmx2 Gaba_3,2,0.0005196
+allen_m,core,0491 DMH Hmx2 Gaba_5,2,0.0005196
+allen_m,core,0495 ARH-PVp Tbx3 Gaba_3,2,0.0005196
+allen_m,core,0518 MS-SF Bsx Glut_1,2,0.0005196
+allen_m,core,0572 LHA Pmch Glut_1,2,0.0005196
+allen_m,core,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,2,0.0005196
+allen_m,core,0611 PH Pitx2 Glut_2,2,0.0005196
+allen_m,core,0341 MEA-BST Sox6 Gaba_5,1,0.0002598
+allen_m,core,0408 MPN-MPO-LPO Lhx6 Zfhx3 Gaba_2,1,0.0002598
+allen_m,core,0413 PVR Six3 Sox3 Gaba_3,1,0.0002598
+allen_m,core,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.0002598
+allen_m,core,0428 ARH-PVi Six6 Dopa-Gaba_2,1,0.0002598
+allen_m,core,0429 TMv-PMv Tbx3 Hist-Gaba_1,1,0.0002598
+allen_m,core,0431 RT-ZI Gnb3 Gaba_1,1,0.0002598
+allen_m,core,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,1,0.0002598
+allen_m,core,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.0002598
+allen_m,core,0468 ZI Pax6 Gaba_10,1,0.0002598
+allen_m,core,0473 DMH-LHA Gsx1 Gaba_4,1,0.0002598
+allen_m,core,0474 PVHd-DMH Lhx6 Gaba_1,1,0.0002598
+allen_m,core,0476 PVHd-DMH Lhx6 Gaba_3,1,0.0002598
+allen_m,core,0481 TMd-DMH Foxd2 Gaba_1,1,0.0002598
+allen_m,core,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.0002598
+allen_m,core,0544 DMH Nkx2-4 Glut_1,1,0.0002598
+allen_m,core,0552 DMH Hmx2 Glut_1,1,0.0002598
+allen_m,core,0556 ARH-PVp Tbx3 Glut_3,1,0.0002598
+allen_m,core,0561 DMH-LHA Vgll2 Glut_3,1,0.0002598
+allen_m,core,0576 LHA-AHN-PVH Otp Trh Glut_3,1,0.0002598
+allen_m,core,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,1,0.0002598
+allen_m,core,0590 PVH-SO-PVa Otp Glut_6,1,0.0002598
+allen_m,core,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.0002598
+allen_m,core,0595 PH-ant-LHA Otp Bsx Glut_5,1,0.0002598
+allen_m,core,0607 PMv-TMv Pitx2 Glut_3,1,0.0002598
+allen_m,core,0610 PH Pitx2 Glut_1,1,0.0002598
+allen_m,core,0628 HY Gnrh1 Glut_1,1,0.0002598
+zhuang1_f,VMHDM,0568 VMH Nr5a1 Glut_3,674,0.6647
+zhuang1_f,VMHDM,0569 VMH Nr5a1 Glut_4,100,0.09862
+zhuang1_f,VMHDM,0570 VMH Nr5a1 Glut_5,92,0.09073
+zhuang1_f,VMHDM,0571 VMH Nr5a1 Glut_6,17,0.01677
+zhuang1_f,VMHDM,0457 AHN Onecut3 Gaba_2,14,0.01381
+zhuang1_f,VMHDM,0487 DMH Hmx2 Gaba_1,14,0.01381
+zhuang1_f,VMHDM,0456 AHN Onecut3 Gaba_1,13,0.01282
+zhuang1_f,VMHDM,0566 VMH Nr5a1 Glut_1,13,0.01282
+zhuang1_f,VMHDM,0552 DMH Hmx2 Glut_1,9,0.008876
+zhuang1_f,VMHDM,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,9,0.008876
+zhuang1_f,VMHDM,0564 VMH Fezf1 Glut_2,6,0.005917
+zhuang1_f,VMHDM,0545 DMH Nkx2-4 Glut_2,5,0.004931
+zhuang1_f,VMHDM,0429 TMv-PMv Tbx3 Hist-Gaba_1,4,0.003945
+zhuang1_f,VMHDM,0544 DMH Nkx2-4 Glut_1,4,0.003945
+zhuang1_f,VMHDM,0489 DMH Hmx2 Gaba_3,3,0.002959
+zhuang1_f,VMHDM,0492 DMH Hmx2 Gaba_6,3,0.002959
+zhuang1_f,VMHDM,0561 DMH-LHA Vgll2 Glut_3,3,0.002959
+zhuang1_f,VMHDM,0428 ARH-PVi Six6 Dopa-Gaba_2,2,0.001972
+zhuang1_f,VMHDM,0455 SBPV-PVa Six6 Satb2 Gaba_3,2,0.001972
+zhuang1_f,VMHDM,0470 DMH-LHA Gsx1 Gaba_1,2,0.001972
+zhuang1_f,VMHDM,0478 TU-ARH Otp Six6 Gaba_1,2,0.001972
+zhuang1_f,VMHDM,0488 DMH Hmx2 Gaba_2,2,0.001972
+zhuang1_f,VMHDM,0557 ARH-PVp Tbx3 Glut_4,2,0.001972
+zhuang1_f,VMHDM,0567 VMH Nr5a1 Glut_2,2,0.001972
+zhuang1_f,VMHDM,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,2,0.001972
+zhuang1_f,VMHDM,0594 PH-ant-LHA Otp Bsx Glut_4,2,0.001972
+zhuang1_f,VMHDM,0404 MPO-ADP Lhx8 Gaba_3,1,0.0009862
+zhuang1_f,VMHDM,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.0009862
+zhuang1_f,VMHDM,0438 SCH Six6 Cdc14a Gaba_3,1,0.0009862
+zhuang1_f,VMHDM,0442 PVHd-SBPV Six3 Prox1 Gaba_1,1,0.0009862
+zhuang1_f,VMHDM,0458 AHN Onecut3 Gaba_3,1,0.0009862
+zhuang1_f,VMHDM,0471 DMH-LHA Gsx1 Gaba_2,1,0.0009862
+zhuang1_f,VMHDM,0491 DMH Hmx2 Gaba_5,1,0.0009862
+zhuang1_f,VMHDM,0493 ARH-PVp Tbx3 Gaba_1,1,0.0009862
+zhuang1_f,VMHDM,0505 MEA-COA-BMA Ccdc42 Glut_1,1,0.0009862
+zhuang1_f,VMHDM,0553 DMH Hmx2 Glut_2,1,0.0009862
+zhuang1_f,VMHDM,0565 VMH Fezf1 Glut_3,1,0.0009862
+zhuang1_f,VMHDM,0573 LHA Pmch Glut_2,1,0.0009862
+zhuang1_f,VMHDM,0585 PVH-SO-PVa Otp Glut_1,1,0.0009862
+zhuang1_f,VMHC,0568 VMH Nr5a1 Glut_3,534,0.583
+zhuang1_f,VMHC,0569 VMH Nr5a1 Glut_4,88,0.09607
+zhuang1_f,VMHC,0567 VMH Nr5a1 Glut_2,48,0.0524
+zhuang1_f,VMHC,0564 VMH Fezf1 Glut_2,47,0.05131
+zhuang1_f,VMHC,0570 VMH Nr5a1 Glut_5,44,0.04803
+zhuang1_f,VMHC,0478 TU-ARH Otp Six6 Gaba_1,25,0.02729
+zhuang1_f,VMHC,0563 VMH Fezf1 Glut_1,18,0.01965
+zhuang1_f,VMHC,0458 AHN Onecut3 Gaba_3,17,0.01856
+zhuang1_f,VMHC,0565 VMH Fezf1 Glut_3,15,0.01638
+zhuang1_f,VMHC,0456 AHN Onecut3 Gaba_1,14,0.01528
+zhuang1_f,VMHC,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,11,0.01201
+zhuang1_f,VMHC,0566 VMH Nr5a1 Glut_1,10,0.01092
+zhuang1_f,VMHC,0457 AHN Onecut3 Gaba_2,8,0.008734
+zhuang1_f,VMHC,0488 DMH Hmx2 Gaba_2,4,0.004367
+zhuang1_f,VMHC,0552 DMH Hmx2 Glut_1,4,0.004367
+zhuang1_f,VMHC,0555 ARH-PVp Tbx3 Glut_2,4,0.004367
+zhuang1_f,VMHC,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,3,0.003275
+zhuang1_f,VMHC,0480 TU-ARH Otp Six6 Gaba_3,2,0.002183
+zhuang1_f,VMHC,0487 DMH Hmx2 Gaba_1,2,0.002183
+zhuang1_f,VMHC,0507 MEA-COA-BMA Ccdc42 Glut_3,2,0.002183
+zhuang1_f,VMHC,0571 VMH Nr5a1 Glut_6,2,0.002183
+zhuang1_f,VMHC,0137 DG Glut_2,1,0.001092
+zhuang1_f,VMHC,0287 STR-PAL Chst9 Gaba_3,1,0.001092
+zhuang1_f,VMHC,0428 ARH-PVi Six6 Dopa-Gaba_2,1,0.001092
+zhuang1_f,VMHC,0472 DMH-LHA Gsx1 Gaba_3,1,0.001092
+zhuang1_f,VMHC,0473 DMH-LHA Gsx1 Gaba_4,1,0.001092
+zhuang1_f,VMHC,0476 PVHd-DMH Lhx6 Gaba_3,1,0.001092
+zhuang1_f,VMHC,0479 TU-ARH Otp Six6 Gaba_2,1,0.001092
+zhuang1_f,VMHC,0491 DMH Hmx2 Gaba_5,1,0.001092
+zhuang1_f,VMHC,0511 COAa-PAA-MEA Barhl2 Glut_3,1,0.001092
+zhuang1_f,VMHC,0554 ARH-PVp Tbx3 Glut_1,1,0.001092
+zhuang1_f,VMHC,0560 DMH-LHA Vgll2 Glut_2,1,0.001092
+zhuang1_f,VMHC,0561 DMH-LHA Vgll2 Glut_3,1,0.001092
+zhuang1_f,VMHC,0573 LHA Pmch Glut_2,1,0.001092
+zhuang1_f,VMHC,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.001092
+zhuang1_f,VMHVL,0563 VMH Fezf1 Glut_1,109,0.2309
+zhuang1_f,VMHVL,0564 VMH Fezf1 Glut_2,93,0.197
+zhuang1_f,VMHVL,0565 VMH Fezf1 Glut_3,90,0.1907
+zhuang1_f,VMHVL,0567 VMH Nr5a1 Glut_2,38,0.08051
+zhuang1_f,VMHVL,0568 VMH Nr5a1 Glut_3,36,0.07627
+zhuang1_f,VMHVL,0479 TU-ARH Otp Six6 Gaba_2,17,0.03602
+zhuang1_f,VMHVL,0480 TU-ARH Otp Six6 Gaba_3,12,0.02542
+zhuang1_f,VMHVL,0569 VMH Nr5a1 Glut_4,12,0.02542
+zhuang1_f,VMHVL,0478 TU-ARH Otp Six6 Gaba_1,11,0.02331
+zhuang1_f,VMHVL,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,9,0.01907
+zhuang1_f,VMHVL,0458 AHN Onecut3 Gaba_3,8,0.01695
+zhuang1_f,VMHVL,0429 TMv-PMv Tbx3 Hist-Gaba_1,5,0.01059
+zhuang1_f,VMHVL,0573 LHA Pmch Glut_2,4,0.008475
+zhuang1_f,VMHVL,0487 DMH Hmx2 Gaba_1,3,0.006356
+zhuang1_f,VMHVL,0472 DMH-LHA Gsx1 Gaba_3,2,0.004237
+zhuang1_f,VMHVL,0491 DMH Hmx2 Gaba_5,2,0.004237
+zhuang1_f,VMHVL,0555 ARH-PVp Tbx3 Glut_2,2,0.004237
+zhuang1_f,VMHVL,0570 VMH Nr5a1 Glut_5,2,0.004237
+zhuang1_f,VMHVL,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,2,0.004237
+zhuang1_f,VMHVL,0394 BST-SI-AAA Six3 Slc22a3 Gaba_1,1,0.002119
+zhuang1_f,VMHVL,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.002119
+zhuang1_f,VMHVL,0455 SBPV-PVa Six6 Satb2 Gaba_3,1,0.002119
+zhuang1_f,VMHVL,0456 AHN Onecut3 Gaba_1,1,0.002119
+zhuang1_f,VMHVL,0457 AHN Onecut3 Gaba_2,1,0.002119
+zhuang1_f,VMHVL,0470 DMH-LHA Gsx1 Gaba_1,1,0.002119
+zhuang1_f,VMHVL,0473 DMH-LHA Gsx1 Gaba_4,1,0.002119
+zhuang1_f,VMHVL,0477 PVHd-DMH Lhx6 Gaba_4,1,0.002119
+zhuang1_f,VMHVL,0488 DMH Hmx2 Gaba_2,1,0.002119
+zhuang1_f,VMHVL,0489 DMH Hmx2 Gaba_3,1,0.002119
+zhuang1_f,VMHVL,0492 DMH Hmx2 Gaba_6,1,0.002119
+zhuang1_f,VMHVL,0557 ARH-PVp Tbx3 Glut_4,1,0.002119
+zhuang1_f,VMHVL,0558 ARH-PVp Tbx3 Glut_5,1,0.002119
+zhuang1_f,VMHVL,0561 DMH-LHA Vgll2 Glut_3,1,0.002119
+zhuang1_f,VMHVL,0566 VMH Nr5a1 Glut_1,1,0.002119
+zhuang1_f,VMH,0456 AHN Onecut3 Gaba_1,40,0.2326
+zhuang1_f,VMH,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,32,0.186
+zhuang1_f,VMH,0458 AHN Onecut3 Gaba_3,14,0.0814
+zhuang1_f,VMH,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,13,0.07558
+zhuang1_f,VMH,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,11,0.06395
+zhuang1_f,VMH,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,8,0.04651
+zhuang1_f,VMH,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,6,0.03488
+zhuang1_f,VMH,0492 DMH Hmx2 Gaba_6,4,0.02326
+zhuang1_f,VMH,0454 SBPV-PVa Six6 Satb2 Gaba_2,3,0.01744
+zhuang1_f,VMH,0557 ARH-PVp Tbx3 Glut_4,3,0.01744
+zhuang1_f,VMH,0564 VMH Fezf1 Glut_2,3,0.01744
+zhuang1_f,VMH,0569 VMH Nr5a1 Glut_4,3,0.01744
+zhuang1_f,VMH,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,3,0.01744
+zhuang1_f,VMH,0429 TMv-PMv Tbx3 Hist-Gaba_1,2,0.01163
+zhuang1_f,VMH,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,2,0.01163
+zhuang1_f,VMH,0478 TU-ARH Otp Six6 Gaba_1,2,0.01163
+zhuang1_f,VMH,0487 DMH Hmx2 Gaba_1,2,0.01163
+zhuang1_f,VMH,0552 DMH Hmx2 Glut_1,2,0.01163
+zhuang1_f,VMH,0553 DMH Hmx2 Glut_2,2,0.01163
+zhuang1_f,VMH,0568 VMH Nr5a1 Glut_3,2,0.01163
+zhuang1_f,VMH,0413 PVR Six3 Sox3 Gaba_3,1,0.005814
+zhuang1_f,VMH,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,1,0.005814
+zhuang1_f,VMH,0477 PVHd-DMH Lhx6 Gaba_4,1,0.005814
+zhuang1_f,VMH,0480 TU-ARH Otp Six6 Gaba_3,1,0.005814
+zhuang1_f,VMH,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.005814
+zhuang1_f,VMH,0489 DMH Hmx2 Gaba_3,1,0.005814
+zhuang1_f,VMH,0507 MEA-COA-BMA Ccdc42 Glut_3,1,0.005814
+zhuang1_f,VMH,0554 ARH-PVp Tbx3 Glut_1,1,0.005814
+zhuang1_f,VMH,0565 VMH Fezf1 Glut_3,1,0.005814
+zhuang1_f,VMH,0567 VMH Nr5a1 Glut_2,1,0.005814
+zhuang1_f,VMH,0570 VMH Nr5a1 Glut_5,1,0.005814
+zhuang1_f,VMH,0579 AHN-RCH-LHA Otp Fezf1 Glut_1,1,0.005814
+zhuang1_f,VMH,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.005814
+zhuang1_f,VMH,0608 PH-an Pitx2 Glut_1,1,0.005814
+zhuang1_f,VMH,0611 PH Pitx2 Glut_2,1,0.005814
+zhuang1_f,VMHSh,0568 VMH Nr5a1 Glut_3,155,0.1502
+zhuang1_f,VMHSh,0567 VMH Nr5a1 Glut_2,73,0.07074
+zhuang1_f,VMHSh,0570 VMH Nr5a1 Glut_5,66,0.06395
+zhuang1_f,VMHSh,0456 AHN Onecut3 Gaba_1,64,0.06202
+zhuang1_f,VMHSh,0569 VMH Nr5a1 Glut_4,52,0.05039
+zhuang1_f,VMHSh,0480 TU-ARH Otp Six6 Gaba_3,47,0.04554
+zhuang1_f,VMHSh,0563 VMH Fezf1 Glut_1,43,0.04167
+zhuang1_f,VMHSh,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,39,0.03779
+zhuang1_f,VMHSh,0564 VMH Fezf1 Glut_2,36,0.03488
+zhuang1_f,VMHSh,0478 TU-ARH Otp Six6 Gaba_1,35,0.03391
+zhuang1_f,VMHSh,0566 VMH Nr5a1 Glut_1,35,0.03391
+zhuang1_f,VMHSh,0458 AHN Onecut3 Gaba_3,25,0.02422
+zhuang1_f,VMHSh,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,24,0.02326
+zhuang1_f,VMHSh,0479 TU-ARH Otp Six6 Gaba_2,22,0.02132
+zhuang1_f,VMHSh,0545 DMH Nkx2-4 Glut_2,21,0.02035
+zhuang1_f,VMHSh,0457 AHN Onecut3 Gaba_2,20,0.01938
+zhuang1_f,VMHSh,0565 VMH Fezf1 Glut_3,19,0.01841
+zhuang1_f,VMHSh,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,19,0.01841
+zhuang1_f,VMHSh,0436 SCH Six6 Cdc14a Gaba_1,18,0.01744
+zhuang1_f,VMHSh,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,17,0.01647
+zhuang1_f,VMHSh,0487 DMH Hmx2 Gaba_1,16,0.0155
+zhuang1_f,VMHSh,0454 SBPV-PVa Six6 Satb2 Gaba_2,15,0.01453
+zhuang1_f,VMHSh,0455 SBPV-PVa Six6 Satb2 Gaba_3,14,0.01357
+zhuang1_f,VMHSh,0438 SCH Six6 Cdc14a Gaba_3,9,0.008721
+zhuang1_f,VMHSh,0472 DMH-LHA Gsx1 Gaba_3,9,0.008721
+zhuang1_f,VMHSh,0555 ARH-PVp Tbx3 Glut_2,8,0.007752
+zhuang1_f,VMHSh,0488 DMH Hmx2 Gaba_2,7,0.006783
+zhuang1_f,VMHSh,0561 DMH-LHA Vgll2 Glut_3,7,0.006783
+zhuang1_f,VMHSh,0562 DMH-LHA Vgll2 Glut_4,7,0.006783
+zhuang1_f,VMHSh,0492 DMH Hmx2 Gaba_6,6,0.005814
+zhuang1_f,VMHSh,0437 SCH Six6 Cdc14a Gaba_2,5,0.004845
+zhuang1_f,VMHSh,0489 DMH Hmx2 Gaba_3,5,0.004845
+zhuang1_f,VMHSh,0553 DMH Hmx2 Glut_2,5,0.004845
+zhuang1_f,VMHSh,0571 VMH Nr5a1 Glut_6,5,0.004845
+zhuang1_f,VMHSh,0412 PVR Six3 Sox3 Gaba_2,4,0.003876
+zhuang1_f,VMHSh,0429 TMv-PMv Tbx3 Hist-Gaba_1,4,0.003876
+zhuang1_f,VMHSh,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,4,0.003876
+zhuang1_f,VMHSh,0448 AHN-SBPV-PVHd Pdrm12 Gaba_3,4,0.003876
+zhuang1_f,VMHSh,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,4,0.003876
+zhuang1_f,VMHSh,0552 DMH Hmx2 Glut_1,4,0.003876
+zhuang1_f,VMHSh,0428 ARH-PVi Six6 Dopa-Gaba_2,3,0.002907
+zhuang1_f,VMHSh,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,3,0.002907
+zhuang1_f,VMHSh,0495 ARH-PVp Tbx3 Gaba_3,3,0.002907
+zhuang1_f,VMHSh,0557 ARH-PVp Tbx3 Glut_4,3,0.002907
+zhuang1_f,VMHSh,0560 DMH-LHA Vgll2 Glut_2,3,0.002907
+zhuang1_f,VMHSh,0576 LHA-AHN-PVH Otp Trh Glut_3,3,0.002907
+zhuang1_f,VMHSh,0579 AHN-RCH-LHA Otp Fezf1 Glut_1,3,0.002907
+zhuang1_f,VMHSh,0413 PVR Six3 Sox3 Gaba_3,2,0.001938
+zhuang1_f,VMHSh,0427 ARH-PVi Six6 Dopa-Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0431 RT-ZI Gnb3 Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0439 DMH Prdm13 Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0442 PVHd-SBPV Six3 Prox1 Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0451 AHN-SBPV-PVHd Pdrm12 Gaba_6,2,0.001938
+zhuang1_f,VMHSh,0470 DMH-LHA Gsx1 Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0481 TMd-DMH Foxd2 Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0493 ARH-PVp Tbx3 Gaba_1,2,0.001938
+zhuang1_f,VMHSh,0518 MS-SF Bsx Glut_1,2,0.001938
+zhuang1_f,VMHSh,0573 LHA Pmch Glut_2,2,0.001938
+zhuang1_f,VMHSh,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,2,0.001938
+zhuang1_f,VMHSh,0411 PVR Six3 Sox3 Gaba_1,1,0.000969
+zhuang1_f,VMHSh,0422 BST-MPN Six3 Nrgn Gaba_3,1,0.000969
+zhuang1_f,VMHSh,0426 BST-MPN Six3 Nrgn Gaba_7,1,0.000969
+zhuang1_f,VMHSh,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.000969
+zhuang1_f,VMHSh,0443 PVHd-SBPV Six3 Prox1 Gaba_2,1,0.000969
+zhuang1_f,VMHSh,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,1,0.000969
+zhuang1_f,VMHSh,0453 SBPV-PVa Six6 Satb2 Gaba_1,1,0.000969
+zhuang1_f,VMHSh,0471 DMH-LHA Gsx1 Gaba_2,1,0.000969
+zhuang1_f,VMHSh,0491 DMH Hmx2 Gaba_5,1,0.000969
+zhuang1_f,VMHSh,0499 LGv-ZI Otx2 Gaba_4,1,0.000969
+zhuang1_f,VMHSh,0515 COAa-PAA-MEA Barhl2 Glut_7,1,0.000969
+zhuang1_f,VMHSh,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.000969
+zhuang1_f,VMHSh,0606 PMv-TMv Pitx2 Glut_2,1,0.000969
+zhuang1_f,VMHSh,0643 PVT-PT Ntrk1 Glut_1,1,0.000969
+zhuang1_f,VMHSh,1033 CS-RPO Meis2 Gaba_3,1,0.000969
+zhuang1_f,core,0568 VMH Nr5a1 Glut_3,1246,0.4841
+zhuang1_f,core,0569 VMH Nr5a1 Glut_4,203,0.07887
+zhuang1_f,core,0564 VMH Fezf1 Glut_2,149,0.05789
+zhuang1_f,core,0570 VMH Nr5a1 Glut_5,139,0.054
+zhuang1_f,core,0563 VMH Fezf1 Glut_1,127,0.04934
+zhuang1_f,core,0565 VMH Fezf1 Glut_3,107,0.04157
+zhuang1_f,core,0567 VMH Nr5a1 Glut_2,89,0.03458
+zhuang1_f,core,0456 AHN Onecut3 Gaba_1,68,0.02642
+zhuang1_f,core,0458 AHN Onecut3 Gaba_3,40,0.01554
+zhuang1_f,core,0478 TU-ARH Otp Six6 Gaba_1,40,0.01554
+zhuang1_f,core,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,35,0.0136
+zhuang1_f,core,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,31,0.01204
+zhuang1_f,core,0566 VMH Nr5a1 Glut_1,24,0.009324
+zhuang1_f,core,0457 AHN Onecut3 Gaba_2,23,0.008936
+zhuang1_f,core,0487 DMH Hmx2 Gaba_1,21,0.008159
+zhuang1_f,core,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,20,0.00777
+zhuang1_f,core,0571 VMH Nr5a1 Glut_6,19,0.007382
+zhuang1_f,core,0479 TU-ARH Otp Six6 Gaba_2,18,0.006993
+zhuang1_f,core,0480 TU-ARH Otp Six6 Gaba_3,15,0.005828
+zhuang1_f,core,0552 DMH Hmx2 Glut_1,15,0.005828
+zhuang1_f,core,0449 AHN-SBPV-PVHd Pdrm12 Gaba_4,13,0.005051
+zhuang1_f,core,0429 TMv-PMv Tbx3 Hist-Gaba_1,11,0.004274
+zhuang1_f,core,0446 AHN-SBPV-PVHd Pdrm12 Gaba_1,8,0.003108
+zhuang1_f,core,0492 DMH Hmx2 Gaba_6,8,0.003108
+zhuang1_f,core,0488 DMH Hmx2 Gaba_2,7,0.00272
+zhuang1_f,core,0555 ARH-PVp Tbx3 Glut_2,6,0.002331
+zhuang1_f,core,0557 ARH-PVp Tbx3 Glut_4,6,0.002331
+zhuang1_f,core,0573 LHA Pmch Glut_2,6,0.002331
+zhuang1_f,core,0489 DMH Hmx2 Gaba_3,5,0.001943
+zhuang1_f,core,0545 DMH Nkx2-4 Glut_2,5,0.001943
+zhuang1_f,core,0561 DMH-LHA Vgll2 Glut_3,5,0.001943
+zhuang1_f,core,0491 DMH Hmx2 Gaba_5,4,0.001554
+zhuang1_f,core,0544 DMH Nkx2-4 Glut_1,4,0.001554
+zhuang1_f,core,0428 ARH-PVi Six6 Dopa-Gaba_2,3,0.001166
+zhuang1_f,core,0454 SBPV-PVa Six6 Satb2 Gaba_2,3,0.001166
+zhuang1_f,core,0455 SBPV-PVa Six6 Satb2 Gaba_3,3,0.001166
+zhuang1_f,core,0470 DMH-LHA Gsx1 Gaba_1,3,0.001166
+zhuang1_f,core,0472 DMH-LHA Gsx1 Gaba_3,3,0.001166
+zhuang1_f,core,0507 MEA-COA-BMA Ccdc42 Glut_3,3,0.001166
+zhuang1_f,core,0553 DMH Hmx2 Glut_2,3,0.001166
+zhuang1_f,core,0582 AHN-RCH-LHA Otp Fezf1 Glut_4,3,0.001166
+zhuang1_f,core,0430 TMv-PMv Tbx3 Hist-Gaba_2,2,0.000777
+zhuang1_f,core,0450 AHN-SBPV-PVHd Pdrm12 Gaba_5,2,0.000777
+zhuang1_f,core,0473 DMH-LHA Gsx1 Gaba_4,2,0.000777
+zhuang1_f,core,0477 PVHd-DMH Lhx6 Gaba_4,2,0.000777
+zhuang1_f,core,0554 ARH-PVp Tbx3 Glut_1,2,0.000777
+zhuang1_f,core,0594 PH-ant-LHA Otp Bsx Glut_4,2,0.000777
+zhuang1_f,core,0137 DG Glut_2,1,0.0003885
+zhuang1_f,core,0287 STR-PAL Chst9 Gaba_3,1,0.0003885
+zhuang1_f,core,0394 BST-SI-AAA Six3 Slc22a3 Gaba_1,1,0.0003885
+zhuang1_f,core,0404 MPO-ADP Lhx8 Gaba_3,1,0.0003885
+zhuang1_f,core,0413 PVR Six3 Sox3 Gaba_3,1,0.0003885
+zhuang1_f,core,0438 SCH Six6 Cdc14a Gaba_3,1,0.0003885
+zhuang1_f,core,0442 PVHd-SBPV Six3 Prox1 Gaba_1,1,0.0003885
+zhuang1_f,core,0447 AHN-SBPV-PVHd Pdrm12 Gaba_2,1,0.0003885
+zhuang1_f,core,0471 DMH-LHA Gsx1 Gaba_2,1,0.0003885
+zhuang1_f,core,0476 PVHd-DMH Lhx6 Gaba_3,1,0.0003885
+zhuang1_f,core,0482 PVpo-VMPO-MPN Hmx2 Gaba_1,1,0.0003885
+zhuang1_f,core,0493 ARH-PVp Tbx3 Gaba_1,1,0.0003885
+zhuang1_f,core,0505 MEA-COA-BMA Ccdc42 Glut_1,1,0.0003885
+zhuang1_f,core,0511 COAa-PAA-MEA Barhl2 Glut_3,1,0.0003885
+zhuang1_f,core,0558 ARH-PVp Tbx3 Glut_5,1,0.0003885
+zhuang1_f,core,0560 DMH-LHA Vgll2 Glut_2,1,0.0003885
+zhuang1_f,core,0579 AHN-RCH-LHA Otp Fezf1 Glut_1,1,0.0003885
+zhuang1_f,core,0581 AHN-RCH-LHA Otp Fezf1 Glut_3,1,0.0003885
+zhuang1_f,core,0585 PVH-SO-PVa Otp Glut_1,1,0.0003885
+zhuang1_f,core,0608 PH-an Pitx2 Glut_1,1,0.0003885
+zhuang1_f,core,0611 PH Pitx2 Glut_2,1,0.0003885
+zhuang2_m,VMHDM,0568 VMH Nr5a1 Glut_3,87,0.5088
+zhuang2_m,VMHDM,0569 VMH Nr5a1 Glut_4,33,0.193
+zhuang2_m,VMHDM,0487 DMH Hmx2 Gaba_1,7,0.04094
+zhuang2_m,VMHDM,0470 DMH-LHA Gsx1 Gaba_1,6,0.03509
+zhuang2_m,VMHDM,0570 VMH Nr5a1 Glut_5,6,0.03509
+zhuang2_m,VMHDM,0492 DMH Hmx2 Gaba_6,4,0.02339
+zhuang2_m,VMHDM,0480 TU-ARH Otp Six6 Gaba_3,3,0.01754
+zhuang2_m,VMHDM,0566 VMH Nr5a1 Glut_1,3,0.01754
+zhuang2_m,VMHDM,0428 ARH-PVi Six6 Dopa-Gaba_2,2,0.0117
+zhuang2_m,VMHDM,0478 TU-ARH Otp Six6 Gaba_1,2,0.0117
+zhuang2_m,VMHDM,0552 DMH Hmx2 Glut_1,2,0.0117
+zhuang2_m,VMHDM,0564 VMH Fezf1 Glut_2,2,0.0117
+zhuang2_m,VMHDM,0571 VMH Nr5a1 Glut_6,2,0.0117
+zhuang2_m,VMHDM,0429 TMv-PMv Tbx3 Hist-Gaba_1,1,0.005848
+zhuang2_m,VMHDM,0472 DMH-LHA Gsx1 Gaba_3,1,0.005848
+zhuang2_m,VMHDM,0479 TU-ARH Otp Six6 Gaba_2,1,0.005848
+zhuang2_m,VMHDM,0491 DMH Hmx2 Gaba_5,1,0.005848
+zhuang2_m,VMHDM,0545 DMH Nkx2-4 Glut_2,1,0.005848
+zhuang2_m,VMHDM,0553 DMH Hmx2 Glut_2,1,0.005848
+zhuang2_m,VMHDM,0556 ARH-PVp Tbx3 Glut_3,1,0.005848
+zhuang2_m,VMHDM,0557 ARH-PVp Tbx3 Glut_4,1,0.005848
+zhuang2_m,VMHDM,0558 ARH-PVp Tbx3 Glut_5,1,0.005848
+zhuang2_m,VMHDM,0567 VMH Nr5a1 Glut_2,1,0.005848
+zhuang2_m,VMHDM,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,1,0.005848
+zhuang2_m,VMHDM,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.005848
+zhuang2_m,VMHC,0568 VMH Nr5a1 Glut_3,151,0.6189
+zhuang2_m,VMHC,0569 VMH Nr5a1 Glut_4,25,0.1025
+zhuang2_m,VMHC,0480 TU-ARH Otp Six6 Gaba_3,17,0.06967
+zhuang2_m,VMHC,0570 VMH Nr5a1 Glut_5,8,0.03279
+zhuang2_m,VMHC,0565 VMH Fezf1 Glut_3,7,0.02869
+zhuang2_m,VMHC,0478 TU-ARH Otp Six6 Gaba_1,5,0.02049
+zhuang2_m,VMHC,0479 TU-ARH Otp Six6 Gaba_2,5,0.02049
+zhuang2_m,VMHC,0564 VMH Fezf1 Glut_2,5,0.02049
+zhuang2_m,VMHC,0567 VMH Nr5a1 Glut_2,3,0.0123
+zhuang2_m,VMHC,0430 TMv-PMv Tbx3 Hist-Gaba_2,2,0.008197
+zhuang2_m,VMHC,0566 VMH Nr5a1 Glut_1,2,0.008197
+zhuang2_m,VMHC,0429 TMv-PMv Tbx3 Hist-Gaba_1,1,0.004098
+zhuang2_m,VMHC,0458 AHN Onecut3 Gaba_3,1,0.004098
+zhuang2_m,VMHC,0470 DMH-LHA Gsx1 Gaba_1,1,0.004098
+zhuang2_m,VMHC,0472 DMH-LHA Gsx1 Gaba_3,1,0.004098
+zhuang2_m,VMHC,0507 MEA-COA-BMA Ccdc42 Glut_3,1,0.004098
+zhuang2_m,VMHC,0553 DMH Hmx2 Glut_2,1,0.004098
+zhuang2_m,VMHC,0554 ARH-PVp Tbx3 Glut_1,1,0.004098
+zhuang2_m,VMHC,0557 ARH-PVp Tbx3 Glut_4,1,0.004098
+zhuang2_m,VMHC,0558 ARH-PVp Tbx3 Glut_5,1,0.004098
+zhuang2_m,VMHC,0563 VMH Fezf1 Glut_1,1,0.004098
+zhuang2_m,VMHC,0571 VMH Nr5a1 Glut_6,1,0.004098
+zhuang2_m,VMHC,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,1,0.004098
+zhuang2_m,VMHC,0607 PMv-TMv Pitx2 Glut_3,1,0.004098
+zhuang2_m,VMHC,0645 PVT-PT Ntrk1 Glut_3,1,0.004098
+zhuang2_m,VMHVL,0480 TU-ARH Otp Six6 Gaba_3,11,0.2075
+zhuang2_m,VMHVL,0568 VMH Nr5a1 Glut_3,8,0.1509
+zhuang2_m,VMHVL,0479 TU-ARH Otp Six6 Gaba_2,7,0.1321
+zhuang2_m,VMHVL,0565 VMH Fezf1 Glut_3,4,0.07547
+zhuang2_m,VMHVL,0569 VMH Nr5a1 Glut_4,4,0.07547
+zhuang2_m,VMHVL,0478 TU-ARH Otp Six6 Gaba_1,3,0.0566
+zhuang2_m,VMHVL,0429 TMv-PMv Tbx3 Hist-Gaba_1,2,0.03774
+zhuang2_m,VMHVL,0564 VMH Fezf1 Glut_2,2,0.03774
+zhuang2_m,VMHVL,0567 VMH Nr5a1 Glut_2,2,0.03774
+zhuang2_m,VMHVL,0384 CEA-BST Ebf1 Pdyn Gaba_1,1,0.01887
+zhuang2_m,VMHVL,0430 TMv-PMv Tbx3 Hist-Gaba_2,1,0.01887
+zhuang2_m,VMHVL,0472 DMH-LHA Gsx1 Gaba_3,1,0.01887
+zhuang2_m,VMHVL,0488 DMH Hmx2 Gaba_2,1,0.01887
+zhuang2_m,VMHVL,0492 DMH Hmx2 Gaba_6,1,0.01887
+zhuang2_m,VMHVL,0557 ARH-PVp Tbx3 Glut_4,1,0.01887
+zhuang2_m,VMHVL,0558 ARH-PVp Tbx3 Glut_5,1,0.01887
+zhuang2_m,VMHVL,0563 VMH Fezf1 Glut_1,1,0.01887
+zhuang2_m,VMHVL,0570 VMH Nr5a1 Glut_5,1,0.01887
+zhuang2_m,VMHVL,0607 PMv-TMv Pitx2 Glut_3,1,0.01887
+zhuang2_m,VMH,0568 VMH Nr5a1 Glut_3,86,0.5443
+zhuang2_m,VMH,0570 VMH Nr5a1 Glut_5,14,0.08861
+zhuang2_m,VMH,0569 VMH Nr5a1 Glut_4,11,0.06962
+zhuang2_m,VMH,0456 AHN Onecut3 Gaba_1,10,0.06329
+zhuang2_m,VMH,0567 VMH Nr5a1 Glut_2,8,0.05063
+zhuang2_m,VMH,0458 AHN Onecut3 Gaba_3,6,0.03797
+zhuang2_m,VMH,0478 TU-ARH Otp Six6 Gaba_1,5,0.03165
+zhuang2_m,VMH,0566 VMH Nr5a1 Glut_1,4,0.02532
+zhuang2_m,VMH,0480 TU-ARH Otp Six6 Gaba_3,2,0.01266
+zhuang2_m,VMH,0488 DMH Hmx2 Gaba_2,2,0.01266
+zhuang2_m,VMH,0507 MEA-COA-BMA Ccdc42 Glut_3,2,0.01266
+zhuang2_m,VMH,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,2,0.01266
+zhuang2_m,VMH,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,2,0.01266
+zhuang2_m,VMH,0457 AHN Onecut3 Gaba_2,1,0.006329
+zhuang2_m,VMH,0479 TU-ARH Otp Six6 Gaba_2,1,0.006329
+zhuang2_m,VMH,0492 DMH Hmx2 Gaba_6,1,0.006329
+zhuang2_m,VMH,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.006329
+zhuang2_m,VMHSh,0568 VMH Nr5a1 Glut_3,54,0.1882
+zhuang2_m,VMHSh,0569 VMH Nr5a1 Glut_4,35,0.122
+zhuang2_m,VMHSh,0570 VMH Nr5a1 Glut_5,30,0.1045
+zhuang2_m,VMHSh,0567 VMH Nr5a1 Glut_2,29,0.101
+zhuang2_m,VMHSh,0564 VMH Fezf1 Glut_2,23,0.08014
+zhuang2_m,VMHSh,0478 TU-ARH Otp Six6 Gaba_1,15,0.05226
+zhuang2_m,VMHSh,0480 TU-ARH Otp Six6 Gaba_3,13,0.0453
+zhuang2_m,VMHSh,0566 VMH Nr5a1 Glut_1,8,0.02787
+zhuang2_m,VMHSh,0545 DMH Nkx2-4 Glut_2,6,0.02091
+zhuang2_m,VMHSh,0565 VMH Fezf1 Glut_3,6,0.02091
+zhuang2_m,VMHSh,0457 AHN Onecut3 Gaba_2,5,0.01742
+zhuang2_m,VMHSh,0470 DMH-LHA Gsx1 Gaba_1,5,0.01742
+zhuang2_m,VMHSh,0428 ARH-PVi Six6 Dopa-Gaba_2,4,0.01394
+zhuang2_m,VMHSh,0458 AHN Onecut3 Gaba_3,4,0.01394
+zhuang2_m,VMHSh,0487 DMH Hmx2 Gaba_1,3,0.01045
+zhuang2_m,VMHSh,0488 DMH Hmx2 Gaba_2,3,0.01045
+zhuang2_m,VMHSh,0492 DMH Hmx2 Gaba_6,3,0.01045
+zhuang2_m,VMHSh,0553 DMH Hmx2 Glut_2,3,0.01045
+zhuang2_m,VMHSh,0555 ARH-PVp Tbx3 Glut_2,3,0.01045
+zhuang2_m,VMHSh,0561 DMH-LHA Vgll2 Glut_3,3,0.01045
+zhuang2_m,VMHSh,0427 ARH-PVi Six6 Dopa-Gaba_1,2,0.006969
+zhuang2_m,VMHSh,0429 TMv-PMv Tbx3 Hist-Gaba_1,2,0.006969
+zhuang2_m,VMHSh,0493 ARH-PVp Tbx3 Gaba_1,2,0.006969
+zhuang2_m,VMHSh,0495 ARH-PVp Tbx3 Gaba_3,2,0.006969
+zhuang2_m,VMHSh,0556 ARH-PVp Tbx3 Glut_3,2,0.006969
+zhuang2_m,VMHSh,0562 DMH-LHA Vgll2 Glut_4,2,0.006969
+zhuang2_m,VMHSh,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,2,0.006969
+zhuang2_m,VMHSh,0605 PMv-TMv Pitx2 Glut_1,2,0.006969
+zhuang2_m,VMHSh,0305 LSX Otx2 Gaba_5,1,0.003484
+zhuang2_m,VMHSh,0442 PVHd-SBPV Six3 Prox1 Gaba_1,1,0.003484
+zhuang2_m,VMHSh,0454 SBPV-PVa Six6 Satb2 Gaba_2,1,0.003484
+zhuang2_m,VMHSh,0456 AHN Onecut3 Gaba_1,1,0.003484
+zhuang2_m,VMHSh,0471 DMH-LHA Gsx1 Gaba_2,1,0.003484
+zhuang2_m,VMHSh,0472 DMH-LHA Gsx1 Gaba_3,1,0.003484
+zhuang2_m,VMHSh,0489 DMH Hmx2 Gaba_3,1,0.003484
+zhuang2_m,VMHSh,0547 MPN-MPO-PVpo Hmx2 Glut_2,1,0.003484
+zhuang2_m,VMHSh,0552 DMH Hmx2 Glut_1,1,0.003484
+zhuang2_m,VMHSh,0560 DMH-LHA Vgll2 Glut_2,1,0.003484
+zhuang2_m,VMHSh,0563 VMH Fezf1 Glut_1,1,0.003484
+zhuang2_m,VMHSh,0572 LHA Pmch Glut_1,1,0.003484
+zhuang2_m,VMHSh,0577 LHA-AHN-PVH Otp Trh Glut_4,1,0.003484
+zhuang2_m,VMHSh,0585 PVH-SO-PVa Otp Glut_1,1,0.003484
+zhuang2_m,VMHSh,0594 PH-ant-LHA Otp Bsx Glut_4,1,0.003484
+zhuang2_m,VMHSh,0607 PMv-TMv Pitx2 Glut_3,1,0.003484
+zhuang2_m,core,0568 VMH Nr5a1 Glut_3,332,0.5304
+zhuang2_m,core,0569 VMH Nr5a1 Glut_4,73,0.1166
+zhuang2_m,core,0480 TU-ARH Otp Six6 Gaba_3,33,0.05272
+zhuang2_m,core,0570 VMH Nr5a1 Glut_5,29,0.04633
+zhuang2_m,core,0478 TU-ARH Otp Six6 Gaba_1,15,0.02396
+zhuang2_m,core,0479 TU-ARH Otp Six6 Gaba_2,14,0.02236
+zhuang2_m,core,0567 VMH Nr5a1 Glut_2,14,0.02236
+zhuang2_m,core,0565 VMH Fezf1 Glut_3,11,0.01757
+zhuang2_m,core,0456 AHN Onecut3 Gaba_1,10,0.01597
+zhuang2_m,core,0564 VMH Fezf1 Glut_2,9,0.01438
+zhuang2_m,core,0566 VMH Nr5a1 Glut_1,9,0.01438
+zhuang2_m,core,0458 AHN Onecut3 Gaba_3,7,0.01118
+zhuang2_m,core,0470 DMH-LHA Gsx1 Gaba_1,7,0.01118
+zhuang2_m,core,0487 DMH Hmx2 Gaba_1,7,0.01118
+zhuang2_m,core,0492 DMH Hmx2 Gaba_6,6,0.009585
+zhuang2_m,core,0429 TMv-PMv Tbx3 Hist-Gaba_1,4,0.00639
+zhuang2_m,core,0430 TMv-PMv Tbx3 Hist-Gaba_2,3,0.004792
+zhuang2_m,core,0472 DMH-LHA Gsx1 Gaba_3,3,0.004792
+zhuang2_m,core,0488 DMH Hmx2 Gaba_2,3,0.004792
+zhuang2_m,core,0507 MEA-COA-BMA Ccdc42 Glut_3,3,0.004792
+zhuang2_m,core,0557 ARH-PVp Tbx3 Glut_4,3,0.004792
+zhuang2_m,core,0558 ARH-PVp Tbx3 Glut_5,3,0.004792
+zhuang2_m,core,0571 VMH Nr5a1 Glut_6,3,0.004792
+zhuang2_m,core,0583 AHN-RCH-LHA Otp Fezf1 Glut_5,3,0.004792
+zhuang2_m,core,0584 AHN-RCH-LHA Otp Fezf1 Glut_6,3,0.004792
+zhuang2_m,core,0428 ARH-PVi Six6 Dopa-Gaba_2,2,0.003195
+zhuang2_m,core,0552 DMH Hmx2 Glut_1,2,0.003195
+zhuang2_m,core,0553 DMH Hmx2 Glut_2,2,0.003195
+zhuang2_m,core,0563 VMH Fezf1 Glut_1,2,0.003195
+zhuang2_m,core,0607 PMv-TMv Pitx2 Glut_3,2,0.003195
+zhuang2_m,core,0384 CEA-BST Ebf1 Pdyn Gaba_1,1,0.001597
+zhuang2_m,core,0457 AHN Onecut3 Gaba_2,1,0.001597
+zhuang2_m,core,0491 DMH Hmx2 Gaba_5,1,0.001597
+zhuang2_m,core,0545 DMH Nkx2-4 Glut_2,1,0.001597
+zhuang2_m,core,0554 ARH-PVp Tbx3 Glut_1,1,0.001597
+zhuang2_m,core,0556 ARH-PVp Tbx3 Glut_3,1,0.001597
+zhuang2_m,core,0580 AHN-RCH-LHA Otp Fezf1 Glut_2,1,0.001597
+zhuang2_m,core,0592 PH-ant-LHA Otp Bsx Glut_2,1,0.001597
+zhuang2_m,core,0645 PVT-PT Ntrk1 Glut_3,1,0.001597

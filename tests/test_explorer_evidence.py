@@ -49,6 +49,14 @@ class ExplorerEvidence(unittest.TestCase):
         pd.testing.assert_series_equal(rows.counts, expected, check_names=False)
         self.assertEqual(set(rows.evidence[solid & ~rows.projected_hit]), {"measured only"})
 
+    def test_borderline_marks(self):
+        for table, key, col in (("ligand_sources.csv", "gene", "local"), ("receptor_ligand_concordance.csv", "receptor", "in_vmh")):
+            t = pd.read_csv(TABLES / table).set_index(key)
+            self.assertTrue(((t.screen_margin >= 0) == t[col]).all(), table)
+            self.assertTrue((t.borderline == (t.screen_margin.abs() < 0.01)).all(), table)
+            for gene in t.index[t.borderline]:
+                self.assertTrue(self.site["genes"][gene]["src"]["borderline"], gene)
+
     def test_review_cases(self):
         r = pd.read_csv(TABLES / "receptor_ligand_concordance.csv").set_index("receptor")
         for gene in ("Crhr1", "Npsr1"):

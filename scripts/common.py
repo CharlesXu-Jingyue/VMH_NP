@@ -35,6 +35,7 @@ CORE = ["VMHDM", "VMHC", "VMHVL", "VMH"]
 # screened: in two of the three brains under a tenth of their neurons are VMH cell types.
 SCREENED = ["VMHDM", "VMHC", "VMHVL", "VMHSh"]
 DETECTION_MIN = 0.10
+BORDERLINE = 0.01            # a gene is borderline when its best screened observation is within this of its threshold
 
 
 # display colours shared by figures and the explorer (validated categorical order)
