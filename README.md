@@ -7,10 +7,11 @@ released into the VMH from local, afferent and endocrine sources, and whether th
 agree with the receptors found in (2).
 
 Deliverables: a static web site in `docs/` (an interactive explorer with its documentation)
-and a written report, all built from the tables in `results/`.
+and a written report ([`REPORT.md`](REPORT.md)), all built from the tables in `results/`.
 
 ## Layout
 
+    REPORT.md           the written report: findings, method, limits and open items
     config/             curated gene tables, afferent-region list, pinned data manifest
     scripts/            numbered pipeline steps
     results/tables/     derived tables (CSV, one parquet)
